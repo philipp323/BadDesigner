@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible">
+
+    <title>Bad-Designer</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="icon" href="https://www.htl-leonding.at/wp-content/uploads/2018/12/cropped-htllogo-2-130x130.png?x81861" sizes="32x32" />
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/snackbar.css">
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
+
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/dat.gui.min.js"></script>
+    <script src="js/LoaderSupport.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/WebGL.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/DragControls.js"></script>
+    <script src="js/FBXLoader.js"></script>
+    <script src="js/MTLLoader.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/OBJExporter.js"></script>
+    <script src="js/own/listeners.js"></script>
+    <script src="js/own/tooltip.js"></script>
+    <script src="js/own/moveEvents.js"></script>
+    <script src="js/own/loadModel.js"></script>
+    <script src="js/own/items.js"></script>
+    <script src="js/own/collision.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="active">
+            <span id="sidebar_objects">
+                <ul class="list-unstyled components">
+                    <li>
+                        <a aria-expanded=" false" type="button" id="objectModeExited"
+                            class="cursor"
+                            onclick="objectAddModeExited()">
+                            <i class="fas fa-times fa-2x"></i>
+                            Exit
+                        </a>
+                    </li>
+                </ul>    
+                <ul class="list-unstyled CTAs">
+                    <div id="items-wrapper" class="row">
+                    </div>
+                    <li>
+                        <a href="https://github.com/philippAuinger/baddesigner" class="download">GitHub -
+                            Repository</a>
+                    </li>
+                    <li>
+                        <a href="http://vm81.htl-leonding.ac.at:8080/projects" class="download">YouTrack - Projects</a>
+                    </li>
+                </ul>
+            </span>
+            <span id="sidebar_elements">
+                <ul class="list-unstyled components">
+                    <li>
+                        <a type="button" id="sidebarCollapse" class="cursor">
+                            <i class="fas fa-arrows-alt-h fa-2x"></i>
+                            Menu
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" aria-expanded="false">
+                            <i class="fas fa-redo fa-2x"></i>
+                            Reload
+                        </a>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" class="cursor" id="presentationMode" onclick=presenationModeEnabled()>
+                            <i class="fas fa-desktop fa-2x"></i>
+                            Show
+                        </a>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" class="cursor" id="dragMode" onclick=dragModeEnabled()>
+                            <i class="fas fa-arrows-alt fa-2x"></i>
+                            Modify
+                        </a>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" class="cursor" id="scaleMode" onclick=loadObjectEnabled()>
+                            <i class="fas fa-cube fa-2x"></i>
+                            Object
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list-unstyled CTAs">
+                    <li>
+                        <a href="http://www.sanmod.at/" class="download">SanMOD</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/philippAuinger/baddesigner" class="download">GitHub -
+                            Repository</a>
+                    </li>
+                    <li>
+                        <a href="http://vm81.htl-leonding.ac.at:8080/projects" class="download">YouTrack - Projects</a>
+                    </li>
+                </ul>
+            </span>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content" class="content">
+
+            <!--GUI for the objects-->
+            <div id="tooltip" class="tooltip" style="display:none">
+                <a class="btn btn-primary bottom" href="#" id="move-spin" onclick="moveSpinY()">
+                    <i class="fas fa-sync "></i>
+                </a>
+
+                <a class="btn btn-primary bottom" href="#" id="move-left" onclick="moveLeft()">
+                    <i class="fas fa-arrow-left "></i>
+                </a>
+
+                <span class="btn-group-vertical">
+                    <a class="btn btn-primary" href="#" id="move-up" onclick="moveUp()">
+                        <i class="fas fa-arrow-up "></i>
+                    </a>
+
+                    <a class="btn btn-primary" href="#" id="move-down" onclick="moveDown()">
+                        <i class="fas fa-arrow-down "></i>
+                    </a>
+                </span>
+
+                <a class="btn btn-primary bottom" href="#" id="move-right" onclick="moveRight()">
+                    <i class="fas fa-arrow-right "></i>
+                </a>
+            </div>
+
+        </div>
+            <script>
+
+                if ( WEBGL.isWebGLAvailable() === false ) {
+
+                document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
+                }
+                
+                var MODE = "PRESENTATION";
+                var TOOLTIP = document.querySelector(".tooltip");
+                var dragging;
+                var controls;
+                var camera, scene, renderer;
+                var room;
+                var latestMouseIntersection;
+                var buttonClicked;
+                var mouse, raycaster, isShiftDown = false;
+                var rollOverMesh, rollOverMaterial;
+                var cubeGeo, cubeMaterial;
+                var objects = [];
+                var objectArr = [];
+                var floorObjects = [];
+                var draggableObjects = [];
+
+                var oldValue = undefined;
+                var newObject = undefined;
+                var selectedObject = undefined;
+                var lastCollisionDistanceX = 100;
+                var lastCollisionDistanceX1 = 100;
+                var lastCollisionDistanceZ = 100;
+                var lastCollisionDistanceZ1 = 100;
+
+                var needsUpdate = true;
+                var placeable = false;
+
+
+                var new_door;
+                var oldDoorPosition = { x: -250, y: 169.07999999999998, z: 0 };
+
+
+                init();
+                animate();
+
+                function init(){
+                    $("#sidebar_objects").hide();
+                    scene = new THREE.Scene();
+                    scene.background = new THREE.Color("#ffffff");
+
+                    var ambientLight = new THREE.AmbientLight( 0x606060 );
+                    scene.add( ambientLight );
+                    var directionalLight = new THREE.DirectionalLight( 0xffffff );
+                    directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+                    scene.add( directionalLight );
+
+                    raycaster = new THREE.Raycaster();
+                    mouse = new THREE.Vector2();
+
+                    var clock = new THREE.Clock();
+
+                    renderer = new THREE.WebGLRenderer({
+                        antialias: true
+                    });
+                    renderer.setPixelRatio(window.devicePixelRatio);
+                    renderer.setSize(window.innerWidth, window.innerHeight)
+                    document.getElementById("content").appendChild(renderer.domElement);
+
+                    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000000);
+                    camera.position.set(500, 800, 1300);
+                    camera.lookAt( 0, 0, 0 );
+
+                    // roll-over helpers
+                    var rollOverGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
+                    rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x26a3a1, opacity: 0.5, transparent: true} );
+                    ghostCube = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+                    ghostCube.visible = false;
+                    scene.add( ghostCube );
+                    setSize(ghostCube);
+                    // cubes
+                    cubeGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
+                    cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x26a3a1 } );
+                    // grid
+                    //var gridHelper = new THREE.GridHelper( 1000, 20 );
+                    //scene.add( gridHelper );
+
+                    var geometry = new THREE.BoxBufferGeometry( 1000, 1000, 5 );
+                    geometry.rotateX( - Math.PI / 2 );
+
+                    var texture = new THREE.TextureLoader().load( 'textures/marbletiles.jpg' );
+                    
+                    room = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
+                    room.visible = false;
+                    room.material.transparent = true; //transparents zulassen
+                    scene.add( room );
+
+
+                    // ================ OUTSOURCE ======================= PRESENTATION
+                    objects.push( room );
+                    floorObjects.push( room );
+
+                    // ========================================================
+
+                    controls = new THREE.OrbitControls(camera, renderer.domElement);
+                    controls.enableDamping = true;
+                    controls.dampingFactor = 0.25;
+                    controls.screenSpacePanning = false;
+                    controls.minDistance = 10;
+                    controls.maxDistance = 500000;
+                    controls.maxPolarAngle = Math.PI / 2;
+                    controls.rotateSpeed = 0.2;
+
+                    window.addEventListener('resize', onResize, false);
+                    window.addEventListener("mousedown", onMouseDown, false);
+                    window.addEventListener( 'mousemove', onMouseMove, false );
+                    window.addEventListener("mouseup", onMouseUp, false);
+                    //loadFbxModel();
+
+
+                    // createTexturedDoor("dusche_blockartig.png");
+                    // createTexturedDoor("dusche_verlauf_klar.png");
+                    createTexturedDoor("dusche_verlauf_weiß");
+                    //loadModel();
+                    //getData();
+
+                }
+
+                function createTexturedDoor(texture_name){
+                    var png_texture = new THREE.TextureLoader().load('models/texture/'+texture_name+'.png');
+                    var png_texture_flip = new THREE.TextureLoader().load('models/texture/'+texture_name+'_flip.png');
+                    // var materials = [
+                    //     leftSide,        // Left side
+                    //     rightSide,       // Right side
+                    //     topSide,         // Top side
+                    //     bottomSide,      // Bottom side
+                    //     frontSide,       // Front side
+                    //     backSide         // Back side
+                    // ];
+                    var png_material = new THREE.MeshPhongMaterial( { map: png_texture } );
+                    png_material.transparent = true;
+                    //png_material.side = THREE.DoubleSide;
+
+                    var png_material_flip = new THREE.MeshPhongMaterial( { map: png_texture_flip } );
+                    png_material_flip.transparent = true;
+                    //png_material_flip.side = THREE.DoubleSide;
+
+                    var whiteMaterial = new THREE.MeshPhongMaterial();
+                    whiteMaterial.transparent = true;
+                    whiteMaterial.opacity = 0.50;
+
+                    var materials = [png_material, png_material, whiteMaterial, png_material, png_material, png_material_flip]
+
+                    var door_geometry = new THREE.BoxGeometry( 140, 140 * 2.344, 2.5, 1, 1, 1, materials );
+                    new_door = new THREE.Mesh( door_geometry, materials );
+                    new_door.material.transparent = true; //transparents zulassen
+                    new_door.position.y += (140 * 2.344) / 2;
+                    new_door.position.y += 5; //on floor
+                    new_door.position.x = oldDoorPosition.x + 200;
+                    new_door.position.z = 100;
+                    new_door.name = texture_name;
+
+                    setSize(new_door);
+                    scene.add( new_door );
+                    objects.push( new_door );
+                    draggableObjects.push ( new_door );
+                 
+                    oldDoorPosition = new_door.position;
+                    
+
+                    console.log(objects);
+                }
+
+            function presenationModeEnabled(){
+                MODE = "PRESENTATION";
+                ghostCube.visible = false;
+                hideTooltip();
+            }
+
+            function cubeModeEnabled(){
+                MODE = "PLACEMENT";
+            }
+
+            function dragModeEnabled(){
+                MODE = "DRAG";
+                ghostCube.visible = false;
+            }
+
+            function scaleModeEnabled(){
+                MODE = "SCALE";
+                $("#scale-menu").show();
+                $('#sidebar').attr("class","");
+                ghostCube.visible = false;
+            }
+
+            function loadObjectEnabled(){
+                ghostCube.visible = false;
+                hideTooltip();
+                //to unfold the Navbar
+                camera.position.x = 850;
+                needsUpdate = true;
+                $('#sidebar').attr("class","");
+                $('#sidebar').css("min-width", "33%");
+                $('#sidebar').css("max-width", "33%");
+                $('#sidebar').css("overflow-y", "auto");
+                $("#sidebar_elements").hide();
+                $("#sidebar_objects").show();
+            }
+
+            function objectAddModeExited(){
+                MODE = "PRESENTATION";
+                ghostCube.visible = false;
+                $('#sidebar').css("min-width", "250px");
+                $('#sidebar').css("max-width", "250px");
+                $('#sidebar').css("overflow-y", "hidden");
+                camera.position.x = 500;
+                needsUpdate = true;
+                $("#sidebar_elements").show();
+                $("#sidebar_objects").hide();
+            }
+
+            function selectObject(object){
+                selectedObject = object;
+                $("#object-name").text(object.name);
+                $('#object-width').val(selectedObject.size.x);
+                $('#object-height').val(selectedObject.size.y);
+                $('#object-depth').val(selectedObject.size.z);
+                if(oldValue == undefined){
+                    oldValue = selectedObject.size.y;
+                }
+            }
+
+            function shouldRender() {
+                // Do we need to draw a new frame //space for more attributes 
+                if (needsUpdate) {
+                    needsUpdate = false;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function animate() {
+                var delay = 50;
+                setTimeout(function () {
+                    requestAnimationFrame(animate);
+                }, delay);
+                render();
+            };
+
+            function render() {
+                if(shouldRender()){
+                    renderer.clear();
+                    renderer.render(scene, camera); 
+                    showTooltip();
+                }
+            }
+
+            $(document).ready(function(){
+                needsUpdate = true;
+                room.visible = true;
+                //loadModel("Register_Waschtisch_scale");
+            });
+            </script>
+
+        <script>
+            // SIDEBAR
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                    $("#scale-menu").hide();
+                });
+            });
+        </script>
+    </body>
+</html>
