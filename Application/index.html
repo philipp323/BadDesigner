@@ -11,7 +11,8 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="icon" href="https://www.htl-leonding.at/wp-content/uploads/2018/12/cropped-htllogo-2-130x130.png?x81861" sizes="32x32" />
+    <link rel="icon" href="https://www.htl-leonding.at/wp-content/uploads/2018/12/cropped-htllogo-2-130x130.png?x81861"
+        sizes="32x32" />
 
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style/style.css">
@@ -22,19 +23,19 @@
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
         integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
-    </script>
+        </script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
-    </script>
+        </script>
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
-    </script>
+        </script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-    </script>
+        </script>
 
     <script src="js/three.min.js"></script>
     <script src="js/OrbitControls.js"></script>
@@ -54,39 +55,37 @@
     <script src="js/own/loadModel.js"></script>
     <script src="js/own/items.js"></script>
     <script src="js/own/collision.js"></script>
+    <script src="js/own/designs.js"></script>
+    <script src="js/FirstPersonControls.js"></script>
+    <script src="js/PointerLockControls.js"></script>
+    <script src="js/TrackballControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
+
 </head>
 
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
-            <span id="sidebar_objects">
+            <span id="sidebar_presentations">
                 <ul class="list-unstyled components">
                     <li>
-                        <a aria-expanded=" false" type="button" id="objectModeExited"
-                            class="cursor"
-                            onclick="objectAddModeExited()">
+                        <a aria-expanded="false" type="button" id="objectModeExited" class="cursor"
+                            onclick="exitPresentationMode()">
                             <i class="fas fa-times fa-2x"></i>
                             Exit
                         </a>
                     </li>
-                </ul>    
+                </ul>
                 <ul class="list-unstyled CTAs">
-                    <div id="items-wrapper" class="row">
+                    <div id="items-wrapper">
                     </div>
-                    <li>
-                        <a href="https://github.com/philippAuinger/baddesigner" class="download">GitHub -
-                            Repository</a>
-                    </li>
-                    <li>
-                        <a href="http://vm81.htl-leonding.ac.at:8080/projects" class="download">YouTrack - Projects</a>
-                    </li>
                 </ul>
             </span>
             <span id="sidebar_elements">
                 <ul class="list-unstyled components">
                     <li>
-                        <a type="button" id="sidebarCollapse" class="cursor">
+                        <a id="sidebarCollapse" class="cursor">
                             <i class="fas fa-arrows-alt-h fa-2x"></i>
                             Menu
                         </a>
@@ -110,30 +109,39 @@
                         </a>
                     </li>
                     <li>
-                        <a aria-expanded="false" class="cursor" id="scaleMode" onclick=loadObjectEnabled()>
-                            <i class="fas fa-cube fa-2x"></i>
-                            Object
+                        <a aria-expanded="false" class="cursor" id="designMode" onclick=chooseDesignEnabled()>
+                            <i class="fas fa-paint-brush fa-2x"></i>
+                            Design
                         </a>
                     </li>
                 </ul>
                 <ul class="list-unstyled CTAs">
                     <li>
-                        <a href="http://www.sanmod.at/" class="download">SanMOD</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/philippAuinger/baddesigner" class="download">GitHub -
-                            Repository</a>
-                    </li>
-                    <li>
-                        <a href="http://vm81.htl-leonding.ac.at:8080/projects" class="download">YouTrack - Projects</a>
+                        <a href="http://www.sanmod.at/" class="download">SanMOD Website</a>
                     </li>
                 </ul>
             </span>
         </nav>
 
+        <div id="loader"></div>
         <!-- Page Content  -->
-        <div id="content" class="content">
+        <div id="content" style="display:none;" class="content">
+            <div id="progress-block" class="progress" style="display:none">
+                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
 
+            <div class="buttons floorSelection">
+                <button type="" id="view_front" class="smallButton" onClick="changeView('view_front');">
+                    <i class="fas fa-angle-up "></i>
+                </button>
+                <button type="" id="view_angle" class="smallButton" onClick="changeView('view_angle');">
+                    <i class="fas fa-angle-up" data-fa-transform="rotate-30"></i>
+                </button>
+                <button type="" id="view_right" class="smallButton" onClick="changeView('view_right');">
+                    <i class="fas fa-angle-right "></i>
+                </button>             
+            </div>
+            
             <!--GUI for the objects-->
             <div id="tooltip" class="tooltip" style="display:none">
                 <a class="btn btn-primary bottom" href="#" id="move-spin" onclick="moveSpinY()">
@@ -159,239 +167,396 @@
                 </a>
             </div>
 
+            <!-- Choose design-Modal -->
+            <div class="modal fade" id="chooseDesignModal" tabindex="-1" role="dialog"
+                aria-labelledby="chooseDesignCenterModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="chooseDesignModalLongTitle">Wählen Sie einen Grundriss:</h5>
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                        </div>
+                        <div class="modal-body" style="padding: 0; padding-left: 1.5rem; padding-right: 1rem;">
+                            <a onclick=chooseDesign(1) id="design_1" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/1.png" alt="IMAGE" tabindex="1">
+                                </div>
+                            </a>
+                            <a onclick=chooseDesign(2) id="design_2" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/2.png" alt="IMAGE" tabindex="2">
+                                </div>
+                            </a>
+                            <a onclick=chooseDesign(3) id="design_3" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/3.png" alt="IMAGE" tabindex="3">
+                                </div>
+                            </a>
+                            <a onclick=chooseDesign(4) id="design_4" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/4.png" alt="IMAGE" tabindex="3">
+                                </div>
+                            </a>
+                            <!-- <a href="" class="custom-card">
+                                    <div class="card" style="width: 14rem; display: inline-block">
+                                        <img class="card-img-top" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="IMAGE">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Wrapped with a tag</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        </div>
+                                    </div>
+                                </a>  -->
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                            <button type="button" class="btn btn-primary" onclick=generateDesign()>Generieren</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-            <script>
+        <script>
 
-                if ( WEBGL.isWebGLAvailable() === false ) {
+            var chosenDesign = 0;
 
-                document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+            if (WEBGL.isWebGLAvailable() === false) {
 
-                }
-                
-                var MODE = "PRESENTATION";
-                var TOOLTIP = document.querySelector(".tooltip");
-                var dragging;
-                var controls;
-                var camera, scene, renderer;
-                var room;
-                var latestMouseIntersection;
-                var buttonClicked;
-                var mouse, raycaster, isShiftDown = false;
-                var rollOverMesh, rollOverMaterial;
-                var cubeGeo, cubeMaterial;
-                var objects = [];
-                var objectArr = [];
-                var floorObjects = [];
-                var draggableObjects = [];
+                document.body.appendChild(WEBGL.getWebGLErrorMessage());
 
-                var oldValue = undefined;
-                var newObject = undefined;
-                var selectedObject = undefined;
-                var lastCollisionDistanceX = 100;
-                var lastCollisionDistanceX1 = 100;
-                var lastCollisionDistanceZ = 100;
-                var lastCollisionDistanceZ1 = 100;
+            }
 
-                var needsUpdate = true;
-                var placeable = false;
+            var MODE = "PRESENTATION";
+            var TOOLTIP = document.querySelector(".tooltip");
+            var dragging;
+            var controls;
+            var camera, scene, renderer;
+            var room;
+            var latestMouseIntersection;
+            var buttonClicked;
+            var mouse, raycaster, isShiftDown = false;
+            var rollOverMesh, rollOverMaterial;
+            var objects = [];
+            var objectArr = [];
+            var floorObjects = [];
+            var draggableObjects = [];
 
+            var oldValue = undefined;
+            var newObject = undefined;
+            var selectedObject = undefined;
 
-                var new_door;
-                var oldDoorPosition = { x: -250, y: 169.07999999999998, z: 0 };
+            var needsUpdate = true;
+            var placeable = false;
+            var startingApplication = false;
+            var ANIMATING = false;
+            var LOADING = false;
+            var MOUSEDOWN = false;
 
 
-                init();
-                animate();
+            var new_door;
+            var oldDoorPosition = { x: -250, y: 169.07999999999998, z: 0 };
 
-                function init(){
-                    $("#sidebar_objects").hide();
-                    scene = new THREE.Scene();
-                    scene.background = new THREE.Color("#ffffff");
+            var numberOfModels = 0;
 
-                    var ambientLight = new THREE.AmbientLight( 0x606060 );
-                    scene.add( ambientLight );
-                    var directionalLight = new THREE.DirectionalLight( 0xffffff );
-                    directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
-                    scene.add( directionalLight );
+            var raycaster_controls;
+            var controlsEnabled = false;
+            var moveForward = false;
+            var moveBackward = false;
+            var moveLeft = false;
+            var moveRight = false;
+            var canJump = false;
+            var prevTime = performance.now();
+            var velocity = new THREE.Vector3();
 
-                    raycaster = new THREE.Raycaster();
-                    mouse = new THREE.Vector2();
+            var mouseControl = new THREE.Vector2();
+            var target = new THREE.Vector2();
+            var windowHalf = new THREE.Vector2( window.innerWidth / 2, window.innerHeight / 2 );
 
-                    var clock = new THREE.Clock();
+            init();
+            animate();
 
-                    renderer = new THREE.WebGLRenderer({
-                        antialias: true
+            function init() {
+                $("#sidebar_presentations").hide();
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color("#ffffff");
+
+                var ambientLight = new THREE.AmbientLight(0x606060);
+                scene.add(ambientLight);
+                var directionalLight = new THREE.DirectionalLight(0xffffff);
+                directionalLight.position.set(1, 0.75, 0.5).normalize();
+                scene.add(directionalLight);
+
+                raycaster = new THREE.Raycaster();
+                mouse = new THREE.Vector2();
+
+                var clock = new THREE.Clock();
+
+                renderer = new THREE.WebGLRenderer({
+                    antialias: true
+                });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight)
+                document.getElementById("content").appendChild(renderer.domElement);
+
+                camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+                camera.position.set(-10, 150, 400);
+                scene.add(camera);
+                LOADING = true;
+
+                loadModel("Design_3/Betonboden", false,0,true, );
+
+                var wand_texture = new THREE.TextureLoader().load('textures/wand.jpg', function() {
+                    wall1.visible = true;
+                    wall2.visible = true;
+                    wall3.visible = true;
+                    wall4.visible = true;
+                    ceiling.visible = true;
+                });
+                needsUpdate = true;
+                var texture = new THREE.TextureLoader().load('textures/beton.jpg',
+                function( texture ) {
+                    // console.log("loaded Textures");
+                    needsUpdate = true;
+                    $('#content').show();
+                    $('#chooseDesignModal').modal({  //prevent from closing when clicking outside
+                        backdrop: 'static',
+                        keyboard: false
                     });
-                    renderer.setPixelRatio(window.devicePixelRatio);
-                    renderer.setSize(window.innerWidth, window.innerHeight)
-                    document.getElementById("content").appendChild(renderer.domElement);
-
-                    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000000);
-                    camera.position.set(500, 800, 1300);
-                    camera.lookAt( 0, 0, 0 );
-
-                    // roll-over helpers
-                    var rollOverGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
-                    rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x26a3a1, opacity: 0.5, transparent: true} );
-                    ghostCube = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-                    ghostCube.visible = false;
-                    scene.add( ghostCube );
-                    setSize(ghostCube);
-                    // cubes
-                    cubeGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
-                    cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x26a3a1 } );
-                    // grid
-                    //var gridHelper = new THREE.GridHelper( 1000, 20 );
-                    //scene.add( gridHelper );
-
-                    var geometry = new THREE.BoxBufferGeometry( 1000, 1000, 5 );
-                    geometry.rotateX( - Math.PI / 2 );
-
-                    var texture = new THREE.TextureLoader().load( 'textures/marbletiles.jpg' );
-                    
-                    room = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
+                    $('#chooseDesignModal').modal('show');
+                    needsUpdate = true;
                     room.visible = false;
-                    room.material.transparent = true; //transparents zulassen
-                    scene.add( room );
+                    needsUpdate = true;
+                    setTimeout(clearLoader, 300);
+                });
 
-
-                    // ================ OUTSOURCE ======================= PRESENTATION
-                    objects.push( room );
-                    floorObjects.push( room );
-
-                    // ========================================================
-
-                    controls = new THREE.OrbitControls(camera, renderer.domElement);
-                    controls.enableDamping = true;
-                    controls.dampingFactor = 0.25;
-                    controls.screenSpacePanning = false;
-                    controls.minDistance = 10;
-                    controls.maxDistance = 500000;
-                    controls.maxPolarAngle = Math.PI / 2;
-                    controls.rotateSpeed = 0.2;
-
-                    window.addEventListener('resize', onResize, false);
-                    window.addEventListener("mousedown", onMouseDown, false);
-                    window.addEventListener( 'mousemove', onMouseMove, false );
-                    window.addEventListener("mouseup", onMouseUp, false);
-                    //loadFbxModel();
-
-
-                    // createTexturedDoor("dusche_blockartig.png");
-                    // createTexturedDoor("dusche_verlauf_klar.png");
-                    createTexturedDoor("dusche_verlauf_weiß");
-                    //loadModel();
-                    //getData();
-
+                function clearLoader(){
+                    $('#loader').removeAttr("style").hide();
+                    $('.modal-backdrop.fade.show').css("opacity", ".5");
+                    LOADING = false;
                 }
 
-                function createTexturedDoor(texture_name){
-                    var png_texture = new THREE.TextureLoader().load('models/texture/'+texture_name+'.png');
-                    var png_texture_flip = new THREE.TextureLoader().load('models/texture/'+texture_name+'_flip.png');
-                    // var materials = [
-                    //     leftSide,        // Left side
-                    //     rightSide,       // Right side
-                    //     topSide,         // Top side
-                    //     bottomSide,      // Bottom side
-                    //     frontSide,       // Front side
-                    //     backSide         // Back side
-                    // ];
-                    var png_material = new THREE.MeshPhongMaterial( { map: png_texture } );
-                    png_material.transparent = true;
-                    //png_material.side = THREE.DoubleSide;
+                var geometry_wall = new THREE.BoxBufferGeometry(5, 263.5, 727);
+                wall1 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall1.position.y = 263.5 / 2;
+                wall1.position.z = 265;
+                wall1.position.x = 500 - 400;
+                wall1.visible = false;
+                scene.add(wall1);
 
-                    var png_material_flip = new THREE.MeshPhongMaterial( { map: png_texture_flip } );
-                    png_material_flip.transparent = true;
-                    //png_material_flip.side = THREE.DoubleSide;
+                var geometry_wall = new THREE.BoxBufferGeometry(731, 270, 5);
+                wall2 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall2.position.y = 257 / 2;
+                wall2.position.z = -500 + 400;
+                wall2.position.x = -265;
+                wall2.visible = false;
+                scene.add(wall2);
 
-                    var whiteMaterial = new THREE.MeshPhongMaterial();
-                    whiteMaterial.transparent = true;
-                    whiteMaterial.opacity = 0.50;
+                var geometry_wall = new THREE.BoxBufferGeometry(5, 263.5, 727);
+                wall3 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall3.position.y = 257 / 2;
+                wall3.position.z = 263.5;
+                wall3.position.x = -400; //-631;
+                wall3.visible = false;
+                scene.add(wall3);
 
-                    var materials = [png_material, png_material, whiteMaterial, png_material, png_material, png_material_flip]
+                var geometry_wall = new THREE.BoxBufferGeometry(731, 270, 5);
+                wall4 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall4.position.y = 257 / 2;
+                wall4.position.z = 630;
+                wall4.position.x = -265;
+                wall4.visible = false;
+                scene.add(wall4);
 
-                    var door_geometry = new THREE.BoxGeometry( 140, 140 * 2.344, 2.5, 1, 1, 1, materials );
-                    new_door = new THREE.Mesh( door_geometry, materials );
-                    new_door.material.transparent = true; //transparents zulassen
-                    new_door.position.y += (140 * 2.344) / 2;
-                    new_door.position.y += 5; //on floor
-                    new_door.position.x = oldDoorPosition.x + 200;
-                    new_door.position.z = 100;
-                    new_door.name = texture_name;
+                var geometry = new THREE.BoxBufferGeometry(731, 727, 5);
+                geometry.rotateX(- Math.PI / 2);
 
-                    setSize(new_door);
-                    scene.add( new_door );
-                    objects.push( new_door );
-                    draggableObjects.push ( new_door );
-                 
-                    oldDoorPosition = new_door.position;
-                    
+                room = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture }));
+                room.visible = false;
+                room.position.x = -400;
+                room.position.z = 400;
+                //room.material.transparent = true; //transparents zulassen
+                scene.add(room);
 
-                    console.log(objects);
-                }
+                objects.push(room);
+                floorObjects.push(room);
 
-            function presenationModeEnabled(){
-                MODE = "PRESENTATION";
-                ghostCube.visible = false;
-                hideTooltip();
-            }
+                ceiling = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                ceiling.visible = false;
+                ceiling.position.x = -265;
+                ceiling.position.z = 265;
+                ceiling.position.y = 263.5;
+                //room.material.transparent = true; //transparents zulassen
+                scene.add(ceiling);
 
-            function cubeModeEnabled(){
-                MODE = "PLACEMENT";
-            }
 
-            function dragModeEnabled(){
-                MODE = "DRAG";
-                ghostCube.visible = false;
-            }
+                raycaster_controls = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+            
 
-            function scaleModeEnabled(){
-                MODE = "SCALE";
-                $("#scale-menu").show();
-                $('#sidebar').attr("class","");
-                ghostCube.visible = false;
-            }
-
-            function loadObjectEnabled(){
-                ghostCube.visible = false;
-                hideTooltip();
-                //to unfold the Navbar
-                camera.position.x = 850;
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 1;
+                controls.screenSpacePanning = false;
+                controls.minDistance = 10;
+                controls.maxDistance = 850;
+                controls.target.x = camera.position.x;
+                controls.target.y = 151;
+                controls.target.z = camera.position.z;
+                controls.maxPolarAngle = Math.PI / 2 -0.01;
+                controls.rotateSpeed = 0.2;
+                controls.minZoom = 100;
+            
+                camera.updateProjectionMatrix();
                 needsUpdate = true;
-                $('#sidebar').attr("class","");
-                $('#sidebar').css("min-width", "33%");
-                $('#sidebar').css("max-width", "33%");
+
+                controls.update();
+                //console.log(controls);
+
+                window.addEventListener('resize', onResize, false);
+                window.addEventListener("mousedown", onMouseDown, false);
+                window.addEventListener('mousemove', onMouseMove, false);
+                window.addEventListener("mouseup", onMouseUp, false);
+                window.addEventListener("scroll", onMouseWheel, false);
+                controls.addEventListener("change", controlsChange, false);
+
+                //loadModel();
+                //getData();
+            }
+
+            function createTexturedDoor(texture_name) {
+                var png_texture = new THREE.TextureLoader().load('models/texture/' + texture_name + '.png');
+                var png_texture_flip = new THREE.TextureLoader().load('models/texture/' + texture_name + '_flip.png');
+                // var materials = [
+                //     leftSide,        // Left side
+                //     rightSide,       // Right side
+                //     topSide,         // Top side
+                //     bottomSide,      // Bottom side
+                //     frontSide,       // Front side
+                //     backSide         // Back side
+                // ];
+                var png_material = new THREE.MeshPhongMaterial({ map: png_texture });
+                png_material.transparent = true;
+                //png_material.side = THREE.DoubleSide;
+
+                var png_material_flip = new THREE.MeshPhongMaterial({ map: png_texture_flip });
+                png_material_flip.transparent = true;
+                //png_material_flip.side = THREE.DoubleSide;
+
+                var whiteMaterial = new THREE.MeshPhongMaterial();
+                whiteMaterial.transparent = true;
+                whiteMaterial.opacity = 0.50;
+
+                var materials = [png_material, png_material, whiteMaterial, png_material, png_material, png_material_flip]
+
+                var door_geometry = new THREE.BoxGeometry(140, 140 * 2.344, 2.5, 1, 1, 1, materials);
+                new_door = new THREE.Mesh(door_geometry, materials);
+                new_door.material.transparent = true; //transparents zulassen
+                new_door.position.y += (140 * 2.344) / 2;
+                new_door.position.y += 5; //on floor
+                new_door.position.x = oldDoorPosition.x + 200;
+                new_door.position.z = 100;
+                new_door.name = texture_name;
+
+                setSize(new_door);
+                scene.add(new_door);
+                objects.push(new_door);
+                draggableObjects.push(new_door);
+
+                oldDoorPosition = new_door.position;
+            }
+
+            function startedPresentation(){
+                $('#sidebar_elements').hide();
+                $('#sidebar_presentations').show();
+                $('#sidebar').toggleClass('active');
                 $('#sidebar').css("overflow-y", "auto");
-                $("#sidebar_elements").hide();
-                $("#sidebar_objects").show();
             }
 
-            function objectAddModeExited(){
+            function exitPresentationMode(){
+                $('#sidebar').toggleClass('active');
+                $('#sidebar_presentations').hide();
+                $('#sidebar_elements').show();
+                $('#sidebar').css("overflow-y", "hidden !important");
+            }
+
+            function presenationModeEnabled() {
                 MODE = "PRESENTATION";
-                ghostCube.visible = false;
-                $('#sidebar').css("min-width", "250px");
-                $('#sidebar').css("max-width", "250px");
-                $('#sidebar').css("overflow-y", "hidden");
-                camera.position.x = 500;
-                needsUpdate = true;
-                $("#sidebar_elements").show();
-                $("#sidebar_objects").hide();
+                hideTooltip();
             }
 
-            function selectObject(object){
+            function dragModeEnabled() {
+                MODE = "DRAG";
+            }
+
+            function chooseDesignEnabled(){
+                console.log(objects[25]);
+                var png_texture = new THREE.TextureLoader().load('models/texture/dusche_verlauf_weiß.png');
+                var png_material = new THREE.MeshPhongMaterial({ map: png_texture });
+                objects[25].materialLibraries = null;
+                objects[25].children[0].material.transparent = true; 
+                objects[25].children[0].material = png_material;
+                needsUpdate = true;
+                console.log(objects[25]);
+            }
+            
+            function changeView(type){
+                if(type == 'view_down'){
+                    controls.enabled = false;
+                    camera.position.y = 550;
+                    camera.position.z = 50;
+                    camera.position.x = -120;
+                    controls.target.x = camera.position.x;
+                    controls.target.y = 0;
+                    controls.target.z = camera.position.z;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = false;
+                } else if(type == 'view_front'){
+                    controls.enabled = true;
+                    camera.position.set(-10, 150, 400);
+                    controls.target.x = camera.position.x;
+                    controls.target.y = 151;
+                    controls.target.z = camera.position.z;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = true;
+                } else if(type == 'view_right'){
+                    controls.enabled = false;
+                    camera.position.set(-400, 110, 25);
+                    controls.target.x = 50;
+                    controls.target.y = 100;
+                    controls.target.z = 25;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = true;
+                }
+                else if(type == 'view_angle'){
+                    controls.enabled = false;
+                    camera.position.set(-300, 150, 400);
+                    controls.target.x = 0;
+                    controls.target.y = 150;
+                    controls.target.z = 0;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = true;
+                }
+
+            }
+
+            function selectObject(object) {
                 selectedObject = object;
                 $("#object-name").text(object.name);
                 $('#object-width').val(selectedObject.size.x);
                 $('#object-height').val(selectedObject.size.y);
                 $('#object-depth').val(selectedObject.size.z);
-                if(oldValue == undefined){
+                if (oldValue == undefined) {
                     oldValue = selectedObject.size.y;
                 }
             }
 
             function shouldRender() {
                 // Do we need to draw a new frame //space for more attributes 
-                if (needsUpdate) {
+                if (needsUpdate || ANIMATING || LOADING) {
                     needsUpdate = false;
                     return true;
                 } else {
@@ -403,33 +568,32 @@
                 var delay = 50;
                 setTimeout(function () {
                     requestAnimationFrame(animate);
+                    //controls.update();
                 }, delay);
                 render();
             };
 
             function render() {
-                if(shouldRender()){
+                if (shouldRender()) {
                     renderer.clear();
-                    renderer.render(scene, camera); 
+                    renderer.render(scene, camera);
+                    TWEEN.update();
                     showTooltip();
                 }
             }
 
-            $(document).ready(function(){
-                needsUpdate = true;
-                room.visible = true;
-                //loadModel("Register_Waschtisch_scale");
+            $(document).ready(function () {
+                // console.log("Document Ready");
             });
-            </script>
+        </script>
 
         <script>
             // SIDEBAR
             $(document).ready(function () {
                 $('#sidebarCollapse').on('click', function () {
                     $('#sidebar').toggleClass('active');
-                    $("#scale-menu").hide();
                 });
             });
         </script>
-    </body>
+</body>
 </html>

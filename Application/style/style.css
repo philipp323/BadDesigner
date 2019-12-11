@@ -1,3 +1,129 @@
+.presentation {
+  background: #fff;
+  color: rgb(69,90,100) !important;
+}
+
+.modal-backdrop.fade.show {
+  opacity: .0
+}
+
+.progress {
+  -webkit-border-radius:.0 !important;
+   border-radius: 0 !important;
+}
+
+.progress-bar {
+  background-color: #26a3a1;
+}
+
+/* Center the loader */
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #26a3a1;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
+
+/*
+  Bootstrap overwrite!
+*/
+
+.btn-primary {
+  background-color: #26a3a1; 
+  border-color:#26a3a1;
+}
+
+.btn-primary:hover {
+  background-color: #1c7774; 
+  border-color:#1c7774;
+}
+
+.btn-primary.focus,.btn-primary:focus {
+  box-shadow:0 0 0 .2rem rgba(28, 119, 116,.5) !important;
+  background-color: #1c7774; 
+  border-color:#1c7774;
+}
+
+.btn-primary:active {
+  background-color: #1c7774 !important;
+  border-color:#1c7774 !important;
+}
+
+.btn-secondary:active {
+  background-color: #5a6268 !important;
+  border-color:#545b62 !important;
+}
+
+.card {
+  margin-top: 1.5px;
+  margin-bottom: 1.5px;
+}
+
+a.custom-card
+{
+  color: inherit;
+}
+
+.card-img-top {  /*runde ecken*/
+  width:100%;
+  border-top-left-radius:calc(.25rem - 1px);
+  border-top-right-radius:calc(.25rem - 1px);
+  border-bottom-right-radius:calc(.25rem - 1px);
+  border-bottom-left-radius:calc(.25rem - 1px)
+}
+
+.card-img-top:hover {
+  box-shadow:0 0 0 .2rem rgba(28, 119, 116,.2) !important;
+}
+
+.card-img-top:focus {
+  box-shadow:0 0 0 .2rem rgba(28, 119, 116,.5) !important;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
@@ -11,11 +137,15 @@ img {
 
 #sidebar {
   height: 100vh !important;
-  overflow-y: hidden !important;
+  overflow-y: hidden;
   border: none;
 }
 
 #sidebar_elements {
+  width: 100%;
+}
+
+#sidebar_presentations {
   width: 100%;
 }
 
@@ -85,7 +215,7 @@ button:active{
   transition: 500ms;
   border-radius: 12px;
   border: none;
-  background-color: #80cbc4;
+  background-color: #26a3a1;
   color: white;
   padding: 5px 15px;
   text-align: center;
@@ -101,7 +231,7 @@ button:active{
   transition: 500ms;
   border-radius: 12px;
   border: none;
-  color: #80cbc4 !important;
+  color: #26a3a1 !important;
   background-color: #fff !important;
   padding: 5px 17px;
   text-align: center;
@@ -112,7 +242,7 @@ button:active{
   outline: none;
 }
 
-smallButton:focus {
+.smallButton:focus {
   margin-right: 10px;
   margin-top: 10px;
   transition: 500ms;

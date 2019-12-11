@@ -1,64 +1,167 @@
 var box;
 var vector;
 var material;
+var nextObject;
+var intervalCounter = 1;
+var interval;
+var progressPerModel = 0;
+var currentProgress = 0;
+
+function Sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+async function showObjects() {
+    nextObject = objects.find(function(element) {
+      return element.number == intervalCounter;
+    });
+    if(nextObject == undefined){
+      ANIMATING = false;
+      return 0;
+    }
+
+    ANIMATING = true;
+    if(nextObject.text != null){
+      appendText(nextObject.text);
+    }
+
+    if(nextObject.animation_mode == 'SIDE'){
+      nextObject.position.z += 70;
+
+      var position = { z: nextObject.position.z};
+      var target = { z: nextObject.position.z - 70};
+      var tween = new TWEEN.Tween(position).to(target, 2000);
+
+      tween.onUpdate(function(){
+        nextObject.position.z = position.z;
+      });
+      nextObject.visible = true;
+      tween.start();
+    
+      await Sleep(2000);
+      nextObject.position.z = 700;
+
+      ANIMATING = false;
+
+      intervalCounter++;
+    } else if(nextObject.animation_mode == 'TOP'){
+      nextObject.position.y += 50;
+
+      var position = { y: nextObject.position.y};
+      var target = { y: nextObject.position.y - 50};
+      var tween = new TWEEN.Tween(position).to(target, 2000);
+
+      tween.onUpdate(function(){
+        nextObject.position.y = position.y;
+      });
+      nextObject.visible = true;
+      tween.start();
+    
+      await Sleep(2000);
+      nextObject.position.y = -22;
+
+      ANIMATING = false;
+
+      intervalCounter++;
+    }
 
 
-function loadedObject(newObject, type) {
-  console.log("Loaded Object: " + newObject.name);
-  if(type == "swap"){
-    //swapXZ(newObject);
+    // if(nextObject.useChildren){
+    //   console.log("use Children");
+    //   nextObject.visible = true;
+    //   for(var i = 0; i < nextObject.children.length; i++){
+    //     nextObject.children[i].visible = false;
+    //   }
+    //   for(var i = 0; i < nextObject.children.length; i++){
+    //     console.log("mesh " + i);
+    //     await Sleep(1000);  
+    //     nextObject.children[i].visible = true;
+    //     needsUpdate = true;
+    //   }
+    //   intervalCounter++;
+    // }
+    // else {
+    // }
+}
+
+var itemsDiv = $("#items-wrapper");
+
+function appendText(text){
+  //console.log(text);
+  var html =
+      '<li>' + '<a class="presentation">' + text + '</a>' + '</li>';
+      $("#items-wrapper").append(html);
+}
+
+function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, TEXT) {
+  if(numberOfModels != 0){
+    progressPerModel = 100 / numberOfModels;
   }
-}
-
-function loadFbxModel(){
-  var fbxloader = new THREE.FBXLoader();
-  fbxloader.load( 'models/fbx/Duschwand_Motiv_transparent_png', function ( object ) {
-
-    scene.add( object );
-
-  }, undefined, function ( e ) {
-
-    console.error("FEHLERMELDUNG: " +  e.message );
-
-  });
-}
-
-function loadModel(object_name, type) {
   var manager = new THREE.LoadingManager();
   manager.onStart = function(url, itemsLoaded, itemsTotal) {
-    console.log(
-      "Started loading file: " +
-        url +
-        ".\nLoaded " +
-        itemsLoaded +
-        " of " +
-        itemsTotal +
-        " files."
-    );
+    // console.log(
+    //   "Started loading file: " +
+    //     url +
+    //     ".\nLoaded " +
+    //     itemsLoaded +
+    //     " of " +
+    //     itemsTotal +
+    //     " files."
+    // );
+    ANIMATING = true;
   };
 
-  manager.onLoad = function() {
-    console.log("Loading complete!");
-    console.log(objects);
+  manager.onLoad = async function() {
+    setSize(newObject);
+    needsUpdate = true;
+    
+    currentProgress += progressPerModel;
+    currentProgress = Math.floor(currentProgress);
 
-    newObject = (objects.slice(-1)[0]); //last added object
+    $('#progress-bar')
+      .css("width", currentProgress  + "%")
+      .attr("aria-valuenow", currentProgress)
+      .text(currentProgress + "% der Modelle geladen.");
 
-    newObject.defaultSize = vector;
-    newObject.size = vector;
+
     newObject.name = object_name;
+    newObject.number = number;
+    newObject.normalLoad = normalLoad;
+    newObject.animation_mode = ANIMATION_MODE;
+    newObject.text = TEXT;
 
-    loadedObject(newObject, type);
-    newObject.visible = false;
+    newObject.position.x = -4995 - 400;
+    newObject.position.y -= 22;
+    newObject.position.z = 300 + 400;
 
-    draggableObjects.push(newObject);
-};
-var textureLoader = new THREE.TextureLoader();
-textureLoader.load("models/texture/dusche_neu_small.png", function(texture){
-  material = new THREE.MeshPhongMaterial({map: texture});
+    if(newObject.normalLoad){
+      //console.log(newObject);
+      newObject.children[0].material.shininess = 0;
+      // newObject.materialLibraries = null;
+      // newObject.children[0].material = new THREE.MeshBasicMaterial({ map: texture });
+      // newObject.children[1].material = new THREE.MeshBasicMaterial({ map: texture });
 
+      needsUpdate = true;
+      ANIMATING = false;
+    }
 
+    if(!newObject.normalLoad){
+      objects.push(newObject);
+      draggableObjects.push(newObject);
 
-  MODE = "OBJECT";
+      newObject.visible = false;
+      
+      if(objects.length == numberOfModels + 1){
+        startedPresentation();
+        // console.log(objects);
+        for(var i = 1; i < numberOfModels + 1; i++){
+          $('#progress-block').css("display","none");
+          await showObjects();
+        }
+        console.log(objects);
+      }
+    }
+  }
   var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setPath("models/");
   var url = object_name + ".mtl"; //modelName
@@ -68,43 +171,19 @@ textureLoader.load("models/texture/dusche_neu_small.png", function(texture){
     var objLoader = new THREE.OBJLoader(manager);
     objLoader.setMaterials(materials);
     objLoader.setPath("models/");
-    /*objLoader.load(object_name + ".obj", function(object) {
-      scene.add(object);
-      for (var i = 0; i < object.children.length; i++) {
-        objectArr.push(object.children[i]);
-      }*/
 
     objLoader.load(object_name + ".obj", function(object) {
-      //object.traverse( function ( node ) {
-
-        //if ( node.isMesh ) node.material = material;
-      //   if ( node.material instanceof THREE.MeshPhongMaterial ) {
-
-      //     // this code is unattainable, but anyway without if (..) it does not work
-
-      //     node.material.alphaTest = 0.5;
-      //     node.material.depthWrite = false;
-      //     node.material.depthTest = false;
-      //     node.material.side = THREE.BackSide;
-      //     node.material.transparent = true;
-      // }
+      object.position.x = 0;
+      object.position.z = 0;
       scene.add(object);
+      newObject = object;
       needsUpdate = true;
+      // object.children[0].material.transparent = isTransparent;
+      // object.children[1].material.transparent = isTransparent;
       for (var i = 0; i < object.children.length; i++) {
-        object.children[i].position.y += 2.5;   //am Boden
-        object.children[i].material.transparent = true; //transparents zulassen
-        //object.children[i].material.alphaTest = 0.1;
-        objects.push(object.children[i]);
+        object.children[i].material.transparent = isTransparent; //transparents zulassen
         object.children[i].castShadow = true;
-      }
-      scene.traverse(function(children) {
-        box = new THREE.Box3().setFromObject(children);
-        vector = new THREE.Vector3();
-        box.getSize(vector);
-        //objects.push(children);
-        //draggableObjects.push(children);
-      });
+      };
     });
   });
-})
 }

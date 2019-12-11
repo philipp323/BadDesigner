@@ -1,4 +1,19 @@
+function controlsChange(){
+  needsUpdate = true;
+}
+
+function onMouseWheel(event) {
+  console.log("wheel!");
+  event.preventDefault();
+  
+
+  camera.position.x -= 1;
+  needsUpdate = true;
+}
+
 function onMouseDown(event) {
+
+  MOUSEDOWN = true;
 
   //So reagieren normale HTML-Elemente auf die Clicks.
   if(!MODE == "SCALE"){
@@ -17,45 +32,21 @@ function onMouseDown(event) {
   raycaster.setFromCamera(mouse, camera);
 
   var floorIntersects = raycaster.intersectObjects(floorObjects);
-  var intersects = raycaster.intersectObjects(objects);
-  var draggableIntersects = raycaster.intersectObjects(draggableObjects);
-
+  var intersects = raycaster.intersectObjects(objects, true);
+  var draggableIntersects = raycaster.intersectObjects(draggableObjects, true);
+  // console.log("on mouse down");
   if (draggableIntersects.length > 0 && MODE == "DRAG") {
     //prevent that one object can be clicked multiple times (and the tooltip changes its position)
-    if(selectedObject == undefined || draggableIntersects[0].object != selectedObject){
+    if(selectedObject == undefined || draggableIntersects[0].object.parent != selectedObject){
       latestMouseIntersection = intersects[0].point;
     }
-    selectObject(draggableIntersects[0].object);
+    // console.log("SELECTED A OBJECT");
+    selectObject(draggableIntersects[0].object.parent);
     console.log(selectedObject);
+    console.log(objects);
 
     controls.enableRotate = false;
     dragging = true;
-  }
-
-  if (intersects.length > 0 && MODE == "PLACEMENT") {
-    var intersect = intersects[0];
-
-      // create cube
-      var cube = new THREE.Mesh(cubeGeo, cubeMaterial);
-      cube.position.copy(intersect.point).add(intersect.face.normal);
-      cube.position.y = 25;
-      scene.add(cube);
-      cube.name = "Würfel";
-
-      setSize(cube);
-
-      //for the default size (scaling is not possible with the real size)
-      var box = new THREE.Box3().setFromObject(cube);
-      const vector = new THREE.Vector3();
-      box.getSize(vector);
-      cube.defaultSize = vector;
-
-      //to show the raycaster on the object
-      //collisionAndMove(cube, undefined, undefined);
-      draggableObjects.push(cube);
-      objects.push(cube);
-
-    needsUpdate = true;
   }
 
   if (intersects.length > 0 && MODE == "OBJECT") {
@@ -107,20 +98,6 @@ function onMouseMove(event) {
     needsUpdate = true;
   }
 
-  //set the GhostCube
-  if (intersects.length > 0 && MODE == "PLACEMENT") {
-    ghostCube.visible = true;
-    var intersect = floorIntersects[0];
-
-    if(selectedObject != undefined){
-      intersect.point.y = selectedObject.position.y;
-    }
-    collisionAndMove(ghostCube, intersect);
-    ghostCube.material.opacity = 0.5;
-    ghostCube.material.transparent = true;
-    ghostCube.position.y = 25;
-    needsUpdate = true;
-  }
 
   if (floorIntersects.length > 0 && MODE == "OBJECT") {
     var intersect = floorIntersects[0];
@@ -131,7 +108,7 @@ function onMouseMove(event) {
 
     collisionAndMove(newObject, intersect);
     //newObject.material.opacity = 0.5;
-    newObject.material.transparent = true;
+    //newObject.material.transparent = true;
     needsUpdate = true;
   }
   needsUpdate = true;
@@ -139,6 +116,7 @@ function onMouseMove(event) {
 
 function onMouseUp(event) {
   document.getElementById("content").style.cursor = "auto";
+  MOUSEDOWN = false;
   controls.enableRotate = true;
   dragging = false;
   needsUpdate = true;
