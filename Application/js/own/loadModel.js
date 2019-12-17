@@ -6,94 +6,157 @@ var intervalCounter = 1;
 var interval;
 var progressPerModel = 0;
 var currentProgress = 0;
+var ANIMATION_SPEED = 4000;
+var RELOADED = true;
 
 function Sleep(milliseconds) {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-async function showObjects() {
-    nextObject = objects.find(function(element) {
+async function showObjects(animationObj) {
+    if(animationObj.CANCELLED == true){
+      $("#items-wrapper").html("");
+      if(RELOADED){
+        intervalCounter = 1;
+        RELOADED = false;
+      }
+      return 0;
+    }
+    nextObject = objects.find(element => {
       return element.number == intervalCounter;
     });
     if(nextObject == undefined){
-      ANIMATING = false;
+      console.log("object undefined");
       return 0;
     }
 
-    ANIMATING = true;
-    if(nextObject.text != null){
-      appendText(nextObject.text);
+    console.log(+ nextObject.number + " Animating: " + nextObject.name);
+
+    $('#slider').val(nextObject.number);
+    prevSliderValue = $('#slider').val();
+
+    if(animationObj.CANCELLED != true){
+      if(nextObject.header != null){
+        appendText(nextObject.header, nextObject.number + 100, false);
+        await Sleep(1000 * MULTIPLIER);
+      }
+      if(nextObject.text != null){
+        appendText(nextObject.text, nextObject.number, nextObject.isSubpoint);
+      }
     }
 
-    if(nextObject.animation_mode == 'SIDE'){
+    if(nextObject.animation_mode == 'FRONT'){
+      nextObject.position.z = nextObject.positionFixZ;
       nextObject.position.z += 70;
 
       var position = { z: nextObject.position.z};
       var target = { z: nextObject.position.z - 70};
-      var tween = new TWEEN.Tween(position).to(target, 2000);
+      var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
+      tween.easing(TWEEN.Easing.Cubic.InOut);
 
       tween.onUpdate(function(){
         nextObject.position.z = position.z;
+        clock.inputMinutes += 0.7;
+        if(animationObj.CANCELLED == true){
+          tween.stop();
+          return 0;
+        }
       });
       nextObject.visible = true;
       tween.start();
-    
-      await Sleep(2000);
+      
+      if(!PAUSED){
+        await Sleep(nextObject.time * MULTIPLIER);
+      }
+      while(PAUSED){
+        await Sleep(100);
+      }
       nextObject.position.z = 700;
-
-      ANIMATING = false;
-
       intervalCounter++;
+      console.log(nextObject.number + " Finished: " + nextObject.name);
+
     } else if(nextObject.animation_mode == 'TOP'){
+      nextObject.position.y = nextObject.positionFixY;
       nextObject.position.y += 50;
 
       var position = { y: nextObject.position.y};
       var target = { y: nextObject.position.y - 50};
-      var tween = new TWEEN.Tween(position).to(target, 2000);
+      var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
+      tween.easing(TWEEN.Easing.Cubic.InOut);
 
       tween.onUpdate(function(){
         nextObject.position.y = position.y;
+        clock.inputMinutes += 0.7;
+        if(animationObj.CANCELLED == true){
+          tween.stop();
+          return 0;
+        }
       });
       nextObject.visible = true;
       tween.start();
-    
-      await Sleep(2000);
+
+      if(!PAUSED){
+        await Sleep(nextObject.time * MULTIPLIER);
+      }
+      while(PAUSED){
+        await Sleep(100);
+      }
+
       nextObject.position.y = -22;
-
-      ANIMATING = false;
-
       intervalCounter++;
+      console.log(nextObject.number + " Finished: " + nextObject.name);
+      
+    } else if(nextObject.animation_mode == 'RIGHT'){
+      nextObject.position.x = nextObject.positionFixX;
+      nextObject.position.x -= 50;
+
+      var position = { x: nextObject.position.x};
+      var target = { x: nextObject.position.x + 50};
+      var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
+      tween.easing(TWEEN.Easing.Cubic.InOut);
+
+      tween.onUpdate(function(){
+        nextObject.position.x = position.x;
+        clock.inputMinutes += 0.7;
+        if(animationObj.CANCELLED == true){
+          tween.stop();
+          return 0;
+        }
+      });
+      nextObject.visible = true;
+      tween.start();
+      if(!PAUSED){
+        await Sleep(nextObject.time * MULTIPLIER);
+      }
+      while(PAUSED){
+        await Sleep(100);
+      }
+      nextObject.position.x = -5395;
+      intervalCounter++;
+      console.log(nextObject.number + " Finished: " + nextObject.name);
     }
-
-
-    // if(nextObject.useChildren){
-    //   console.log("use Children");
-    //   nextObject.visible = true;
-    //   for(var i = 0; i < nextObject.children.length; i++){
-    //     nextObject.children[i].visible = false;
-    //   }
-    //   for(var i = 0; i < nextObject.children.length; i++){
-    //     console.log("mesh " + i);
-    //     await Sleep(1000);  
-    //     nextObject.children[i].visible = true;
-    //     needsUpdate = true;
-    //   }
-    //   intervalCounter++;
-    // }
-    // else {
-    // }
 }
 
 var itemsDiv = $("#items-wrapper");
 
-function appendText(text){
+function appendText(text, id, isSubpoint){
   //console.log(text);
-  var html =
-      '<li>' + '<a class="presentation">' + text + '</a>' + '</li>';
-      $("#items-wrapper").append(html);
+  var html;
+  if(isSubpoint){
+    html = '<li id="' + id + '">' + '<a class="presentation subpoint">' + text + '</a>' + '</li>';
+  } else {
+    html = '<li id="' + id + '">' + '<a class="presentation">' + text + '</a>' + '</li>';
+  }
+  $("#items-wrapper").append(html);
+  scrollTo(id);
 }
 
-function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, TEXT) {
+function scrollTo(id){
+  var element = document.getElementById(id);
+  element.scrollIntoView();
+}
+
+function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME) {
   if(numberOfModels != 0){
     progressPerModel = 100 / numberOfModels;
   }
@@ -129,10 +192,16 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
     newObject.normalLoad = normalLoad;
     newObject.animation_mode = ANIMATION_MODE;
     newObject.text = TEXT;
+    newObject.header = HEADER;
+    newObject.isSubpoint = isSUBPOINT;
+    newObject.time = TIME;
 
     newObject.position.x = -4995 - 400;
     newObject.position.y -= 22;
     newObject.position.z = 300 + 400;
+    newObject.positionFixX = newObject.position.x;
+    newObject.positionFixY = newObject.position.y;
+    newObject.positionFixZ = newObject.position.z;
 
     if(newObject.normalLoad){
       //console.log(newObject);
@@ -148,17 +217,13 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
     if(!newObject.normalLoad){
       objects.push(newObject);
       draggableObjects.push(newObject);
-
       newObject.visible = false;
-      
-      if(objects.length == numberOfModels + 1){
-        startedPresentation();
-        // console.log(objects);
-        for(var i = 1; i < numberOfModels + 1; i++){
-          $('#progress-block').css("display","none");
-          await showObjects();
-        }
-        console.log(objects);
+      startedPresentation();
+      if(objects.length == numberOfModels){
+        await startAnimation(1);
+      }
+      if(intervalCounter == objects.length){
+        ANIMATING = false;
       }
     }
   }
@@ -178,12 +243,102 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
       scene.add(object);
       newObject = object;
       needsUpdate = true;
-      // object.children[0].material.transparent = isTransparent;
-      // object.children[1].material.transparent = isTransparent;
-      for (var i = 0; i < object.children.length; i++) {
-        object.children[i].material.transparent = isTransparent; //transparents zulassen
-        object.children[i].castShadow = true;
-      };
+      if(isTransparent){
+        object.children[0].material.transparent = true;
+        object.children[1].material.transparent = true;
+        object.children[0].material.opacity = 0.3;
+        object.children[1].material.opacity = 0.3;
+      }
+      // for (var i = 0; i < object.children.length; i++) {
+      //   object.children[i].material.transparent = isTransparent; //transparents zulassen
+      //   object.children[i].castShadow = true;
+      // };
     });
+  });
+}
+
+async function startAnimation(startPoint){
+  var animationObj = createNewAnimation(startPoint);
+  ANIMATING = true;
+  intervalCounter = animationObj.startPoint;
+  console.log(objects);
+  $('#progress-block').css("display","none");
+  for(var i = animationObj.startPoint; i < numberOfModels + 1; i++){
+    await showObjects(animationObj);
+  }
+  //console.log(objects);
+}
+
+async function hideAll(){
+  animations.find(x => x.id == currentAnimation).CANCELLED = true;
+  RELOADED = true;
+  $("#items-wrapper").html("");
+  nextObject = undefined;
+  clock.inputMinutes = 0;
+  objects.forEach(obj => obj.visible = false);
+  await startAnimation(1);
+}
+
+async function sliderInput(id, ANIMATE){
+  //jetzige Animation beenden
+  $("#items-wrapper").html("");
+  //nextObject = undefined;
+  clock.inputMinutes = 0;
+
+  var objectsToShow = objects.filter(obj => obj.number < id);
+  //alle zu richtiger Position
+  moveEveryObjectToRealPosition();
+  //alle invisible
+  objects.forEach(obj => obj.visible = false);
+  //die die schon gezeigt sind visible
+  objectsToShow.forEach(obj => obj.visible = true);
+  //alle sichtbaren infos in der Liste anzeigen
+  objectsToShow.forEach(obj => {
+    if(obj.header != null){
+      appendText(obj.header, obj.number + 100, false);
+    }
+    if(obj.text != null){
+      appendText(obj.text, obj.number, obj.isSubpoint);
+    }
+  });
+
+  if(ANIMATE){
+    await startAnimation(id - 1);
+  }
+}
+
+function sliderClicked(){
+  animations.find(x => x.id == currentAnimation).CANCELLED = true;
+}
+
+
+function createNewAnimation(startPoint){
+  animations.forEach(x => x.CANCELLED == true);
+  currentAnimation++;
+  var animation = {};
+  animation.id = currentAnimation;
+  animation.CANCELLED = false;
+  animation.startPoint = startPoint;
+  animations.push(animation);
+  return animation;
+}
+
+function pauseAnimation(){
+  if(PAUSED){
+    PAUSED = false;
+    $("#pause").html('<i class="fas fa-pause"></i>');
+    $("#pause").blur();
+  } else {
+    PAUSED = true;
+    $("#pause").html('<i class="fas fa-play"></i>');
+    $("#pause").blur();
+  }
+}
+
+function moveEveryObjectToRealPosition(){
+  objects.forEach(obj => {
+    obj.position.x = obj.positionFixX;
+    obj.position.y = obj.positionFixY;
+    obj.position.z = obj.positionFixZ;
   });
 }

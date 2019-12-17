@@ -1,6 +1,59 @@
+/* Slider */
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  pointer-events: auto;
+  margin-top: 15px;
+  border-radius: 5px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #26a3a1;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #26a3a1;
+  cursor: pointer;
+  border-color: #E5E5E5 !important
+}
+
+.clockPosition {
+  position: absolute;
+  top: 45px;
+  right: 0;
+}
+
 .presentation {
   background: #fff;
   color: rgb(69,90,100) !important;
+  font-size: 1.1rem !important;
+}
+
+.subpoint {
+  width: 95% !important;
+  margin-left:auto;
+  margin-right:0;
 }
 
 .modal-backdrop.fade.show {
@@ -10,10 +63,12 @@
 .progress {
   -webkit-border-radius:.0 !important;
    border-radius: 0 !important;
+   z-index: 1;
 }
 
 .progress-bar {
   background-color: #26a3a1;
+  z-index: 1;
 }
 
 /* Center the loader */
@@ -139,6 +194,7 @@ img {
   height: 100vh !important;
   overflow-y: hidden;
   border: none;
+  z-index: 1 !important;
 }
 
 #sidebar_elements {
@@ -203,6 +259,19 @@ canvas {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.speedSelection {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 10px;
+}
+
+.sliderSelection {
+  position: absolute;
+  top: 0;
+  left: 37%;
 }
 
 button:active{
@@ -462,7 +531,7 @@ ul.CTAs {
 
 ul.CTAs a {
   text-align: center;
-  font-size: 0.9em !important;
+  font-size: 0.9em;
   display: block;
   border-radius: 5px;
   margin-bottom: 5px;

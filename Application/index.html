@@ -60,13 +60,13 @@
     <script src="js/PointerLockControls.js"></script>
     <script src="js/TrackballControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
-
+    <script src="js/station-clock.js"></script>
 </head>
 
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="active">
+        <nav id="sidebar" class="active" style="position:absolute !important;">
             <span id="sidebar_presentations">
                 <ul class="list-unstyled components">
                     <li>
@@ -124,6 +124,7 @@
         </nav>
 
         <div id="loader"></div>
+        <div id="canvas" style="z-index: 0 !important;"></div>
         <!-- Page Content  -->
         <div id="content" style="display:none;" class="content">
             <div id="progress-block" class="progress" style="display:none">
@@ -141,6 +142,30 @@
                     <i class="fas fa-angle-right "></i>
                 </button>             
             </div>
+            
+            <div class="buttons speedSelection">
+                <button type="" id="speed_1" class="smallButton" onclick="MULTIPLIER = 1;">
+                    1x
+                </button>
+                <button type="" id="speed_2" class="smallButton" onclick="MULTIPLIER = 0.5;">
+                    2x
+                </button>
+                <button type="" id="restart" class="smallButton" onclick="hideAll();">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button type="" id="pause" class="smallButton" onclick="pauseAnimation();">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+
+            <input type="range" min="2" max="30" value="0" id="slider" class="slider sliderSelection">
+
+
+            <div style="text-align: center;" class="clockPosition">
+                <canvas id="clock" width="150" height="150">
+                         
+                </canvas>
+              </div>
             
             <!--GUI for the objects-->
             <div id="tooltip" class="tooltip" style="display:none">
@@ -272,6 +297,13 @@
             var mouseControl = new THREE.Vector2();
             var target = new THREE.Vector2();
             var windowHalf = new THREE.Vector2( window.innerWidth / 2, window.innerHeight / 2 );
+            var clock;
+            var MULTIPLIER = 1;
+            var animations = [];
+            var currentAnimation = 0;
+            var PAUSED = false;
+            var prevSliderValue = -1;
+            var newSliderValue = -1;
 
             init();
             animate();
@@ -290,17 +322,17 @@
                 raycaster = new THREE.Raycaster();
                 mouse = new THREE.Vector2();
 
-                var clock = new THREE.Clock();
+                //var clock = new THREE.Clock();
 
                 renderer = new THREE.WebGLRenderer({
                     antialias: true
                 });
                 renderer.setPixelRatio(window.devicePixelRatio);
                 renderer.setSize(window.innerWidth, window.innerHeight)
-                document.getElementById("content").appendChild(renderer.domElement);
+                document.getElementById("canvas").appendChild(renderer.domElement);
 
                 camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-                camera.position.set(-10, 150, 400);
+                camera.position.set(-130, 150, 440);
                 scene.add(camera);
                 LOADING = true;
 
@@ -356,7 +388,7 @@
                 wall3 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
                 wall3.position.y = 257 / 2;
                 wall3.position.z = 263.5;
-                wall3.position.x = -400; //-631;
+                wall3.position.x = -520; //-631;
                 wall3.visible = false;
                 scene.add(wall3);
 
@@ -378,7 +410,7 @@
                 //room.material.transparent = true; //transparents zulassen
                 scene.add(room);
 
-                objects.push(room);
+                //objects.push(room);
                 floorObjects.push(room);
 
                 ceiling = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: wand_texture }));
@@ -397,6 +429,7 @@
                 controls.enableDamping = true;
                 controls.dampingFactor = 1;
                 controls.screenSpacePanning = false;
+                controls.enableZoom = false;
                 controls.minDistance = 10;
                 controls.maxDistance = 850;
                 controls.target.x = camera.position.x;
@@ -405,6 +438,7 @@
                 controls.maxPolarAngle = Math.PI / 2 -0.01;
                 controls.rotateSpeed = 0.2;
                 controls.minZoom = 100;
+                controls.maxZoom = 1;
             
                 camera.updateProjectionMatrix();
                 needsUpdate = true;
@@ -412,12 +446,23 @@
                 controls.update();
                 //console.log(controls);
 
+                clock = new StationClock("clock");
+                clock.body = StationClock.RoundBody;
+                clock.dial = StationClock.GermanHourStrokeDial;
+                clock.hourHand = StationClock.SwissHourHand;
+                clock.minuteHand = StationClock.SwissMinuteHand;
+                clock.secondHand = StationClock.NoSecondHand;
+                clock.boss = StationClock.BlackBoss;
+                clock.minuteHandBehavoir = StationClock.BouncingMinuteHand;
+                clock.secondHandBehavoir = StationClock.OverhastySecondHand;
+
                 window.addEventListener('resize', onResize, false);
                 window.addEventListener("mousedown", onMouseDown, false);
                 window.addEventListener('mousemove', onMouseMove, false);
                 window.addEventListener("mouseup", onMouseUp, false);
                 window.addEventListener("scroll", onMouseWheel, false);
                 controls.addEventListener("change", controlsChange, false);
+                $("#slider").on("input change", onSliderChange);
 
                 //loadModel();
                 //getData();
@@ -469,6 +514,9 @@
                 $('#sidebar_elements').hide();
                 $('#sidebar_presentations').show();
                 $('#sidebar').toggleClass('active');
+                $('#sidebar').attr("class","");
+                $('#sidebar').css("min-width", "33%");
+                $('#sidebar').css("max-width", "33%");
                 $('#sidebar').css("overflow-y", "auto");
             }
 
@@ -476,7 +524,21 @@
                 $('#sidebar').toggleClass('active');
                 $('#sidebar_presentations').hide();
                 $('#sidebar_elements').show();
+                $('#sidebar').css("min-width", "250px");
+                $('#sidebar').css("max-width", "250px");
                 $('#sidebar').css("overflow-y", "hidden !important");
+            }
+
+            function startedAnimationMode(){
+                //to unfold the Navbar
+                camera.position.x = 850;
+                needsUpdate = true;
+                $('#sidebar').attr("class","");
+                $('#sidebar').css("min-width", "33%");
+                $('#sidebar').css("max-width", "33%");
+                $('#sidebar').css("overflow-y", "auto");
+                $("#sidebar_elements").hide();
+                $("#sidebar_objects").show();
             }
 
             function presenationModeEnabled() {
@@ -513,7 +575,7 @@
                     ceiling.visible = false;
                 } else if(type == 'view_front'){
                     controls.enabled = true;
-                    camera.position.set(-10, 150, 400);
+                    camera.position.set(-130, 150, 440);
                     controls.target.x = camera.position.x;
                     controls.target.y = 151;
                     controls.target.z = camera.position.z;
@@ -522,18 +584,18 @@
                     ceiling.visible = true;
                 } else if(type == 'view_right'){
                     controls.enabled = false;
-                    camera.position.set(-400, 110, 25);
-                    controls.target.x = 50;
-                    controls.target.y = 100;
-                    controls.target.z = 25;
+                    camera.position.set(-520, 110, 0);
+                    controls.target.x = 0;
+                    controls.target.y = 130;
+                    controls.target.z = -80;
                     camera.updateProjectionMatrix();
                     controls.update();
                     ceiling.visible = true;
                 }
                 else if(type == 'view_angle'){
                     controls.enabled = false;
-                    camera.position.set(-300, 150, 400);
-                    controls.target.x = 0;
+                    camera.position.set(-300, 150, 450);
+                    controls.target.x = -160;
                     controls.target.y = 150;
                     controls.target.z = 0;
                     camera.updateProjectionMatrix();
@@ -577,8 +639,11 @@
                 if (shouldRender()) {
                     renderer.clear();
                     renderer.render(scene, camera);
-                    TWEEN.update();
+                    if(!PAUSED){
+                        TWEEN.update();
+                    }
                     showTooltip();
+                    clock.draw();
                 }
             }
 

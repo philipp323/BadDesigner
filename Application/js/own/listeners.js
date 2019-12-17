@@ -1,3 +1,5 @@
+var sliderMoveCounter = 0;
+
 function controlsChange(){
   needsUpdate = true;
 }
@@ -13,10 +15,13 @@ function onMouseWheel(event) {
 
 function onMouseDown(event) {
 
+  prevSliderValue = $('#slider').val();
+  sliderMoveCounter = 0;
   MOUSEDOWN = true;
+  //console.log(controls);
 
   //So reagieren normale HTML-Elemente auf die Clicks.
-  if(!MODE == "SCALE"){
+  if(!MODE == "SCALE") {
     event.preventDefault();
   }
 
@@ -71,8 +76,6 @@ var worldNormal = new THREE.Vector3();
 var lookAtVector = new THREE.Vector3();
 
 function onMouseMove(event) {
-  event.preventDefault();
-
   mouse.set(
     ((event.clientX - renderer.domElement.offsetLeft) / window.innerWidth) * 2 -
       1,
@@ -89,6 +92,7 @@ function onMouseMove(event) {
 
   if (/*floorIntersects.length > 0 &&*/ MODE == "DRAG" && dragging) {
     //var intersect = intersects[0].object;
+    event.preventDefault();
     document.getElementById("content").style.cursor = "move";
 
     var oldY = selectedObject.position.y;
@@ -115,6 +119,11 @@ function onMouseMove(event) {
 }
 
 function onMouseUp(event) {
+  newSliderValue = $('#slider').val();
+  if(prevSliderValue != newSliderValue){
+    console.log("mouse up -> method aufruf")
+    sliderInput(newSliderValue, true);
+  }
   document.getElementById("content").style.cursor = "auto";
   MOUSEDOWN = false;
   controls.enableRotate = true;
@@ -134,4 +143,14 @@ function setSize(object){
   const vector = new THREE.Vector3();
   box.getSize(vector);
   object.size = vector;
+}
+
+function onSliderChange(){
+  console.log("moved slider");
+  sliderMoveCounter++;
+  if(sliderMoveCounter == 1){
+    console.log("letzte ANIMATION löschen");
+    sliderClicked();
+  }
+  sliderInput($('#slider').val(), false);
 }
