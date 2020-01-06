@@ -158,7 +158,9 @@
                 </button>
             </div>
 
-            <input type="range" min="2" max="30" value="0" id="slider" class="slider sliderSelection">
+            <input type="range" min="1" max="30" value="1" id="slider" class="slider sliderSelection">
+
+            <div id="detailDiv"></div>
 
 
             <div style="text-align: center;" class="clockPosition">
@@ -305,6 +307,10 @@
             var prevSliderValue = -1;
             var newSliderValue = -1;
 
+            var detailScene;
+            var detailCamera;
+            var betonboden;
+
             init();
             animate();
 
@@ -433,9 +439,9 @@
                 controls.minDistance = 10;
                 controls.maxDistance = 850;
                 controls.target.x = camera.position.x;
-                controls.target.y = 151;
-                controls.target.z = camera.position.z;
-                controls.maxPolarAngle = Math.PI / 2 -0.01;
+                controls.target.y = 150;
+                controls.target.z = camera.position.z - 1;
+                //controls.maxPolarAngle = Math.PI / 2 -0.01;
                 controls.rotateSpeed = 0.2;
                 controls.minZoom = 100;
                 controls.maxZoom = 1;
@@ -466,6 +472,119 @@
 
                 //loadModel();
                 //getData();
+                /*
+                //Setting up the detailScene
+                detailScene = new THREE.Scene();
+                detailScene.background = new THREE.Color("#ffffff");
+                detailDiv = document.getElementById( 'detailDiv' );
+                document.body.appendChild( detailDiv );
+
+                // detailCamera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+                // detailCamera.position.set(-130, 150, 440);
+                // detailScene.add(detailCamera);
+
+                detailCamera = new THREE.PerspectiveCamera( 75, 500 / 300, 1, 10000);
+                detailCamera.position.set(-130, 150, 440);
+			    detailCamera.position.z = 30;
+
+                detailRenderer = new THREE.WebGLRenderer();
+                detailRenderer.setSize( 500, 300 );
+                detailDiv.appendChild( detailRenderer.domElement );
+
+                detailControls = new THREE.OrbitControls(detailCamera, detailRenderer.domElement);
+                detailControls.enableDamping = true;
+                detailControls.dampingFactor = 1;
+                detailControls.screenSpacePanning = false;
+                detailControls.enableZoom = false;
+                detailControls.minDistance = 10;
+                detailControls.maxDistance = 850;
+                detailControls.target.x = camera.position.x;
+                detailControls.target.y = 151;
+                detailControls.target.z = camera.position.z;
+                detailControls.maxPolarAngle = Math.PI / 2 -0.01;
+                detailControls.rotateSpeed = 0.2;
+                detailControls.minZoom = 100;
+                detailControls.maxZoom = 1;
+
+                var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+                var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+                var cube = new THREE.Mesh( geometry, material );
+                detailScene.add( cube );
+
+                //  detailScene.add(ambientLight.clone());
+                //  detailScene.add(directionalLight.clone());
+                var detailWall1 = wall1.clone();
+                detailWall1.visible = true;
+                detailScene.add(detailWall1);
+                var detailWall2 = wall2.clone();
+                detailWall2.visible = true;
+                detailScene.add(detailWall2);
+                var detailWall3 = wall3.clone();
+                detailWall3.visible = true;
+                detailScene.add(detailWall3);
+                var detailWall3 = wall1.clone();
+                detailWall3.visible = true;
+                detailScene.add(detailWall3);
+                var detailWall4 = wall4.clone();
+                detailWall4.visible = true;
+                detailScene.add(detailWall4);
+                var ceiling = ceiling.clone();
+                ceiling.visible = true;
+                detailScene.add(ceiling);
+                
+                
+                // detailScene.add(wall2);
+                // detailScene.add(wall3);
+                // detailScene.add(wall4); */
+
+                
+                //designView4();
+            }
+
+            function designView1() {
+                //Wandelemente werden in Nuten 
+                //eingefasst - somit wasserdicht!
+                controls.enabled = true;
+                camera.position.set(40, 20, 100);  //x, y, z
+                controls.target.x = 0;
+                controls.target.y = -8;
+                controls.target.z = 80;
+                camera.updateProjectionMatrix();
+                controls.update();
+            }
+
+            function designView2() {
+                //Eckprofil - somit wasserdicht!
+                controls.enabled = true;
+                camera.position.set(-100, 10, -50);  //x, y, z
+                controls.target.x = -90;
+                controls.target.y = 0;
+                controls.target.z = -100;
+                camera.updateProjectionMatrix();
+                controls.update();
+            }
+
+            function designView3() {
+                //Led, Strahler -> Revisionsklappe animation
+                controls.enabled = true;
+                camera.position.set(-18, 200, 130);
+                controls.target.x = 50;
+                controls.target.y = 232;
+                controls.target.z = 20;
+                camera.updateProjectionMatrix();
+                controls.update();
+            }
+
+            
+            function designView4() {
+                //Spiegel (Textur!) Led Beleuchtung innen
+                controls.enabled = true;
+                camera.position.set(-195, 190, 100);
+                controls.target.x = -195;
+                controls.target.y = 190;
+                controls.target.z = 0;
+                camera.updateProjectionMatrix();
+                controls.update();
             }
 
             function createTexturedDoor(texture_name) {
@@ -515,8 +634,8 @@
                 $('#sidebar_presentations').show();
                 $('#sidebar').toggleClass('active');
                 $('#sidebar').attr("class","");
-                $('#sidebar').css("min-width", "33%");
-                $('#sidebar').css("max-width", "33%");
+                $('#sidebar').css("min-width", "507px");
+                $('#sidebar').css("max-width", "507px");
                 $('#sidebar').css("overflow-y", "auto");
             }
 
@@ -534,8 +653,8 @@
                 camera.position.x = 850;
                 needsUpdate = true;
                 $('#sidebar').attr("class","");
-                $('#sidebar').css("min-width", "33%");
-                $('#sidebar').css("max-width", "33%");
+                $('#sidebar').css("min-width", "440px");
+                $('#sidebar').css("max-width", "440px");
                 $('#sidebar').css("overflow-y", "auto");
                 $("#sidebar_elements").hide();
                 $("#sidebar_objects").show();
@@ -574,14 +693,14 @@
                     controls.update();
                     ceiling.visible = false;
                 } else if(type == 'view_front'){
-                    controls.enabled = true;
                     camera.position.set(-130, 150, 440);
-                    controls.target.x = camera.position.x;
-                    controls.target.y = 151;
-                    controls.target.z = camera.position.z;
+                    controls.target.x = -130;
+                    controls.target.y = 150;
+                    controls.target.z = 439;
                     camera.updateProjectionMatrix();
                     controls.update();
                     ceiling.visible = true;
+                    controls.enabled = true;
                 } else if(type == 'view_right'){
                     controls.enabled = false;
                     camera.position.set(-520, 110, 0);
@@ -636,6 +755,7 @@
             };
 
             function render() {
+                //detailRenderer.render(detailScene, detailCamera);
                 if (shouldRender()) {
                     renderer.clear();
                     renderer.render(scene, camera);

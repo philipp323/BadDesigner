@@ -18,7 +18,7 @@ function onMouseDown(event) {
   prevSliderValue = $('#slider').val();
   sliderMoveCounter = 0;
   MOUSEDOWN = true;
-  //console.log(controls);
+  console.log(controls);
 
   //So reagieren normale HTML-Elemente auf die Clicks.
   if(!MODE == "SCALE") {
@@ -39,6 +39,11 @@ function onMouseDown(event) {
   var floorIntersects = raycaster.intersectObjects(floorObjects);
   var intersects = raycaster.intersectObjects(objects, true);
   var draggableIntersects = raycaster.intersectObjects(draggableObjects, true);
+
+  if (intersects.length > 0){
+    console.log(intersects[0].point);
+  }
+
   // console.log("on mouse down");
   if (draggableIntersects.length > 0 && MODE == "DRAG") {
     //prevent that one object can be clicked multiple times (and the tooltip changes its position)

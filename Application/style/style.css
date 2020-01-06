@@ -1,3 +1,16 @@
+#detailDiv {
+  background-color: white;
+  width: 502px;
+  height: 302px;
+  border: 1px solid black;
+  margin: 100px;
+  padding: 0px;
+  position: absolute; /* fixed or static */
+  top: 100px;
+  left: 100px;
+  display: none;
+}
+
 /* Slider */
 .slidecontainer {
   width: 100%;
@@ -271,7 +284,7 @@ canvas {
 .sliderSelection {
   position: absolute;
   top: 0;
-  left: 37%;
+  left: 560px;
 }
 
 button:active{
@@ -302,7 +315,7 @@ button:active{
   border: none;
   color: #26a3a1 !important;
   background-color: #fff !important;
-  padding: 5px 17px;
+  padding: 5px 15px;
   text-align: center;
   text-decoration: bold;
   font-weight: bold;
@@ -319,7 +332,7 @@ button:active{
   border: none;
   color: #80cbc4 !important;
   background-color: #fff !important;
-  padding: 5px 17px;
+  padding: 5px 15px;
   text-align: center;
   text-decoration: bold;
   font-weight: bold;
