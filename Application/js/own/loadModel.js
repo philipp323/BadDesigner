@@ -2,7 +2,6 @@ var box;
 var vector;
 var material;
 var nextObject;
-var intervalCounter = 1;
 var interval;
 var progressPerModel = 0;
 var currentProgress = 0;
@@ -14,8 +13,9 @@ function Sleep(milliseconds) {
 }
 
 async function showObjects(animationObj) {
-    nextObject = objects.find(element => {
-      return element.number == intervalCounter;
+    if(!animationObj.CANCELLED) {
+    nextObject = objects.find(obj => {
+      return obj.number == animationObj.currentObjectNumber;
     });
     if(nextObject == undefined){
       console.log("object undefined");
@@ -23,77 +23,54 @@ async function showObjects(animationObj) {
     }
 
     if(animationObj.CANCELLED == true){
-      console.log(intervalCounter + " got cancelled!");
+      console.log(animationObj.currentObjectNumber + " got cancelled!");
+      changeView(currentlySelectedView);
       //$("#items-wrapper").html("");
       if(RELOADED){
         console.log("BACK TO 1");
-        intervalCounter = 1;
         RELOADED = false;
       }
-      nextObject.visible = true;
+      //nextObject.visible = true;
       return 0;
+    }
+
+    if(nextObject.isDetailBefore){
+      console.log("DISPLAY DETAIL");
+      await displayDetailView(nextObject.DETAIL_VIEW_ID, animationObj);
     }
 
     console.log(+ nextObject.number + " Animating: " + nextObject.name);
 
     $('#slider').val(nextObject.number);
-    prevSliderValue = $('#slider').val();
 
-    if(animationObj.CANCELLED != true){
-      if(nextObject.header != null){
-        appendText(nextObject.header, nextObject.number + 100, false);
-        await Sleep(2500 * MULTIPLIER);
-      }
-      if(nextObject.text != null){
-        appendText(nextObject.text, nextObject.number, nextObject.isSubpoint);
-      }
-    }
+    calculateObjectsBeforeAndAfter(nextObject, true, nextObject.number);
 
-    //jedes vorherige Objekt sichtbar machen und auf die vorherige Position bewegen
-    var objectsBefore = objects.filter(o => o.number < nextObject.number);
-    objectsBefore.forEach(o => {
-      o.visible = true;
-      o.position.x = o.positionFixX;
-      o.position.y = o.positionFixY;
-      o.position.z = o.positionFixZ;
-    });
-
-    $("#items-wrapper").html("");
-    //außerdem in der Liste alle Punkte anzeigen einschließlich des derzeitig animierten objekts.
-    var objectsBeforeWithCurrent = objects.filter(o => o.number <= nextObject.number);
-    objectsBeforeWithCurrent.sort((a,b) => a.number > b.number);
-    objectsBeforeWithCurrent.forEach(o => {
-      if(o.header != null){
-        appendText(o.header, o.number + 100, false);
-      }
-      if(o.text != null){
-        appendText(o.text, o.number, o.isSubpoint);
-      }
-    });
-
-    //jedes volgende Objekt unsichtbar machen
-    var objectsAfter = objects.filter(o => o.number > nextObject.number);
-    objectsAfter.forEach(o => o.visible = false);
-
-
+    var returnValue;
     if(nextObject.animation_mode == 'FRONT'){
-      nextObject.position.z = nextObject.positionFixZ;
+      //nextObject.position.z = nextObject.positionFixZ;
       nextObject.position.z += 70;
 
       var position = { z: nextObject.position.z};
       var target = { z: nextObject.position.z - 70};
       var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
       tween.easing(TWEEN.Easing.Cubic.InOut);
-
-      tween.onUpdate(function(){
+      tween.onUpdate(returnValue = function(){
+        nextObject.visible = true;
         nextObject.position.z = position.z;
         clock.inputMinutes += 0.7;
         if(animationObj.CANCELLED == true){
           tween.stop();
+          tween = undefined;
+          console.log(animationObj.currentObjectNumber + " got cancelled while FRONT!");
+          //nextObject.visible = false;
           return 0;
+        }else{
+          return 1;
         }
       });
-      nextObject.visible = true;
+      if(returnValue == 0){
+        return 0;
+      }
 
       tween.start();
       
@@ -104,12 +81,9 @@ async function showObjects(animationObj) {
         await Sleep(100);
       }
       nextObject.position.z = 700;
-      intervalCounter++;
       console.log(nextObject.number + " Finished: " + nextObject.name);
-      nextObject.visible = true;
-
     } else if(nextObject.animation_mode == 'TOP'){
-      nextObject.position.y = nextObject.positionFixY;
+      //nextObject.position.y = nextObject.positionFixY;
       nextObject.position.y += 50;
 
       var position = { y: nextObject.position.y};
@@ -117,15 +91,23 @@ async function showObjects(animationObj) {
       var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
       tween.easing(TWEEN.Easing.Cubic.InOut);
 
-      tween.onUpdate(function(){
+      tween.onUpdate(returnValue = function(){
+        nextObject.visible = true;
         nextObject.position.y = position.y;
         clock.inputMinutes += 0.7;
         if(animationObj.CANCELLED == true){
           tween.stop();
+          tween = undefined;
+          console.log(animationObj.currentObjectNumber + " got cancelled while TOP!");
           return 0;
+        }else{
+          return 1;
         }
       });
-      nextObject.visible = true;
+      if(returnValue == 0){
+        return 0;
+      }
+
       tween.start();
 
       if(!PAUSED){
@@ -134,30 +116,34 @@ async function showObjects(animationObj) {
       while(PAUSED){
         await Sleep(100);
       }
-
       nextObject.position.y = -22;
-      intervalCounter++;
       console.log(nextObject.number + " Finished: " + nextObject.name);
-      nextObject.visible = true;
-      
     } else if(nextObject.animation_mode == 'RIGHT'){
-      nextObject.position.x = nextObject.positionFixX;
+      //nextObject.position.x = nextObject.positionFixX;
       nextObject.position.x -= 50;
 
       var position = { x: nextObject.position.x};
       var target = { x: nextObject.position.x + 50};
       var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
       tween.easing(TWEEN.Easing.Cubic.InOut);
-
-      tween.onUpdate(function(){
+      tween.onUpdate(returnValue = function(){
+        nextObject.visible = true;
         nextObject.position.x = position.x;
         clock.inputMinutes += 0.7;
         if(animationObj.CANCELLED == true){
           tween.stop();
+          tween = undefined;
+          console.log(animationObj.currentObjectNumber + " got cancelled while RIGHT!");
+          //nextObject.visible = false;
           return 0;
+        }else{
+          return 1;
         }
       });
-      nextObject.visible = true;
+      if(returnValue == 0){
+        return 0;
+      }
+
       tween.start();
       if(!PAUSED){
         await Sleep(nextObject.time * MULTIPLIER);
@@ -166,10 +152,9 @@ async function showObjects(animationObj) {
         await Sleep(100);
       }
       nextObject.position.x = -5395;
-      intervalCounter++;
       console.log(nextObject.number + " Finished: " + nextObject.name);
-      nextObject.visible = true;
     }
+  }
 }
 
 var itemsDiv = $("#items-wrapper");
@@ -182,7 +167,7 @@ function appendText(text, id, isSubpoint){
   } else {
     html = '<li id="' + id + '">' + '<a class="presentation">' + text + '</a>' + '</li>';
   }
-  $("#items-wrapper").append(html);
+  document.getElementById("items-wrapper").innerHTML += html;
   scrollTo(id);
 }
 
@@ -191,7 +176,72 @@ function scrollTo(id){
   element.scrollIntoView();
 }
 
-function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME) {
+async function displayDetailView(detailViewId, animationObj){
+  controls.enabled = false;
+  var currentDetailView = detailViews.find(dv => dv.id == detailViewId);
+  console.log(currentDetailView);
+  var from = {
+    camera_x : camera.position.x,
+    camera_y : camera.position.y,
+    camera_z : camera.position.z,
+    target_x : controls.target.x,
+    target_y : controls.target.y,
+    target_z : controls.target.z
+  };
+
+  var to = {
+    camera_x : currentDetailView.camera.x,
+    camera_y : currentDetailView.camera.y,
+    camera_z : currentDetailView.camera.z,
+    target_x : currentDetailView.target.x,
+    target_y : currentDetailView.target.y,
+    target_z : currentDetailView.target.z
+  };
+  var tween = new TWEEN.Tween(from)
+  .to(to,2000 * MULTIPLIER)
+  .easing(TWEEN.Easing.Linear.None)
+  .onUpdate(function () {
+    camera.position.set(from.camera_x, from.camera_y, from.camera_z);
+    controls.target.x = from.target_x;
+    controls.target.y = from.target_y;
+    controls.target.z = from.target_z;
+    controls.update();
+  })
+  .onComplete(function () {
+  })
+  .start();
+  for(i = 0; i < 20; i++){
+    await Sleep(100);
+    if(animationObj.CANCELLED == true){
+      hideTooltip();
+      tween.stop();
+      changeView(currentlySelectedView);
+      return 0;
+    }
+  }
+  updateTooltip(currentDetailView.text);
+  latestMouseIntersection = currentDetailView.tooltipPosition;
+  if(currentDetailView.objectToDisplay != undefined){
+    currentDetailView.objectToDisplay.visible = true;
+  }
+  for(i = 0; i < 40; i++){
+    await Sleep(100);
+    if(animationObj.CANCELLED == true){
+      hideTooltip();
+      changeView(currentlySelectedView);
+      return 0;
+    }
+  }
+  if(!animationObj.CANCELLED) {
+    while(PAUSED){
+      await Sleep(100);
+    }
+  }
+  hideTooltip();
+  changeView(currentlySelectedView);
+}
+
+function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, isDetailBefore, DETAIL_VIEW_ID) {
   if(numberOfModels != 0){
     progressPerModel = 100 / numberOfModels;
   }
@@ -209,7 +259,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
     ANIMATING = true;
   };
 
-  manager.onLoad = async function() {
+  async function onLoadComplete(){
     setSize(newObject);
     needsUpdate = true;
     
@@ -238,6 +288,12 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
     newObject.positionFixY = newObject.position.y;
     newObject.positionFixZ = newObject.position.z;
 
+    newObject.isDetailBefore = isDetailBefore;
+    newObject.DETAIL_VIEW_ID = DETAIL_VIEW_ID;
+
+    //setMetallness to 0
+    newObject.children[0].children.forEach(e => e.material.metalness = 0);
+
     if(newObject.normalLoad){
       //console.log(newObject);
       newObject.children[0].material.shininess = 0;
@@ -256,101 +312,183 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
       startedPresentation();
       if(objects.length == numberOfModels){
         await startAnimation(1);
-      }
-      if(intervalCounter == objects.length){
-        ANIMATING = false;
+        console.log("ANIMATION ENDING");
+        //ANIMATING = false; 
       }
     }
   }
-  var mtlLoader = new THREE.MTLLoader();
-  mtlLoader.setPath("models/");
-  var url = object_name + ".mtl"; //modelName
-  mtlLoader.load(url, function(materials) {
-    materials.preload();
 
-    var objLoader = new THREE.OBJLoader(manager);
-    objLoader.setMaterials(materials);
-    objLoader.setPath("models/");
+  manager.onLoad = async function() {
+    setSize(newObject);
+    needsUpdate = true;
+    
+    currentProgress += progressPerModel;
+    currentProgress = Math.floor(currentProgress);
 
-    objLoader.load(object_name + ".obj", function(object) {
-      object.position.x = 0;
-      object.position.z = 0;
-      scene.add(object);
-      newObject = object;
+    $('#progress-bar')
+      .css("width", currentProgress  + "%")
+      .attr("aria-valuenow", currentProgress)
+      .text(currentProgress + "% der Modelle geladen.");
+
+
+    newObject.name = object_name;
+    newObject.number = number;
+    newObject.normalLoad = normalLoad;
+    newObject.animation_mode = ANIMATION_MODE;
+    newObject.text = TEXT;
+    newObject.header = HEADER;
+    newObject.isSubpoint = isSUBPOINT;
+    newObject.time = TIME;
+
+    newObject.position.x = -4995 - 400;
+    newObject.position.y -= 22;
+    newObject.position.z = 300 + 400;
+
+    if(newObject.normalLoad){
+      //console.log(newObject);
+      newObject.children[0].material.shininess = 0;
+      // newObject.materialLibraries = null;
+      // newObject.children[0].material = new THREE.MeshBasicMaterial({ map: texture });
+      // newObject.children[1].material = new THREE.MeshBasicMaterial({ map: texture });
       needsUpdate = true;
-      if(isTransparent){
-        object.children[0].material.transparent = true;
-        //object.children[1].material.transparent = true;
-        object.children[0].material.opacity = 0.3;
-        //object.children[1].material.opacity = 0.3;
+      // console.log("loaded Textures");
+      $('#content').show();
+      $('#chooseDesignModal').modal({  //prevent from closing when clicking outside
+          backdrop: 'static',
+          keyboard: false
+      });
+      $('#chooseDesignModal').modal('show');
+      needsUpdate = true;
+      // room.visible = false;
+      needsUpdate = true;
+      setTimeout(clearLoader, 300);
+      LOADING = false;
+    }
+  }
+
+  if(object_name.includes('glb')){
+    var loader = new THREE.GLTFLoader();
+
+    // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+    var dracoLoader = new THREE.DRACOLoader();
+    glbPath = 'models/' + object_name + '.glb';
+    dracoLoader.setDecoderPath( 'js/libs/draco/' );
+    dracoLoader.setDecoderConfig( { type: 'js' } );
+    loader.setDRACOLoader( dracoLoader );
+    console.log(glbPath);
+    // Load a glTF resource
+    loader.load(
+      // resource URL
+      glbPath,
+      // called when the resource is loaded
+      function ( gltf ) {
+        scene.add( gltf.scene );
+        needsUpdate = true;
+        newObject = gltf.scene;
+
+        gltf.animations; // Array<THREE.AnimationClip>
+        gltf.scene; // THREE.Scene
+        gltf.scenes; // Array<THREE.Scene>
+        gltf.cameras; // Array<THREE.Camera>
+        gltf.asset; // Object
+
+        onLoadComplete();
+      },
+      // called while loading is progressing
+      function ( xhr ) {
+
+        //console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+      },
+      // called when loading has errors
+      function ( error ) {
+
+        console.log( 'An error happened' );
+
       }
-      // for (var i = 0; i < object.children.length; i++) {
-      //   object.children[i].material.transparent = isTransparent; //transparents zulassen
-      //   object.children[i].castShadow = true;
-      // };
+    );
+  }
+
+  if(object_name.includes('obj')){
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath("models/");
+    var url = object_name + ".mtl"; //modelName
+    mtlLoader.load(url, function(materials) {
+      materials.preload();
+
+      var objLoader = new THREE.OBJLoader(manager);
+      objLoader.setMaterials(materials);
+      objLoader.setPath("models/");
+
+      objLoader.load(object_name + ".obj", function(object) {
+        object.position.x = 0;
+        object.position.z = 0;
+        scene.add(object);
+        newObject = object;
+        needsUpdate = true;
+        if(isTransparent){
+          object.children[0].material.transparent = true;
+          //object.children[1].material.transparent = true;
+          object.children[0].material.opacity = 0.3;
+          //object.children[1].material.opacity = 0.3;
+        }
+        // for (var i = 0; i < object.children.length; i++) {
+        //   object.children[i].material.transparent = isTransparent; //transparents zulassen
+        //   object.children[i].castShadow = true;
+        // };
+        LOADING = false;
+      });
     });
-  });
+  }
+}
+
+function clearLoader(){
+  $('#loader').removeAttr("style").hide();
+  $('.modal-backdrop.fade.show').css("opacity", ".5");
 }
 
 async function startAnimation(startPoint){
   var animationObj = createNewAnimation(startPoint);
   ANIMATING = true;
-  intervalCounter = animationObj.startPoint;
   //console.log(objects);
   $('#progress-block').css("display","none");
-  for(var i = animationObj.startPoint; i < numberOfModels + 1; i++){
+  for(var i = animationObj.startPoint; i <= numberOfModels; i++){
+    animationObj.currentObjectNumber = i;
     await showObjects(animationObj);
   }
   //console.log(objects);
 }
 
-async function hideAll(){
-  animations.find(x => x.id == currentAnimation).CANCELLED = true;
+async function restart(){
   RELOADED = true;
   $("#items-wrapper").html("");
-  nextObject = undefined;
   clock.inputMinutes = 0;
-  objects.forEach(obj => obj.visible = false);
+  //objects.forEach(obj => obj.visible = false);
   await startAnimation(1);
 }
 
 async function sliderInput(id, ANIMATE){
-  //jetzige Animation beenden
   $("#items-wrapper").html("");
   //nextObject = undefined;
   clock.inputMinutes = 0;
 
-  var objectsToShow = objects.filter(obj => obj.number < id);
-  objectsToShow.sort((a, b) => a.number - b.number);
-  //console.log(objectsToShow);
   //alle zu richtiger Position
   moveEveryObjectToRealPosition();
-  //alle invisible
-  objects.forEach(obj => obj.visible = false);
-  //die die schon gezeigt sind visible
-  objectsToShow.forEach(obj => obj.visible = true);
-  //alle sichtbaren infos in der Liste anzeigen
-  objectsToShow.forEach(obj => {
-    if(obj.header != null){
-      appendText(obj.header, obj.number + 100, false);
-    }
-    if(obj.text != null){
-      appendText(obj.text, obj.number, obj.isSubpoint);
-    }
-  });
-
+  calculateObjectsBeforeAndAfter(objects.find(obj => obj.number == (id - 1)), true, id);
   if(ANIMATE){
     await startAnimation(id);
   }
 }
 
 function sliderClicked(){
+  //cancel current Animations
+  console.log("SLIDER CLICKED");
   animations.find(x => x.id == currentAnimation).CANCELLED = true;
 }
 
 
 function createNewAnimation(startPoint){
-  animations.forEach(x => x.CANCELLED == true);
+  animations.forEach(x => x.CANCELLED = true);
   currentAnimation++;
   var animation = {};
   animation.id = currentAnimation;
@@ -378,4 +516,55 @@ function moveEveryObjectToRealPosition(){
     obj.position.y = obj.positionFixY;
     obj.position.z = obj.positionFixZ;
   });
+}
+
+function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){
+  if(nextObject == undefined){
+    objects.forEach(o => o.visible = false);
+    nextObject = objects.find(o => o.number == 1);
+    appendText(nextObject.text, nextObject.number, nextObject.isSubpoint);
+    return 0;
+  }
+  if(number == numberOfModels + 1){
+    objects.forEach(o => o.visible = true);
+    appendArrayOfObjectsToList(objects.sort((a, b) => (a.number > b.number) ? 1 : -1));
+    return 0;
+  }
+
+  //jedes vorherige Objekt sichtbar machen und auf die vorherige Position bewegen
+  var objectsBefore = objects.filter(o => o.number < nextObject.number);
+  objectsBefore.sort((a, b) => (a.number > b.number) ? 1 : -1);
+
+  //außerdem in der Liste alle Punkte anzeigen einschließlich des derzeitig animierten objekts.
+  var objectsBeforeWithCurrent = objects.filter(o => o.number <= nextObject.number);
+  objectsBeforeWithCurrent.sort((a, b) => (a.number > b.number) ? 1 : -1);
+  
+
+  $("#items-wrapper").html("");
+  if(withCurrent){
+    appendArrayOfObjectsToList(objectsBeforeWithCurrent)
+    makeArrayVisible(objectsBeforeWithCurrent);
+  }else{
+    appendArrayOfObjectsToList(objectsBefore);
+    makeArrayVisible(objectsBefore);
+  }
+
+  //jedes volgende Objekt unsichtbar machen
+  var objectsAfter = objects.filter(o => o.number > nextObject.number);
+  objectsAfter.forEach(o => o.visible = false);
+}
+
+function appendArrayOfObjectsToList(array){
+  array.forEach(o => {
+    if(o.header != null){
+      appendText(o.header, o.number + 100, false);
+    }
+    if(o.text != null){
+      appendText(o.text, o.number, o.isSubpoint);
+    }
+  });
+}
+
+function makeArrayVisible(array){
+  array.forEach(o => o.visible = true);
 }

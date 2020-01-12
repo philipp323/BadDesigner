@@ -18,7 +18,7 @@ function onMouseDown(event) {
   prevSliderValue = $('#slider').val();
   sliderMoveCounter = 0;
   MOUSEDOWN = true;
-  console.log(controls);
+  // console.log(controls);
 
   //So reagieren normale HTML-Elemente auf die Clicks.
   if(!MODE == "SCALE") {
@@ -51,8 +51,9 @@ function onMouseDown(event) {
       latestMouseIntersection = intersects[0].point;
     }
     // console.log("SELECTED A OBJECT");
-    selectObject(draggableIntersects[0].object.parent);
-    console.log(selectedObject);
+    // console.log(intersects[0].point);
+    // selectObject(draggableIntersects[0].object.parent);
+    //console.log(selectedObject);
     console.log(objects);
 
     controls.enableRotate = false;
@@ -123,19 +124,6 @@ function onMouseMove(event) {
   needsUpdate = true;
 }
 
-function onMouseUp(event) {
-  newSliderValue = $('#slider').val();
-  if(prevSliderValue != newSliderValue){
-    console.log("mouse up -> method aufruf")
-    sliderInput(newSliderValue, true);
-  }
-  document.getElementById("content").style.cursor = "auto";
-  MOUSEDOWN = false;
-  controls.enableRotate = true;
-  dragging = false;
-  needsUpdate = true;
-}
-
 function onResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -150,11 +138,25 @@ function setSize(object){
   object.size = vector;
 }
 
+function onMouseUp(event) {
+  newSliderValue = $('#slider').val();
+  //console.log("mouse up -> method aufruf");
+  if(newSliderValue != prevSliderValue){
+    sliderInput(newSliderValue, true);
+  }
+  document.getElementById("content").style.cursor = "auto";
+  MOUSEDOWN = false;
+  dragging = false;
+  needsUpdate = true;
+}
+
+
 function onSliderChange(){
-  console.log("moved slider");
+  //console.log("moved slider");
+  console.log($('#slider').val());
   sliderMoveCounter++;
   if(sliderMoveCounter == 1){
-    console.log("letzte ANIMATION löschen");
+    //wenn der Slider einmal verändert worden ist
     sliderClicked();
   }
   sliderInput($('#slider').val(), false);

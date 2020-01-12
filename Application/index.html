@@ -45,9 +45,11 @@
     <script src="js/WebGL.js"></script>
     <script src="js/OrbitControls.js"></script>
     <script src="js/DragControls.js"></script>
-    <script src="js/FBXLoader.js"></script>
+    <script src="js/LoadingManager.js"></script>
     <script src="js/MTLLoader.js"></script>
     <script src="js/OBJLoader.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script src="js/DRACOLoader.js"></script>
     <script src="js/OBJExporter.js"></script>
     <script src="js/own/listeners.js"></script>
     <script src="js/own/tooltip.js"></script>
@@ -56,9 +58,6 @@
     <script src="js/own/items.js"></script>
     <script src="js/own/collision.js"></script>
     <script src="js/own/designs.js"></script>
-    <script src="js/FirstPersonControls.js"></script>
-    <script src="js/PointerLockControls.js"></script>
-    <script src="js/TrackballControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
     <script src="js/station-clock.js"></script>
 </head>
@@ -150,7 +149,7 @@
                 <button type="" id="speed_2" class="smallButton" onclick="MULTIPLIER = 0.5;">
                     2x
                 </button>
-                <button type="" id="restart" class="smallButton" onclick="hideAll();">
+                <button type="" id="restart" class="smallButton" onclick="restart();">
                     <i class="fas fa-redo"></i>
                 </button>
                 <button type="" id="pause" class="smallButton" onclick="pauseAnimation();">
@@ -158,7 +157,7 @@
                 </button>
             </div>
 
-            <input type="range" min="1" max="30" value="1" id="slider" class="slider sliderSelection">
+            <input type="range" min="1" max="30" value="0" id="slider" class="slider sliderSelection">
 
             <div id="detailDiv"></div>
 
@@ -170,28 +169,11 @@
               </div>
             
             <!--GUI for the objects-->
-            <div id="tooltip" class="tooltip" style="display:none">
-                <a class="btn btn-primary bottom" href="#" id="move-spin" onclick="moveSpinY()">
-                    <i class="fas fa-sync "></i>
-                </a>
-
-                <a class="btn btn-primary bottom" href="#" id="move-left" onclick="moveLeft()">
-                    <i class="fas fa-arrow-left "></i>
-                </a>
-
-                <span class="btn-group-vertical">
-                    <a class="btn btn-primary" href="#" id="move-up" onclick="moveUp()">
-                        <i class="fas fa-arrow-up "></i>
-                    </a>
-
-                    <a class="btn btn-primary" href="#" id="move-down" onclick="moveDown()">
-                        <i class="fas fa-arrow-down "></i>
-                    </a>
-                </span>
-
-                <a class="btn btn-primary bottom" href="#" id="move-right" onclick="moveRight()">
-                    <i class="fas fa-arrow-right "></i>
-                </a>
+            <div id="tooltip" class="tooltip noPaddingMargin">
+                <p id="tooltipText">test test test test</p>
+                <!-- <div id="tailShadow"></div> -->
+                <div id="tail1"></div>
+                <div id="tail2"></div>
             </div>
 
             <!-- Choose design-Modal -->
@@ -310,6 +292,10 @@
             var detailScene;
             var detailCamera;
             var betonboden;
+            var detailViews = [];
+            var currentlySelectedView = 'view_front';
+            var cameraViews = [];
+            var spiegel;
 
             init();
             animate();
@@ -342,36 +328,24 @@
                 scene.add(camera);
                 LOADING = true;
 
-                loadModel("Design_3/Betonboden", false,0,true, );
-
+                loadModel("Design_3_obj/Betonboden", false,0,true, );
+                
                 var wand_texture = new THREE.TextureLoader().load('textures/wand.jpg', function() {
                     wall1.visible = true;
                     wall2.visible = true;
                     wall3.visible = true;
                     wall4.visible = true;
                     ceiling.visible = true;
+                    needsUpdate = true;
                 });
-                needsUpdate = true;
-                var texture = new THREE.TextureLoader().load('textures/beton.jpg',
-                function( texture ) {
-                    // console.log("loaded Textures");
-                    needsUpdate = true;
-                    $('#content').show();
-                    $('#chooseDesignModal').modal({  //prevent from closing when clicking outside
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-                    $('#chooseDesignModal').modal('show');
-                    needsUpdate = true;
-                    room.visible = false;
-                    needsUpdate = true;
-                    setTimeout(clearLoader, 300);
-                });
+                // var texture = new THREE.TextureLoader().load('textures/beton.jpg',
+                // function( texture ) {
+                    
+                // });
 
                 function clearLoader(){
                     $('#loader').removeAttr("style").hide();
                     $('.modal-backdrop.fade.show').css("opacity", ".5");
-                    LOADING = false;
                 }
 
                 var geometry_wall = new THREE.BoxBufferGeometry(5, 263.5, 727);
@@ -409,15 +383,15 @@
                 var geometry = new THREE.BoxBufferGeometry(731, 727, 5);
                 geometry.rotateX(- Math.PI / 2);
 
-                room = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture }));
-                room.visible = false;
-                room.position.x = -400;
-                room.position.z = 400;
-                //room.material.transparent = true; //transparents zulassen
-                scene.add(room);
+                // room = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture }));
+                // room.visible = false;
+                // room.position.x = -400;
+                // room.position.z = 400;
+                // //room.material.transparent = true; //transparents zulassen
+                // scene.add(room);
 
                 //objects.push(room);
-                floorObjects.push(room);
+                // floorObjects.push(room);
 
                 ceiling = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: wand_texture }));
                 ceiling.visible = false;
@@ -469,6 +443,19 @@
                 window.addEventListener("scroll", onMouseWheel, false);
                 controls.addEventListener("change", controlsChange, false);
                 $("#slider").on("input change", onSliderChange);
+
+                cameraViews.push({name: 'view_front', camera: {x: -130, y: 150, z: 440}, target: {x: -130, y: 150, z: 439}});
+                cameraViews.push({name: 'view_right', camera: {x: -520, y: 110, z: 0}, target: {x: 0, y: 130, z: -80}});
+                cameraViews.push({name: 'view_angle', camera: {x: -300, y: 150, z: 450}, target: {x: -160, y: 150, z: 0}});
+
+                spiegel = new THREE.BoxBufferGeometry(100, 120, 4);
+                spiegel = new THREE.Mesh(spiegel, new THREE.MeshBasicMaterial());
+                //objects.object.children.children[0].geometry.boundingSphere
+                spiegel.position.y = 216 - 22;
+                spiegel.position.z = -799 + 700; //weil MINUS wert
+                spiegel.position.x = 5242 - 5395;
+                spiegel.visible = false;
+                scene.add(spiegel);
 
                 //loadModel();
                 //getData();
@@ -541,52 +528,6 @@
                 //designView4();
             }
 
-            function designView1() {
-                //Wandelemente werden in Nuten 
-                //eingefasst - somit wasserdicht!
-                controls.enabled = true;
-                camera.position.set(40, 20, 100);  //x, y, z
-                controls.target.x = 0;
-                controls.target.y = -8;
-                controls.target.z = 80;
-                camera.updateProjectionMatrix();
-                controls.update();
-            }
-
-            function designView2() {
-                //Eckprofil - somit wasserdicht!
-                controls.enabled = true;
-                camera.position.set(-100, 10, -50);  //x, y, z
-                controls.target.x = -90;
-                controls.target.y = 0;
-                controls.target.z = -100;
-                camera.updateProjectionMatrix();
-                controls.update();
-            }
-
-            function designView3() {
-                //Led, Strahler -> Revisionsklappe animation
-                controls.enabled = true;
-                camera.position.set(-18, 200, 130);
-                controls.target.x = 50;
-                controls.target.y = 232;
-                controls.target.z = 20;
-                camera.updateProjectionMatrix();
-                controls.update();
-            }
-
-            
-            function designView4() {
-                //Spiegel (Textur!) Led Beleuchtung innen
-                controls.enabled = true;
-                camera.position.set(-195, 190, 100);
-                controls.target.x = -195;
-                controls.target.y = 190;
-                controls.target.z = 0;
-                camera.updateProjectionMatrix();
-                controls.update();
-            }
-
             function createTexturedDoor(texture_name) {
                 var png_texture = new THREE.TextureLoader().load('models/texture/' + texture_name + '.png');
                 var png_texture_flip = new THREE.TextureLoader().load('models/texture/' + texture_name + '_flip.png');
@@ -634,8 +575,8 @@
                 $('#sidebar_presentations').show();
                 $('#sidebar').toggleClass('active');
                 $('#sidebar').attr("class","");
-                $('#sidebar').css("min-width", "507px");
-                $('#sidebar').css("max-width", "507px");
+                $('#sidebar').css("min-width", "33%");
+                $('#sidebar').css("max-width", "33%");
                 $('#sidebar').css("overflow-y", "auto");
             }
 
@@ -679,20 +620,10 @@
                 needsUpdate = true;
                 console.log(objects[25]);
             }
-            
+
+
             function changeView(type){
-                if(type == 'view_down'){
-                    controls.enabled = false;
-                    camera.position.y = 550;
-                    camera.position.z = 50;
-                    camera.position.x = -120;
-                    controls.target.x = camera.position.x;
-                    controls.target.y = 0;
-                    controls.target.z = camera.position.z;
-                    camera.updateProjectionMatrix();
-                    controls.update();
-                    ceiling.visible = false;
-                } else if(type == 'view_front'){
+                if(type == 'view_front'){
                     camera.position.set(-130, 150, 440);
                     controls.target.x = -130;
                     controls.target.y = 150;
@@ -701,6 +632,7 @@
                     controls.update();
                     ceiling.visible = true;
                     controls.enabled = true;
+                    currentlySelectedView = 'view_front';
                 } else if(type == 'view_right'){
                     controls.enabled = false;
                     camera.position.set(-520, 110, 0);
@@ -710,6 +642,7 @@
                     camera.updateProjectionMatrix();
                     controls.update();
                     ceiling.visible = true;
+                    currentlySelectedView = 'view_right';
                 }
                 else if(type == 'view_angle'){
                     controls.enabled = false;
@@ -720,6 +653,7 @@
                     camera.updateProjectionMatrix();
                     controls.update();
                     ceiling.visible = true;
+                    currentlySelectedView = 'view_angle';
                 }
 
             }
