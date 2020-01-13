@@ -168,6 +168,8 @@
                 </canvas>
               </div>
             
+            <div id="tooltips" class="tooltips">
+            </div>
             <!--GUI for the objects-->
             <div id="tooltip" class="tooltip noPaddingMargin">
                 <p id="tooltipText">test test test test</p>
@@ -447,15 +449,6 @@
                 cameraViews.push({name: 'view_front', camera: {x: -130, y: 150, z: 440}, target: {x: -130, y: 150, z: 439}});
                 cameraViews.push({name: 'view_right', camera: {x: -520, y: 110, z: 0}, target: {x: 0, y: 130, z: -80}});
                 cameraViews.push({name: 'view_angle', camera: {x: -300, y: 150, z: 450}, target: {x: -160, y: 150, z: 0}});
-
-                spiegel = new THREE.BoxBufferGeometry(100, 120, 4);
-                spiegel = new THREE.Mesh(spiegel, new THREE.MeshBasicMaterial());
-                //objects.object.children.children[0].geometry.boundingSphere
-                spiegel.position.y = 216 - 22;
-                spiegel.position.z = -799 + 700; //weil MINUS wert
-                spiegel.position.x = 5242 - 5395;
-                spiegel.visible = false;
-                scene.add(spiegel);
 
                 //loadModel();
                 //getData();

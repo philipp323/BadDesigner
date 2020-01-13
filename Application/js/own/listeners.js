@@ -40,8 +40,11 @@ function onMouseDown(event) {
   var intersects = raycaster.intersectObjects(objects, true);
   var draggableIntersects = raycaster.intersectObjects(draggableObjects, true);
 
+  //Tooltip Position mit Mouseclick ändern. 
   if (intersects.length > 0){
-    console.log(intersects[0].point);
+    console.log(objects);
+    // console.log(intersects[0].point);
+    // latestMouseIntersection = intersects[0].point;
   }
 
   // console.log("on mouse down");
@@ -149,7 +152,6 @@ function onMouseUp(event) {
   dragging = false;
   needsUpdate = true;
 }
-
 
 function onSliderChange(){
   //console.log("moved slider");

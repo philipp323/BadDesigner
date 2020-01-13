@@ -36,7 +36,11 @@ async function showObjects(animationObj) {
 
     if(nextObject.isDetailBefore){
       console.log("DISPLAY DETAIL");
-      await displayDetailView(nextObject.DETAIL_VIEW_ID, animationObj);
+      displayDetailViewReturnVal = await displayDetailView(nextObject.DETAIL_VIEW_ID, animationObj);
+      if(displayDetailViewReturnVal == 0){
+        console.log("In der DetailView abgebrochen!");
+        return 0;
+      }
     }
 
     console.log(+ nextObject.number + " Animating: " + nextObject.name);
@@ -159,14 +163,11 @@ async function showObjects(animationObj) {
 
 var itemsDiv = $("#items-wrapper");
 
-function appendText(text, id, isSubpoint){
+function appendText(text, id){
   //console.log(text);
   var html;
-  if(isSubpoint){
-    html = '<li id="' + id + '">' + '<a class="presentation subpoint">' + text + '</a>' + '</li>';
-  } else {
-    html = '<li id="' + id + '">' + '<a class="presentation">' + text + '</a>' + '</li>';
-  }
+  html = '<li id="' + id + '">' + '<a class="presentation">' + text + '</a>' + '</li>';
+  
   document.getElementById("items-wrapper").innerHTML += html;
   scrollTo(id);
 }
@@ -177,9 +178,8 @@ function scrollTo(id){
 }
 
 async function displayDetailView(detailViewId, animationObj){
-  controls.enabled = false;
+  controls.enabled = true;
   var currentDetailView = detailViews.find(dv => dv.id == detailViewId);
-  console.log(currentDetailView);
   var from = {
     camera_x : camera.position.x,
     camera_y : camera.position.y,
@@ -188,7 +188,6 @@ async function displayDetailView(detailViewId, animationObj){
     target_y : controls.target.y,
     target_z : controls.target.z
   };
-
   var to = {
     camera_x : currentDetailView.camera.x,
     camera_y : currentDetailView.camera.y,
@@ -219,11 +218,13 @@ async function displayDetailView(detailViewId, animationObj){
       return 0;
     }
   }
-  updateTooltip(currentDetailView.text);
-  latestMouseIntersection = currentDetailView.tooltipPosition;
-  if(currentDetailView.objectToDisplay != undefined){
-    currentDetailView.objectToDisplay.visible = true;
-  }
+  currentDetailView.array.forEach(tooltipInformation => {
+    updateTooltip(currentDetailView.id, tooltipInformation.id, tooltipInformation.text);
+    //latestMouseIntersection = tooltipInformation.tooltipPosition;
+    if(tooltipInformation.objectsToDisplay != []){
+      tooltipInformation.objectsToDisplay.forEach(oD => oD.visible = true);
+    }
+  });
   for(i = 0; i < 40; i++){
     await Sleep(100);
     if(animationObj.CANCELLED == true){
@@ -239,9 +240,46 @@ async function displayDetailView(detailViewId, animationObj){
   }
   hideTooltip();
   changeView(currentlySelectedView);
+  return 1;
 }
 
-function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, isDetailBefore, DETAIL_VIEW_ID) {
+function generateObjects(){
+  var loadedObject;
+  var generatedObjects = [];
+  newObject.minusValues.forEach(minusValue => {
+    loadedObject = objects.find(o => o.number == newObject.number - minusValue);
+    console.log(loadedObject);
+    for (let index of newObject.indexesOfGeometrysToGenerate) {
+      var o = loadedObject.children[0].children[index];
+      console.log(o);
+      o.geometry.computeBoundingSphere();
+      var size = {
+        x: o.size.x - 3,
+        y: o.size.y,
+        z: o.size.z 
+      };
+      var position = {
+        x: o.geometry.boundingSphere.center.x,
+        y: o.geometry.boundingSphere.center.y + 1,
+        z: o.geometry.boundingSphere.center.z - 1
+      };
+      var geometry = new THREE.BoxBufferGeometry(size.x, size.y, size.z);
+      var object = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
+      object.position.x = position.x - 5395;
+      object.position.y = position.y - 22;
+      object.position.z = position.z + 700;
+      object.visible = false;
+      scene.add(object);
+      generatedObjects.push(object);
+  
+      var detailView = detailViews.find(dV => dV.id == newObject.DETAIL_VIEW_ID);
+      detailView.array[0].objectsToDisplay.push(object);
+    }
+  });
+  return generatedObjects;
+}
+
+function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, isDetailBefore, DETAIL_VIEW_ID, otherObjectsToGenerate, minusValues, indexesOfGeometrysToGenerate) {
   if(numberOfModels != 0){
     progressPerModel = 100 / numberOfModels;
   }
@@ -260,7 +298,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
   };
 
   async function onLoadComplete(){
-    setSize(newObject);
+    newObject.children[0].children.forEach(o => setSize(o));
     needsUpdate = true;
     
     currentProgress += progressPerModel;
@@ -290,6 +328,14 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
 
     newObject.isDetailBefore = isDetailBefore;
     newObject.DETAIL_VIEW_ID = DETAIL_VIEW_ID;
+    newObject.otherObjectsToGenerate = otherObjectsToGenerate;
+    newObject.minusValues = minusValues;
+    newObject.indexesOfGeometrysToGenerate = indexesOfGeometrysToGenerate;
+    if(otherObjectsToGenerate){
+      newObject.otherObjectsToDisplay = generateObjects();
+    }else{
+      newObject.otherObjectsToDisplay = undefined;
+    }
 
     //setMetallness to 0
     newObject.children[0].children.forEach(e => e.material.metalness = 0);
@@ -321,6 +367,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
   manager.onLoad = async function() {
     setSize(newObject);
     needsUpdate = true;
+    newObject.visible = false;
     
     currentProgress += progressPerModel;
     currentProgress = Math.floor(currentProgress);
@@ -331,22 +378,35 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
       .text(currentProgress + "% der Modelle geladen.");
 
 
-    newObject.name = object_name;
-    newObject.number = number;
-    newObject.normalLoad = normalLoad;
-    newObject.animation_mode = ANIMATION_MODE;
-    newObject.text = TEXT;
-    newObject.header = HEADER;
-    newObject.isSubpoint = isSUBPOINT;
-    newObject.time = TIME;
-
-    newObject.position.x = -4995 - 400;
-    newObject.position.y -= 22;
-    newObject.position.z = 300 + 400;
+      newObject.name = object_name;
+      newObject.number = number;
+      newObject.normalLoad = normalLoad;
+      newObject.animation_mode = ANIMATION_MODE;
+      newObject.text = TEXT;
+      newObject.header = HEADER;
+      newObject.isSubpoint = isSUBPOINT;
+      newObject.time = TIME;
+  
+      newObject.position.x = -4995 - 400;
+      newObject.position.y -= 22;
+      newObject.position.z = 300 + 400;
+      newObject.positionFixX = newObject.position.x;
+      newObject.positionFixY = newObject.position.y;
+      newObject.positionFixZ = newObject.position.z;
+  
+      newObject.isDetailBefore = isDetailBefore;
+      newObject.DETAIL_VIEW_ID = DETAIL_VIEW_ID;
+      newObject.otherObjectsToGenerate = otherObjectsToGenerate;
+      if(otherObjectsToGenerate){
+        newObject.otherObjectsToDisplay = generateObjects(objects.find(o => o.number == newObject.number - 1));
+      }else{
+        newObject.otherObjectsToDisplay = undefined;
+      }
 
     if(newObject.normalLoad){
       //console.log(newObject);
       newObject.children[0].material.shininess = 0;
+      newObject.visible = true;
       // newObject.materialLibraries = null;
       // newObject.children[0].material = new THREE.MeshBasicMaterial({ map: texture });
       // newObject.children[1].material = new THREE.MeshBasicMaterial({ map: texture });
@@ -364,6 +424,17 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
       setTimeout(clearLoader, 300);
       LOADING = false;
     }
+    if(!newObject.normalLoad){
+      objects.push(newObject);
+      draggableObjects.push(newObject);
+      newObject.visible = false;
+      startedPresentation();
+      if(objects.length == numberOfModels){
+        await startAnimation(1);
+        console.log("ANIMATION ENDING");
+        //ANIMATING = false; 
+      }
+    }
   }
 
   if(object_name.includes('glb')){
@@ -375,7 +446,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
     dracoLoader.setDecoderPath( 'js/libs/draco/' );
     dracoLoader.setDecoderConfig( { type: 'js' } );
     loader.setDRACOLoader( dracoLoader );
-    console.log(glbPath);
+    //console.log(glbPath);
     // Load a glTF resource
     loader.load(
       // resource URL
@@ -396,9 +467,6 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
       },
       // called while loading is progressing
       function ( xhr ) {
-
-        //console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
       },
       // called when loading has errors
       function ( error ) {
@@ -450,7 +518,6 @@ function clearLoader(){
 async function startAnimation(startPoint){
   var animationObj = createNewAnimation(startPoint);
   ANIMATING = true;
-  //console.log(objects);
   $('#progress-block').css("display","none");
   for(var i = animationObj.startPoint; i <= numberOfModels; i++){
     animationObj.currentObjectNumber = i;
@@ -520,13 +587,23 @@ function moveEveryObjectToRealPosition(){
 
 function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){
   if(nextObject == undefined){
-    objects.forEach(o => o.visible = false);
+    objects.forEach(o => {
+      o.visible = false;
+      if(o.otherObjectsToDisplay != undefined){
+        o.otherObjectsToDisplay.forEach(oD => oD.visible = false);
+      }
+    });
     nextObject = objects.find(o => o.number == 1);
-    appendText(nextObject.text, nextObject.number, nextObject.isSubpoint);
+    appendText(nextObject.text, nextObject.number);
     return 0;
   }
   if(number == numberOfModels + 1){
-    objects.forEach(o => o.visible = true);
+    objects.forEach(o => {
+      o.visible = true;
+      if(o.otherObjectsToDisplay != undefined){
+        o.otherObjectsToDisplay.forEach(oD => oD.visible = true);
+      }
+    });
     appendArrayOfObjectsToList(objects.sort((a, b) => (a.number > b.number) ? 1 : -1));
     return 0;
   }
@@ -551,7 +628,12 @@ function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){
 
   //jedes volgende Objekt unsichtbar machen
   var objectsAfter = objects.filter(o => o.number > nextObject.number);
-  objectsAfter.forEach(o => o.visible = false);
+  objectsAfter.forEach(o => {
+    o.visible = false;
+    if(o.otherObjectsToDisplay != undefined){
+      o.otherObjectsToDisplay.forEach(oD => oD.visible = false);
+    }
+  });
 }
 
 function appendArrayOfObjectsToList(array){
@@ -560,11 +642,16 @@ function appendArrayOfObjectsToList(array){
       appendText(o.header, o.number + 100, false);
     }
     if(o.text != null){
-      appendText(o.text, o.number, o.isSubpoint);
+      appendText(o.text, o.number);
     }
   });
 }
 
 function makeArrayVisible(array){
-  array.forEach(o => o.visible = true);
+  array.forEach(o => {
+    o.visible = true;
+    if(o.otherObjectsToDisplay != undefined){
+      o.otherObjectsToDisplay.forEach(oD => oD.visible = true);
+    }
+  });
 }
