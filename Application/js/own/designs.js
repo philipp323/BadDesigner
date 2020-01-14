@@ -64,34 +64,37 @@ function generateDesign() {
                     text: 'LED Beleuchtung innen',
                     objectsToDisplay: []}
               ]});
-            loadModel("Design_3_glb/Register_WC", false,1,false,null,'FRONT',null,'1. Registerwände versetzen: \n WC, Dusche, Waschtisch', false, 5000);      
-            loadModel("Design_3_glb/Register_Dusche", false,2,false,null,'FRONT', null, null, false, 5000);  
-            loadModel("Design_3_glb/Register_Waschtisch", false,3,false,null,'FRONT', null, null, false, 5000);  
-            loadModel("Design_3_glb/Fancoil", false,4,false,null,'FRONT',null, '2. Fan Coil einbauen', false, 5000);  
-            loadModel("Design_3_glb/Duschtasse", false,5,false,null,'TOP',null, '3. Duschtasse einbauen', false, 4000);  
-            loadModel("Design_3_glb/WC_Boden", false,6,false,null,'TOP',null, '4. WC – Boden einbauen', false, 4000);  
-            loadModel("Design_3_glb/WC_Rueckwand", false,7,false,null,'FRONT', '5. WC Modul einbauen', '5.1 Rückwand', true, 4000);  
-            loadModel("Design_3_glb/WC_Seitenwand", false,8,false,null,'FRONT',null, '5.2 Seitenwand', true, 4000); 
-            loadModel("Design_3_glb/Trennwand", true,9,false,null,'FRONT',null, '5.3 Trennwand', true, 4000);  
-            loadModel("Design_3_glb/WC_Vorderwand", true,10,false,null,'FRONT',null, '5.4 Vorderwand', true, 4000);
-            loadModel("Design_3_glb/WC_Decke_geschlossen", false,11,false,null,'FRONT',null, '5.5 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, true, 0);  
-            loadModel("Design_3_glb/Dusche_Rueckwand", false,12,false,null,'FRONT','6. Dusch Modul einbauen', '6.1 Rückwand', true, 4000);  
-            loadModel("Design_3_glb/Seitenwand", true,13,false,null,'RIGHT',null, '6.2 Seitenwand', true, 4000);  
-            loadModel("Design_3_glb/Dusche_Decke", false,14,false,null,'FRONT',null, '6.4 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000);  
-            loadModel("Design_3_glb/Waschtisch_Verkleidung", false,15,false,null,'FRONT',null, '7. Registerverkleidung Waschtisch einbauen', false, 4000,true,2, true, [1,4], [6,12]);  
-            loadModel("Design_3_glb/restliche Verkleidung_rechts", false,16,false,null,'RIGHT',null, '8. restliche Verkleidungen einbauen', false, 4000, true, 1);
-            loadModel("Design_3_glb/restliche Verkleidung_Abdeckbrett", false,17,false,null,'TOP',null, null, true, 4000);
-            loadModel("Design_3_glb/restliche Verkleidung_links", false,18,false,null,'RIGHT',null, null, true, 4000);
-            loadModel("Design_3_glb/Fliesenboden_weiß", false,19,false,null,'TOP',null, '9. Badezimmerboden verlegen', false, 4000);  
-            loadModel("Design_3_glb/Spiegel", false,20,false,null,'FRONT',null, '10. Spiegel', false, 4000);  
-            loadModel("Design_3_glb/Waschtischunterbau", false,21,false,null,'FRONT',null, '11. Waschtischunterbau', false, 4000, true, 3, true, [1], [0]);
-            loadModel("Design_3_glb/Tuere_WC", true,22,false,null,'FRONT', null, '12. Tür Dusche', false, 4000);
-            loadModel("Design_3_glb/Tuere_Dusche", true,23,false,null,'RIGHT',null, '13. Tür WC', false, 4000);  
-            loadModel("Design_3_glb/Waschbecken", false,24,false,null,'TOP',null, '14. Waschbecken + Armatur', false, 4000); 
-            loadModel("Design_3_glb/WC", false,25,false,null,'FRONT',null, '15. WC Keramik montieren', false, 4000);  
-            loadModel("Design_3_glb/Duscharmatur", false,26,false,null,'FRONT',null, '16. Duscharmatur einbauen', false, 4000); 
-            loadModel("Design_3_glb/Zubehoer", false,27,false,null,'TOP',null, '17. Zubehör montieren', false, 4000);   
-            loadModel("Design_3_glb/Deckenverkleidung", false,28,false,null,'FRONT',null, '18. Deckenverkleidung', false, 4000);
+            loadModel("Design_3_glb/Register_WC", false,1,false,{value: false, childrenId: 0},'FRONT',null,'1. Registerwände versetzen: \n WC, Dusche, Waschtisch', false, 5000);      
+            loadModel("Design_3_glb/Register_Dusche", false,2,false,{value: false, childrenId: 0},'FRONT', null, null, false, 5000);  
+            loadModel("Design_3_glb/Register_Waschtisch", false,3,false,{value: false, childrenId: 0},'FRONT', null, null, false, 5000);  
+            loadModel("Design_3_glb/Fancoil", false,4,false,{value: false, childrenId: 0},'FRONT',null, '2. Fan Coil einbauen', false, 5000);  
+            loadModel("Design_3_glb/Duschtasse", false,5,false,{value: false, childrenId: 0},'TOP',null, '3. Duschtasse einbauen', false, 4000);  
+            loadModel("Design_3_glb/WC_Boden", false,6,false,{value: false, childrenId: 0},'TOP',null, '4. WC – Boden einbauen', false, 4000);  
+            loadModel("Design_3_glb/WC_Rueckwand", false,7,false,{value: true, childrenId: 0},'FRONT', '5. WC Modul einbauen', '5.1 Rückwand', true, 4000);  
+            loadModel("Design_3_glb/WC_Seitenwand", false,8,false,{value: true, childrenId: 0},'FRONT',null, '5.2 Seitenwand', true, 4000); 
+            loadModel("Design_3_glb/Trennwand", true,9,false,{value: true, childrenId: 0},'FRONT',null, '5.3 Trennwand', true, 4000);  
+            loadModel("Design_3_glb/WC_Vorderwand", true,10,false,{value: true, childrenId: 0},'FRONT',null, '5.4 Vorderwand', true, 4000);
+            loadModel("Design_3_glb/WC_Decke_geschlossen", false,11,false,{value: false, childrenId: 0},'FRONT',null, '5.5 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, true, 0);  
+            loadModel("Design_3_glb/Dusche_Rueckwand", false,12,false,{value: true, childrenId: 3},'FRONT','6. Dusch Modul einbauen', '6.1 Rückwand', true, 4000);  
+            loadModel("Design_3_glb/Dusche_Seitenwand", true,13,false,{value: true, childrenId: 0},'RIGHT',null, '6.2 Seitenwand', true, 4000);  
+            loadModel("Design_3_glb/Dusche_Decke", false,14,false,{value: false, childrenId: 0},'FRONT',null, '6.4 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000);  
+            loadModel("Design_3_glb/Waschtisch_Verkleidung", false,15,false,{value: true, childrenId: 0},'FRONT',null, '7. Registerverkleidung Waschtisch einbauen', false, 4000,true,2, true, [1,4], [6,12]);  
+            loadModel("Design_3_glb/restliche Verkleidung_rechts", false,16,false,{value: false, childrenId: 0},'RIGHT',null, '8. restliche Verkleidungen einbauen', false, 4000, true, 1);
+            loadModel("Design_3_glb/restliche Verkleidung_Abdeckbrett", false,17,false,{value: false, childrenId: 0},'TOP',null, null, true, 4000);
+            loadModel("Design_3_glb/restliche Verkleidung_links", false,18,false,{value: false, childrenId: 0},'RIGHT',null, null, true, 4000);
+            loadModel("Design_3_glb/Fliesenboden_weiß", false,19,false,{value: false, childrenId: 0},'TOP',null, '9. Badezimmerboden verlegen', false, 4000);  
+            loadModel("Design_3_glb/Spiegel", false,20,false,{value: false, childrenId: 0},'FRONT',null, '10. Spiegel', false, 4000);  
+            loadModel("Design_3_glb/Waschtischunterbau", false,21,false,{value: false, childrenId: 0},'FRONT',null, '11. Waschtischunterbau', false, 4000, true, 3, true, [1], [0]);
+            loadModel("Design_3_glb/Tuere_WC", true,22,false,{value: true, childrenId: 0},'FRONT', null, '12. Tür Dusche', false, 4000);
+            loadModel("Design_3_glb/Tuere_Dusche", true,23,false,{value: true, childrenId: 0},'RIGHT',null, '13. Tür WC', false, 4000);  
+            loadModel("Design_3_glb/Waschbecken", false,24,false,{value: false, childrenId: 0},'TOP',null, '14. Waschbecken + Armatur', false, 4000); 
+            loadModel("Design_3_glb/WC", false,25,false,{value: false, childrenId: 0},'FRONT',null, '15. WC Keramik montieren', false, 4000);  
+            loadModel("Design_3_glb/Duscharmatur", false,26,false,{value: false, childrenId: 0},'FRONT',null, '16. Duscharmatur einbauen', false, 4000); 
+            loadModel("Design_3_glb/Zubehoer", false,27,false,{value: false, childrenId: 0},'TOP',null, '17. Zubehör montieren', false, 4000);   
+            loadModel("Design_3_glb/Deckenverkleidung", false,28,false,{value: false, childrenId: 0},'FRONT',null, '18. Deckenverkleidung', false, 4000);
+
+            //textures
+            textureNames.push('SanMod_Nature', 'SanMod_Nomad');
           break;
         case 4:
             console.log("==== GENERATE 4. DESIGN ====");

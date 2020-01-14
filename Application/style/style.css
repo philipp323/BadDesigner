@@ -337,6 +337,13 @@ canvas {
   right: 0;
 }
 
+.textureSelection {
+  position: absolute;
+  bottom: 0;
+  left: 34%;
+  margin-bottom: 10px;
+}
+
 .speedSelection {
   position: absolute;
   bottom: 0;

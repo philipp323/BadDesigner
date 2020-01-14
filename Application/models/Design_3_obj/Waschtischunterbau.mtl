@@ -1,0 +1,24 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl _auto_1
+Ka 0.000000 0.000000 0.000000
+Kd 0.200000 0.200000 0.200000
+Ks 0.330000 0.330000 0.330000
+
+newmtl ForegroundColor
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+
+newmtl Eiche___Natur___quer
+Ka 0.000000 0.000000 0.000000
+Kd 0.313725 0.313725 0.313725
+Ks 0.330000 0.330000 0.330000
+
+newmtl Aluminium___poliert
+Ka 0.000000 0.000000 0.000000
+Kd 0.956863 0.956863 0.956863
+Ks 0.330000 0.330000 0.330000
+

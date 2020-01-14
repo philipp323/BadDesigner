@@ -66,6 +66,7 @@ async function showObjects(animationObj) {
           tween.stop();
           tween = undefined;
           console.log(animationObj.currentObjectNumber + " got cancelled while FRONT!");
+          moveEveryObjectToRealPosition();
           //nextObject.visible = false;
           return 0;
         }else{
@@ -79,7 +80,14 @@ async function showObjects(animationObj) {
       tween.start();
       
       if(!PAUSED){
-        await Sleep(nextObject.time * MULTIPLIER);
+        for(i = 0; i < (nextObject.time / 100) * MULTIPLIER; i++){
+          await Sleep(100);
+          if(animationObj.CANCELLED == true){
+            moveEveryObjectToRealPosition();
+            return 0;
+          }
+        }
+        //await Sleep(nextObject.time * MULTIPLIER);
       }
       while(PAUSED){
         await Sleep(100);
@@ -103,6 +111,7 @@ async function showObjects(animationObj) {
           tween.stop();
           tween = undefined;
           console.log(animationObj.currentObjectNumber + " got cancelled while TOP!");
+          moveEveryObjectToRealPosition();
           return 0;
         }else{
           return 1;
@@ -115,7 +124,14 @@ async function showObjects(animationObj) {
       tween.start();
 
       if(!PAUSED){
-        await Sleep(nextObject.time * MULTIPLIER);
+        for(i = 0; i < (nextObject.time / 100) * MULTIPLIER; i++){
+          await Sleep(100);
+          if(animationObj.CANCELLED == true){
+            moveEveryObjectToRealPosition();
+            return 0;
+          }
+        }
+        //await Sleep(nextObject.time * MULTIPLIER);
       }
       while(PAUSED){
         await Sleep(100);
@@ -138,6 +154,7 @@ async function showObjects(animationObj) {
           tween.stop();
           tween = undefined;
           console.log(animationObj.currentObjectNumber + " got cancelled while RIGHT!");
+          moveEveryObjectToRealPosition();
           //nextObject.visible = false;
           return 0;
         }else{
@@ -150,7 +167,14 @@ async function showObjects(animationObj) {
 
       tween.start();
       if(!PAUSED){
-        await Sleep(nextObject.time * MULTIPLIER);
+        for(i = 0; i < (nextObject.time / 100) * MULTIPLIER; i++){
+          await Sleep(100);
+          if(animationObj.CANCELLED == true){
+            moveEveryObjectToRealPosition();
+            return 0;
+          }
+        }
+        //await Sleep(nextObject.time * MULTIPLIER);
       }
       while(PAUSED){
         await Sleep(100);
@@ -209,7 +233,7 @@ async function displayDetailView(detailViewId, animationObj){
   .onComplete(function () {
   })
   .start();
-  for(i = 0; i < 20; i++){
+  for(i = 0; i < 20 * MULTIPLIER; i++){
     await Sleep(100);
     if(animationObj.CANCELLED == true){
       hideTooltip();
@@ -239,7 +263,46 @@ async function displayDetailView(detailViewId, animationObj){
     }
   }
   hideTooltip();
-  changeView(currentlySelectedView);
+  var currentCameraInformation = cameraViews.find(cV => cV.name == currentlySelectedView);
+  var from = {
+    camera_x : currentDetailView.camera.x,
+    camera_y : currentDetailView.camera.y,
+    camera_z : currentDetailView.camera.z,
+    target_x : currentDetailView.target.x,
+    target_y : currentDetailView.target.y,
+    target_z : currentDetailView.target.z
+  };
+  var to = {
+    camera_x : currentCameraInformation.camera.x,
+    camera_y : currentCameraInformation.camera.y,
+    camera_z : currentCameraInformation.camera.z,
+    target_x : currentCameraInformation.target.x,
+    target_y : currentCameraInformation.target.y,
+    target_z : currentCameraInformation.target.z
+  };
+  var tween = new TWEEN.Tween(from)
+  .to(to,2000 * MULTIPLIER)
+  .easing(TWEEN.Easing.Linear.None)
+  .onUpdate(function () {
+    camera.position.set(from.camera_x, from.camera_y, from.camera_z);
+    controls.target.x = from.target_x;
+    controls.target.y = from.target_y;
+    controls.target.z = from.target_z;
+    controls.update();
+  })
+  .onComplete(function () {
+  })
+  .start();
+  for(i = 0; i < 20 * MULTIPLIER; i++){
+    await Sleep(100);
+    if(animationObj.CANCELLED == true){
+      hideTooltip();
+      tween.stop();
+      changeView(currentlySelectedView);
+      return 0;
+    }
+  }
+  //changeView(currentlySelectedView);
   return 1;
 }
 
@@ -248,38 +311,40 @@ function generateObjects(){
   var generatedObjects = [];
   newObject.minusValues.forEach(minusValue => {
     loadedObject = objects.find(o => o.number == newObject.number - minusValue);
-    console.log(loadedObject);
-    for (let index of newObject.indexesOfGeometrysToGenerate) {
-      var o = loadedObject.children[0].children[index];
-      console.log(o);
-      o.geometry.computeBoundingSphere();
-      var size = {
-        x: o.size.x - 3,
-        y: o.size.y,
-        z: o.size.z 
-      };
-      var position = {
-        x: o.geometry.boundingSphere.center.x,
-        y: o.geometry.boundingSphere.center.y + 1,
-        z: o.geometry.boundingSphere.center.z - 1
-      };
-      var geometry = new THREE.BoxBufferGeometry(size.x, size.y, size.z);
-      var object = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
-      object.position.x = position.x - 5395;
-      object.position.y = position.y - 22;
-      object.position.z = position.z + 700;
-      object.visible = false;
-      scene.add(object);
-      generatedObjects.push(object);
-  
-      var detailView = detailViews.find(dV => dV.id == newObject.DETAIL_VIEW_ID);
-      detailView.array[0].objectsToDisplay.push(object);
+    if(loadedObject != undefined){
+      console.log(loadedObject);
+      for (let index of newObject.indexesOfGeometrysToGenerate) {
+        var o = loadedObject.children[0].children[index];
+        console.log(o);
+        o.geometry.computeBoundingSphere();
+        var size = {
+          x: o.size.x - 3,
+          y: o.size.y,
+          z: o.size.z
+        };
+        var position = {
+          x: o.geometry.boundingSphere.center.x,
+          y: o.geometry.boundingSphere.center.y + 1,
+          z: o.geometry.boundingSphere.center.z - 1
+        };
+        var geometry = new THREE.BoxBufferGeometry(size.x, size.y, size.z);
+        var object = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
+        object.position.x = position.x - 5395;
+        object.position.y = position.y - 22;
+        object.position.z = position.z + 700;
+        object.visible = false;
+        scene.add(object);
+        generatedObjects.push(object);
+    
+        var detailView = detailViews.find(dV => dV.id == newObject.DETAIL_VIEW_ID);
+        detailView.array[0].objectsToDisplay.push(object);
+      }
     }
   });
   return generatedObjects;
 }
 
-function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, isDetailBefore, DETAIL_VIEW_ID, otherObjectsToGenerate, minusValues, indexesOfGeometrysToGenerate) {
+function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, isDetailBefore, DETAIL_VIEW_ID, otherObjectsToGenerate, minusValues, indexesOfGeometrysToGenerate) {
   if(numberOfModels != 0){
     progressPerModel = 100 / numberOfModels;
   }
@@ -318,6 +383,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, texture, ANIM
     newObject.header = HEADER;
     newObject.isSubpoint = isSUBPOINT;
     newObject.time = TIME;
+    newObject.textureJSON = textureJSON;
 
     newObject.position.x = -4995 - 400;
     newObject.position.y -= 22;
@@ -531,6 +597,7 @@ async function restart(){
   $("#items-wrapper").html("");
   clock.inputMinutes = 0;
   //objects.forEach(obj => obj.visible = false);
+  endTextureMode();
   await startAnimation(1);
 }
 
@@ -538,6 +605,8 @@ async function sliderInput(id, ANIMATE){
   $("#items-wrapper").html("");
   //nextObject = undefined;
   clock.inputMinutes = 0;
+  $('#slider').val(id);
+  endTextureMode();
 
   //alle zu richtiger Position
   moveEveryObjectToRealPosition();
@@ -583,6 +652,7 @@ function moveEveryObjectToRealPosition(){
     obj.position.y = obj.positionFixY;
     obj.position.z = obj.positionFixZ;
   });
+  needsUpdate = true;
 }
 
 function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){

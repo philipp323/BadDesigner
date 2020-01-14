@@ -155,7 +155,7 @@ function onMouseUp(event) {
 
 function onSliderChange(){
   //console.log("moved slider");
-  console.log($('#slider').val());
+  //console.log($('#slider').val());
   sliderMoveCounter++;
   if(sliderMoveCounter == 1){
     //wenn der Slider einmal verändert worden ist
