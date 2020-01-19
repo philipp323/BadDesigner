@@ -80,6 +80,9 @@
                     </div>
                     <div id="textures" class="row">
                     </div>
+                    <div id="progress-block" class="progress" style="display: none;">
+                        <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
                 </ul>
             </span>
             <span id="sidebar_elements">
@@ -102,24 +105,6 @@
                             Details
                         </a>
                     </li>
-                    <!--<li>
-                        <a aria-expanded="false" class="cursor" id="presentationMode" onclick=presenationModeEnabled()>
-                            <i class="fas fa-desktop fa-2x"></i>
-                            Show
-                        </a>
-                    </li>
-                    <li>
-                        <a aria-expanded="false" class="cursor" id="dragMode" onclick=dragModeEnabled()>
-                            <i class="fas fa-arrows-alt fa-2x"></i>
-                            Modify
-                        </a>
-                    </li>
-                    <li>
-                        <a aria-expanded="false" class="cursor" id="designMode" onclick=chooseDesignEnabled()>
-                            <i class="fas fa-paint-brush fa-2x"></i>
-                            Design
-                        </a>
-                    </li>-->
                 </ul>
                 <ul class="list-unstyled CTAs">
                     <li>
@@ -132,11 +117,7 @@
         <div id="loader"></div>
         <div id="canvas" style="z-index: 0 !important;"></div>
         <!-- Page Content  -->
-        <div id="content" style="display:none;" class="content">
-            <div id="progress-block" class="progress" style="display:none">
-                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-            </div>
-
+        <div id="content" class="content">
             <div class="buttons floorSelection">
                 <button type="" id="view_front" class="smallButton" onClick="changeView('view_front');">
                     <i class="fas fa-angle-up "></i>
@@ -311,9 +292,9 @@
             var currentlySelectedView = 'view_front';
             var cameraViews = [];
             var spiegel;
-            var textureNames = [];
+            var textures = [];
             var texturePath;
-            var generatedTextureObjects = [];
+            var chosenTexture = undefined;
 
             init();
             animate();
@@ -626,18 +607,73 @@
                 $('#textures').html("");
                 $('#textures').show();
 
-                textureNames.forEach(name => {
-                    $('#textures').append('<li class="col-sm-6"><a onclick="loadTexture(\'' 
-                        + name + '\')"><img src="models/texture/'+ name + '/' + name +'.png" alt="' + name + '"></a></li>')
+                textures.forEach(to => {
+                    $('#textures').append(
+                        '<a id=' + to.id + 'textureDiv class="container cursor col-sm-6" onclick="showTexture(' + to.id + ');"><img id=' + to.id + 'Image class="image" src="models/texture/'+ to.name + '/' 
+                            + to.name +'.jpg" alt="' + to.name + '">' + 
+                        '<div id=' + to.id + 'Text class="middle"><div class="textureNameText">' + to.displayName + '</div></div></a>');
+
+                        $('#' + to.id + 'textureDiv').hover(function(){
+                            $('#' + to.id + 'Text').css("font-size", $('#' + to.id + 'Image').width() / 6 + 'px');
+                        }, function(){
+                            if(chosenTexture == undefined || chosenTexture.id != to.id){
+                                $('#' + to.id + 'Text').css("font-size", '1px');
+                            }
+                        });
                 });
+            }
+
+            function showTexture(id){
+                if(chosenTexture != undefined){
+                    chosenTexture.generatedTextureObjects.forEach(o => {
+                        o.visible = false;
+                    });
+                    chosenTexture = undefined;
+                }
+                chosenTexture = textures.find(to => to.id == id);
+                //HTML STYLE
+                //alle unactive machen
+                textures.forEach(to => {
+                    $('#' + to.id + 'Image').toggleClass('higherTextureImageOpacity', false);
+                    $('#' + to.id + 'Text').toggleClass('showTextureNameText', false);
+                });
+
+                //das einschalten das gerade geclickt wurde
+                $('#' + id + 'Image').toggleClass('higherTextureImageOpacity');
+                $('#' + id + 'Text').toggleClass('showTextureNameText');
+
+
+                //OBJECTS
+                //hide real
+                ANIMATING = true;
+                chosenTexture.objectsToHide.forEach(o => {
+                    o.children[0].children[o.textureJSON.childrenId].visible = false;
+                    o.children[0].children.forEach(child => {
+                        if(child.type == "LineSegments"){
+                            child.visible = false;
+                        }
+                    });
+                    needsUpdate = true;
+                });
+
+                //show all textured objects
+                chosenTexture.generatedTextureObjects.forEach(o => {
+                    o.visible = true;
+                });
+                ANIMATING = false;
             }
 
             function endTextureMode(){
                 $('#items-wrapper').show(); 
                 $('#textures').hide();
 
-                generatedTextureObjects.forEach(oT => scene.remove(oT));
-                generatedTextureObjects = [];
+                //hide all textured objects
+                if(chosenTexture != undefined){
+                    chosenTexture.generatedTextureObjects.forEach(o => {
+                        o.visible = false;
+                    });
+                    chosenTexture = undefined;
+                }
 
                 //showAllNormalObjects
                 objects.forEach(o => {
@@ -645,66 +681,53 @@
                 });
             }
 
-            function loadTexture(name){
-                var objectsWithTexture = objects.filter(o => o.textureJSON.value == true);
-                generatedTextureObjects.forEach(oT => scene.remove(oT));
-                generatedTextureObjects = [];
-                //generateObjects
-                objectsWithTexture.forEach(o => {
-                    texturePath = 'models/texture/' + name + '/' + o.name.split('/')[1] + '.png';
-                    console.log(o);
-                    var png_texture = new THREE.TextureLoader().load(texturePath);
-                    // var materials = [
-                    //     leftSide,        // Left side
-                    //     rightSide,       // Right side
-                    //     topSide,         // Top side
-                    //     bottomSide,      // Bottom side
-                    //     frontSide,       // Front side
-                    //     backSide         // Back side
-                    // ];
-                    var png_material = new THREE.MeshPhongMaterial({ map: png_texture });
-                    png_material.transparent = true;
-                    //png_material.side = THREE.DoubleSide;
+            function loadTextures(){
+                textures.forEach(to => {
+                    var objectsWithTexture = objects.filter(o => o.textureJSON.value == true);
+                    var generatedTextureObjects = [];
+                    var objectsToHide = [];
+                    //generateObjects
+                    objectsWithTexture.forEach(o => {
+                        texturePath = 'models/texture/' + to.name + '/' + o.name.split('/')[1] + '.png';
+                        var png_texture = new THREE.TextureLoader().load(texturePath, function() {
+                            
+                        });
+                        // var materials = [
+                        //     leftSide,        // Left side
+                        //     rightSide,       // Right side
+                        //     topSide,         // Top side
+                        //     bottomSide,      // Bottom side
+                        //     frontSide,       // Front side
+                        //     backSide         // Back side
+                        // ];
+                        var png_material = new THREE.MeshPhongMaterial({ map: png_texture });
+                        png_material.transparent = true;
+                        //png_material.side = THREE.DoubleSide;
 
-                    var whiteMaterial = new THREE.MeshPhongMaterial();
-                    whiteMaterial.transparent = true;
-                    whiteMaterial.opacity = 0.50;
+                        var whiteMaterial = new THREE.MeshPhongMaterial();
+                        whiteMaterial.transparent = true;
+                        whiteMaterial.opacity = 0.50;
 
-                    var materials = [png_material, png_material, whiteMaterial, png_material, png_material, undefined]
+                        var materials = [png_material, png_material, whiteMaterial, png_material, png_material, undefined]
 
-                    var mainMesh = o.children[0].children[o.textureJSON.childrenId];
-                    var geometry = new THREE.BoxGeometry(mainMesh.size.x, mainMesh.size.y, mainMesh.size.z, 1, 1, 1, materials);
-                    var generatedTextureObject = new THREE.Mesh(geometry, materials);
-                    mainMesh.geometry.computeBoundingSphere();
-                    generatedTextureObject.material.transparent = true; //transparents zulassen
-                    generatedTextureObject.name = o.name;
-                    generatedTextureObject.position.x = mainMesh.geometry.boundingSphere.center.x - 5395;
-                    generatedTextureObject.position.y = mainMesh.geometry.boundingSphere.center.y - 22;
-                    generatedTextureObject.position.z = mainMesh.geometry.boundingSphere.center.z + 700;
+                        var mainMesh = o.children[0].children[o.textureJSON.childrenId];
+                        var geometry = new THREE.BoxGeometry(mainMesh.size.x, mainMesh.size.y, mainMesh.size.z, 1, 1, 1, materials);
+                        var generatedTextureObject = new THREE.Mesh(geometry, materials);
+                        mainMesh.geometry.computeBoundingSphere();
+                        //generatedTextureObject.material.transparent = true; //transparents zulassen
+                        generatedTextureObject.name = o.name;
+                        generatedTextureObject.position.x = mainMesh.geometry.boundingSphere.center.x - 5395;
+                        generatedTextureObject.position.y = mainMesh.geometry.boundingSphere.center.y - 22;
+                        generatedTextureObject.position.z = mainMesh.geometry.boundingSphere.center.z + 700;
 
-                    o.children[0].children[o.textureJSON.childrenId].visible = false;
-                    o.children[0].children.forEach(child => {
-                        if(child.type == "LineSegments"){
-                            child.visible = false;
-                        }
+                        generatedTextureObjects.push(generatedTextureObject);
+                        scene.add(generatedTextureObject);
+                        generatedTextureObject.visible = false;
                     });
-                    generatedTextureObjects.push(generatedTextureObject);
-                    scene.add(generatedTextureObject);
+                    to.generatedTextureObjects = generatedTextureObjects;
+                    to.objectsToHide = objectsWithTexture;
                 });
-                console.log(generatedTextureObjects);
             }
-
-            function chooseDesignEnabled(){
-                console.log(objects[25]);
-                var png_texture = new THREE.TextureLoader().load('models/texture/dusche_verlauf_weiß.png');
-                var png_material = new THREE.MeshPhongMaterial({ map: png_texture });
-                objects[25].materialLibraries = null;
-                objects[25].children[0].material.transparent = true; 
-                objects[25].children[0].material = png_material;
-                needsUpdate = true;
-                console.log(objects[25]);
-            }
-
 
             function changeView(type){
                 if(type == 'view_front'){
@@ -787,6 +810,8 @@
 
             $(document).ready(function () {
                 // console.log("Document Ready");
+                startedPresentation();
+                $('#sidebar').hide();
             });
         </script>
 

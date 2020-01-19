@@ -43,6 +43,11 @@ async function showObjects(animationObj) {
       }
     }
 
+    if(nextObject.header != null){
+      appendText(nextObject.header, nextObject.number + 100);
+      await Sleep(2000);
+    }
+
     console.log(+ nextObject.number + " Animating: " + nextObject.name);
 
     $('#slider').val(nextObject.number);
@@ -348,6 +353,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, 
   if(numberOfModels != 0){
     progressPerModel = 100 / numberOfModels;
   }
+  $('#sidebar').show();
   var manager = new THREE.LoadingManager();
   manager.onStart = function(url, itemsLoaded, itemsTotal) {
     // console.log(
@@ -423,6 +429,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, 
       newObject.visible = false;
       startedPresentation();
       if(objects.length == numberOfModels){
+        loadTextures();
         await startAnimation(1);
         console.log("ANIMATION ENDING");
         //ANIMATING = false; 
@@ -431,18 +438,9 @@ function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, 
   }
 
   manager.onLoad = async function() {
-    setSize(newObject);
-    needsUpdate = true;
-    newObject.visible = false;
-    
-    currentProgress += progressPerModel;
-    currentProgress = Math.floor(currentProgress);
-
-    $('#progress-bar')
-      .css("width", currentProgress  + "%")
-      .attr("aria-valuenow", currentProgress)
-      .text(currentProgress + "% der Modelle geladen.");
-
+      setSize(newObject);
+      needsUpdate = true;
+      newObject.visible = false;
 
       newObject.name = object_name;
       newObject.number = number;
@@ -494,7 +492,7 @@ function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, 
       objects.push(newObject);
       draggableObjects.push(newObject);
       newObject.visible = false;
-      startedPresentation();
+      
       if(objects.length == numberOfModels){
         await startAnimation(1);
         console.log("ANIMATION ENDING");
