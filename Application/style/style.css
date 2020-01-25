@@ -1,3 +1,7 @@
+canvas {
+  display: block; /* fix necessary to remove space at bottom of canvas */
+}
+
 .container {
   position: relative;
 }
@@ -148,6 +152,7 @@
   height: 25px;
   background: #26a3a1;
   cursor: pointer;
+  border-radius: 5px;;
 }
 
 .slider::-moz-range-thumb {
@@ -155,6 +160,7 @@
   height: 25px;
   background: #26a3a1;
   cursor: pointer;
+  border-radius: 5px;
   border-color: #E5E5E5 !important
 }
 
@@ -281,10 +287,12 @@ a.custom-card
 }
 
 .card-img-top:hover {
+  outline:none;
   box-shadow:0 0 0 .2rem rgba(28, 119, 116,.2) !important;
 }
 
 .card-img-top:focus {
+  outline:none;
   box-shadow:0 0 0 .2rem rgba(28, 119, 116,.5) !important;
 }
 
@@ -789,5 +797,3 @@ a.article:hover {
 .violet {
   background-color: #80cbc4;
 }
-
- 

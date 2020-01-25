@@ -255,7 +255,7 @@ StationClock.prototype.draw = function(inputMinutes) {
       var millis  = 0;
       var seconds = 0;
       var minutes = this.inputMinutes;
-      var hours   = 7;
+      var hours   = 6;
 
       // draw hour hand
       context.save();

@@ -59,6 +59,7 @@ async function showObjects(animationObj) {
       //nextObject.position.z = nextObject.positionFixZ;
       nextObject.position.z += 70;
 
+      var previousClockValue = clock.inputMinutes;
       var position = { z: nextObject.position.z};
       var target = { z: nextObject.position.z - 70};
       var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
@@ -66,7 +67,8 @@ async function showObjects(animationObj) {
       tween.onUpdate(returnValue = function(){
         nextObject.visible = true;
         nextObject.position.z = position.z;
-        clock.inputMinutes += 0.7;
+        //console.log(((nextObject.clockMinutes * 60) / nextObject.time));
+        clock.inputMinutes += ((nextObject.clockMinutes * 60) / nextObject.time);
         if(animationObj.CANCELLED == true){
           tween.stop();
           tween = undefined;
@@ -97,12 +99,13 @@ async function showObjects(animationObj) {
       while(PAUSED){
         await Sleep(100);
       }
+      clock.inputMinutes = previousClockValue + nextObject.clockMinutes;
       nextObject.position.z = 700;
       console.log(nextObject.number + " Finished: " + nextObject.name);
     } else if(nextObject.animation_mode == 'TOP'){
       //nextObject.position.y = nextObject.positionFixY;
       nextObject.position.y += 50;
-
+      var previousClockValue = clock.inputMinutes;
       var position = { y: nextObject.position.y};
       var target = { y: nextObject.position.y - 50};
       var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
@@ -111,7 +114,8 @@ async function showObjects(animationObj) {
       tween.onUpdate(returnValue = function(){
         nextObject.visible = true;
         nextObject.position.y = position.y;
-        clock.inputMinutes += 0.7;
+        //console.log(((nextObject.clockMinutes * 60) / nextObject.time));
+        clock.inputMinutes += ((nextObject.clockMinutes * 60) / nextObject.time);
         if(animationObj.CANCELLED == true){
           tween.stop();
           tween = undefined;
@@ -142,11 +146,13 @@ async function showObjects(animationObj) {
         await Sleep(100);
       }
       nextObject.position.y = -22;
+      clock.inputMinutes = previousClockValue + nextObject.clockMinutes;
       console.log(nextObject.number + " Finished: " + nextObject.name);
     } else if(nextObject.animation_mode == 'RIGHT'){
       //nextObject.position.x = nextObject.positionFixX;
       nextObject.position.x -= 50;
 
+      var previousClockValue = clock.inputMinutes
       var position = { x: nextObject.position.x};
       var target = { x: nextObject.position.x + 50};
       var tween = new TWEEN.Tween(position).to(target, nextObject.time * MULTIPLIER);
@@ -154,7 +160,8 @@ async function showObjects(animationObj) {
       tween.onUpdate(returnValue = function(){
         nextObject.visible = true;
         nextObject.position.x = position.x;
-        clock.inputMinutes += 0.7;
+        // console.log(((nextObject.clockMinutes * 60) / nextObject.time));
+        clock.inputMinutes += ((nextObject.clockMinutes * 60) / nextObject.time);
         if(animationObj.CANCELLED == true){
           tween.stop();
           tween = undefined;
@@ -185,6 +192,7 @@ async function showObjects(animationObj) {
         await Sleep(100);
       }
       nextObject.position.x = -5395;
+      clock.inputMinutes = previousClockValue + nextObject.clockMinutes;
       console.log(nextObject.number + " Finished: " + nextObject.name);
     }
   }
@@ -248,7 +256,9 @@ async function displayDetailView(detailViewId, animationObj){
     }
   }
   currentDetailView.array.forEach(tooltipInformation => {
-    updateTooltip(currentDetailView.id, tooltipInformation.id, tooltipInformation.text);
+    if(tooltipInformation.second == false){
+      updateTooltip(currentDetailView.id, tooltipInformation.id, tooltipInformation.text);
+    }
     //latestMouseIntersection = tooltipInformation.tooltipPosition;
     if(tooltipInformation.objectsToDisplay != []){
       tooltipInformation.objectsToDisplay.forEach(oD => oD.visible = true);
@@ -262,12 +272,35 @@ async function displayDetailView(detailViewId, animationObj){
       return 0;
     }
   }
+  hideTooltip();
+  var loadedObjectToDisplay = undefined;
+  var objectToHide = undefined;
+  if(currentDetailView.array[0].loadedObjectToDisplay != undefined){
+    //"second" tooltip anzeigen
+    currentDetailView.array.forEach(tooltipInformation => {
+      if(tooltipInformation.second == true){
+        updateTooltip(currentDetailView.id, tooltipInformation.id, tooltipInformation.text);
+      }
+    });
+    
+    loadedObjectToDisplay = currentDetailView.array[0].loadedObjectToDisplay;
+    loadedObjectToDisplay.visible = true;
+    objectToHide = objects.find(o => o.number == currentDetailView.array[0].objectToHide);
+    objectToHide.visible = false;
+    await Sleep(3000);
+  }
   if(!animationObj.CANCELLED) {
     while(PAUSED){
       await Sleep(100);
     }
   }
-  hideTooltip();
+  //wieder hiden
+  if(objectToHide != undefined && loadedObjectToDisplay != undefined){
+    loadedObjectToDisplay.visible = false;
+    objectToHide.visible = true;
+    hideTooltip();
+  }
+  
   var currentCameraInformation = cameraViews.find(cV => cV.name == currentlySelectedView);
   var from = {
     camera_x : currentDetailView.camera.x,
@@ -312,44 +345,39 @@ async function displayDetailView(detailViewId, animationObj){
 }
 
 function generateObjects(){
-  var loadedObject;
   var generatedObjects = [];
-  newObject.minusValues.forEach(minusValue => {
-    loadedObject = objects.find(o => o.number == newObject.number - minusValue);
-    if(loadedObject != undefined){
-      console.log(loadedObject);
-      for (let index of newObject.indexesOfGeometrysToGenerate) {
-        var o = loadedObject.children[0].children[index];
-        console.log(o);
-        o.geometry.computeBoundingSphere();
-        var size = {
-          x: o.size.x - 3,
-          y: o.size.y,
-          z: o.size.z
-        };
-        var position = {
-          x: o.geometry.boundingSphere.center.x,
-          y: o.geometry.boundingSphere.center.y + 1,
-          z: o.geometry.boundingSphere.center.z - 1
-        };
-        var geometry = new THREE.BoxBufferGeometry(size.x, size.y, size.z);
-        var object = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
-        object.position.x = position.x - 5395;
-        object.position.y = position.y - 22;
-        object.position.z = position.z + 700;
-        object.visible = false;
-        scene.add(object);
-        generatedObjects.push(object);
-    
-        var detailView = detailViews.find(dV => dV.id == newObject.DETAIL_VIEW_ID);
-        detailView.array[0].objectsToDisplay.push(object);
-      }
+  console.log(newObject);
+  if(newObject != undefined){
+    for (let index of newObject.indexesOfGeometrysToGenerate) {
+      var o = newObject.children[0].children[index];
+      o.geometry.computeBoundingSphere();
+      var size = {
+        x: o.size.x - 3,
+        y: o.size.y,
+        z: o.size.z
+      };
+      var position = {
+        x: o.geometry.boundingSphere.center.x,
+        y: o.geometry.boundingSphere.center.y + 1,
+        z: o.geometry.boundingSphere.center.z - 1
+      };
+      var geometry = new THREE.BoxBufferGeometry(size.x, size.y, size.z);
+      var object = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
+      object.position.x = position.x - 5395;
+      object.position.y = position.y - 22;
+      object.position.z = position.z + 700;
+      object.visible = false;
+      scene.add(object);
+      generatedObjects.push(object);
+  
+      var detailView = detailViews.find(dV => dV.id == newObject.generatedDetailViewId);
+      detailView.array[0].objectsToDisplay.push(object);
     }
-  });
+  }
   return generatedObjects;
 }
 
-function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, isDetailBefore, DETAIL_VIEW_ID, otherObjectsToGenerate, minusValues, indexesOfGeometrysToGenerate) {
+function loadModel(object_name, detailLoad, detailViewId, objectToHideNumber, isTransparent, number, normalLoad, textureJSON, ANIMATION_MODE, HEADER, TEXT, isSUBPOINT, TIME, clockMinutes, isDetailBefore, DETAIL_VIEW_ID, otherObjectsToDisplay, otherObjectsToGenerate, indexesOfGeometrysToGenerate, generatedDetailViewId) {
   if(numberOfModels != 0){
     progressPerModel = 100 / numberOfModels;
   }
@@ -380,6 +408,23 @@ function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, 
       .attr("aria-valuenow", currentProgress)
       .text(currentProgress + "% der Modelle geladen.");
 
+    newObject.position.x = -4995 - 400;
+    newObject.position.y -= 22;
+    newObject.position.z = 300 + 400;
+    newObject.positionFixX = newObject.position.x;
+    newObject.positionFixY = newObject.position.y;
+    newObject.positionFixZ = newObject.position.z;
+
+    if(detailLoad){
+      newObject.visible = false;
+
+      newObject.children[0].children.forEach(e => e.material.metalness = 0);
+
+      var detailView = detailViews.find(dV => dV.id == detailViewId);
+      detailView.array[0].loadedObjectToDisplay = newObject;
+      detailView.array[0].objectToHide = objectToHideNumber;
+      return 0;
+    }
 
     newObject.name = object_name;
     newObject.number = number;
@@ -391,22 +436,18 @@ function loadModel(object_name, isTransparent, number, normalLoad, textureJSON, 
     newObject.time = TIME;
     newObject.textureJSON = textureJSON;
 
-    newObject.position.x = -4995 - 400;
-    newObject.position.y -= 22;
-    newObject.position.z = 300 + 400;
-    newObject.positionFixX = newObject.position.x;
-    newObject.positionFixY = newObject.position.y;
-    newObject.positionFixZ = newObject.position.z;
-
     newObject.isDetailBefore = isDetailBefore;
     newObject.DETAIL_VIEW_ID = DETAIL_VIEW_ID;
     newObject.otherObjectsToGenerate = otherObjectsToGenerate;
-    newObject.minusValues = minusValues;
     newObject.indexesOfGeometrysToGenerate = indexesOfGeometrysToGenerate;
+    newObject.clockMinutes = clockMinutes;
+    newObject.generatedDetailViewId = generatedDetailViewId;
     if(otherObjectsToGenerate){
-      newObject.otherObjectsToDisplay = generateObjects();
-    }else{
-      newObject.otherObjectsToDisplay = undefined;
+      generateObjects();
+    }
+
+    if(otherObjectsToDisplay){
+      newObject.otherObjectsToDisplay = detailViews.find(dV => dV.id == newObject.DETAIL_VIEW_ID).array[0].objectsToDisplay;
     }
 
     //setMetallness to 0
@@ -593,7 +634,7 @@ async function startAnimation(startPoint){
 async function restart(){
   RELOADED = true;
   $("#items-wrapper").html("");
-  clock.inputMinutes = 0;
+  // clock.inputMinutes = 0;
   //objects.forEach(obj => obj.visible = false);
   endTextureMode();
   await startAnimation(1);
@@ -602,7 +643,7 @@ async function restart(){
 async function sliderInput(id, ANIMATE){
   $("#items-wrapper").html("");
   //nextObject = undefined;
-  clock.inputMinutes = 0;
+  // clock.inputMinutes = 0;
   $('#slider').val(id);
   endTextureMode();
 
@@ -654,6 +695,7 @@ function moveEveryObjectToRealPosition(){
 }
 
 function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){
+  clock.inputMinutes = 0;
   if(nextObject == undefined){
     objects.forEach(o => {
       o.visible = false;
@@ -673,6 +715,7 @@ function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){
       }
     });
     appendArrayOfObjectsToList(objects.sort((a, b) => (a.number > b.number) ? 1 : -1));
+    clock.inputMinutes += 12.5 * 60; //auf 18:30 stellen
     return 0;
   }
 
@@ -683,6 +726,11 @@ function calculateObjectsBeforeAndAfter(nextObject, withCurrent, number){
   //außerdem in der Liste alle Punkte anzeigen einschließlich des derzeitig animierten objekts.
   var objectsBeforeWithCurrent = objects.filter(o => o.number <= nextObject.number);
   objectsBeforeWithCurrent.sort((a, b) => (a.number > b.number) ? 1 : -1);
+
+  //time, but always without current because this one gets animated
+  objectsBefore.forEach(o => {
+    clock.inputMinutes += o.clockMinutes;
+  });
   
 
   $("#items-wrapper").html("");
@@ -720,6 +768,6 @@ function makeArrayVisible(array){
     o.visible = true;
     if(o.otherObjectsToDisplay != undefined){
       o.otherObjectsToDisplay.forEach(oD => oD.visible = true);
-    }
+    } 
   });
 }
