@@ -1,0 +1,864 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.1)  4 FEB 2020 19:55
+entering extended mode
+**c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/Main.tex
+(c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/Main.tex
+LaTeX2e <2019-10-01> patch level 3
+("C:\Program Files\MiKTeX 2.9\tex/latex/base\report.cls"
+Document Class: report 2019/10/25 v1.4k Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.9\tex/latex/base\size11.clo"
+File: size11.clo 2019/10/25 v1.4k Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) ("C:\Program Files\MiKTeX 2.9\tex/generic/babel\babel.sty"
+Package: babel 2019/11/14 3.36 The Babel package
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/babel\switch.def"
+File: switch.def 2019/11/14 3.36 Babel switching mechanism
+)
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Program Files\MiKTeX 2.9\tex/latex/arabi\bblopts.cfg"
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of babel
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/babel-english\english.ldf"
+Language: english 2017/06/06 v3.3r English support from the babel system
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/babel\babel.def"
+File: babel.def 2019/11/14 3.36 Babel common definitions
+\babel@savecnt=\count89
+\U@D=\dimen103
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/babel\txtbabel.def")
+\bbl@dirlevel=\count90
+)
+Package babel Info: \l@canadian = using hyphenrules for english
+(babel)             (\language0) on input line 102.
+Package babel Info: \l@australian = using hyphenrules for ukenglish
+(babel)             (\language72) on input line 105.
+Package babel Info: \l@newzealand = using hyphenrules for ukenglish
+(babel)             (\language72) on input line 108.
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/babel-german\german.ldf"
+Language: german 2018/12/08 v2.11 German support for babel (pre-1996 orthography)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/babel-german\germanb.ldf"
+Language: germanb 2018/12/08 v2.11 German support for babel (pre-1996 orthography)
+Package babel Info: Making " an active character on input line 135.
+))) ("C:\Program Files\MiKTeX 2.9\tex/latex/geometry-de\geometry.sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+) ("C:\Program Files\MiKTeX 2.9\tex/generic/iftex\ifpdf.sty"
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/iftex\iftex.sty"
+Package: iftex 2019/11/07 v1.0c TeX engine tests
+)) ("C:\Program Files\MiKTeX 2.9\tex/generic/iftex\ifvtex.sty"
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+) ("C:\Program Files\MiKTeX 2.9\tex/generic/iftex\ifxetex.sty"
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count91
+\Gm@cntv=\count92
+\c@Gm@tempcnt=\count93
+\Gm@bindingoffset=\dimen104
+\Gm@wd@mp=\dimen105
+\Gm@odd@mp=\dimen106
+\Gm@even@mp=\dimen107
+\Gm@layoutwidth=\dimen108
+\Gm@layoutheight=\dimen109
+\Gm@layouthoffset=\dimen110
+\Gm@layoutvoffset=\dimen111
+\Gm@dimlist=\toks15
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.cfg")) ("C:\Program Files\MiKTeX 2.9\tex/latex/xifthen\xifthen.sty"
+Package: xifthen 2015/11/05 v1.4.0 Extended ifthen features
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/tools\calc.sty"
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count94
+\calc@Bcount=\count95
+\calc@Adimen=\dimen112
+\calc@Bdimen=\dimen113
+\calc@Askip=\skip43
+\calc@Bskip=\skip44
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count96
+\calc@Cskip=\skip45
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/ifmtarg\ifmtarg.sty"
+Package: ifmtarg 2018/04/16 v1.2b check for an empty argument
+)) ("C:\Program Files\MiKTeX 2.9\tex/latex/xstring\xstring.sty" ("C:\Program Files\MiKTeX 2.9\tex/generic/xstring\xstring.tex"
+\integerpart=\count97
+\decimalpart=\count98
+)
+Package: xstring 2019/02/06 v1.83 String manipulations (CT)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphicx.sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphics.sty"
+Package: graphics 2019/11/01 v1.3d Standard LaTeX Graphics (DPC,SPQR)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\graphics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def"
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen114
+\Gin@req@width=\dimen115
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/xcolor\xcolor.sty"
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Package option `usenames' ignored on input line 216.
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/colortbl\colortbl.sty"
+Package: colortbl 2018/12/12 v1.0d Color table columns (DPC)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/tools\array.sty"
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen116
+\ar@mcellbox=\box27
+\extrarowheight=\dimen117
+\NC@list=\toks16
+\extratabsurround=\skip46
+\backup@length=\skip47
+\ar@cellbox=\box28
+)
+\everycr=\toks17
+\minrowclearance=\skip48
+)
+\rownum=\count99
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\dvipsnam.def"
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+)) ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\amssymb.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\amsfonts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks18
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) ("C:\Program Files\MiKTeX 2.9\tex/latex/epstopdf-pkg\epstopdf.sty"
+Package: epstopdf 2019/11/24 v2.7 Conversion with epstopdf on the fly (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/epstopdf-pkg\epstopdf-base.sty"
+Package: epstopdf-base 2019/11/24 v2.7 Base part for package epstopdf
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\infwarerr.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\kvdefinekeys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\ltxcmds.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+))) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\etexcmds.sty"
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/iftex\ifluatex.sty"
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+)))) ("C:\Program Files\MiKTeX 2.9\tex/latex/pdftexcmds\pdftexcmds.sty"
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 442.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 460.
+)) ("C:\Program Files\MiKTeX 2.9\tex/latex/base\inputenc.sty"
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks19
+\inpenc@posthook=\toks20
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hyperref.sty"
+Package: hyperref 2019/11/10 v7.00c Hypertext links for LaTeX
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\pdfescape.sty"
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\hycolor.sty"
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\xcolor-patch.sty"
+Package: xcolor-patch 2016/05/16 xcolor patch
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\hopatch.sty"
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+))) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\letltxmacro.sty"
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\auxhook.sty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen118
+\Hy@linkcounter=\count100
+\Hy@pagecounter=\count101
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\pd1enc.def"
+File: pd1enc.def 2019/11/10 v7.00c Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\intcalc.sty"
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count102
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4535.
+Package hyperref Info: Link nesting OFF on input line 4540.
+Package hyperref Info: Hyper index ON on input line 4543.
+Package hyperref Info: Plain pages OFF on input line 4550.
+Package hyperref Info: Backreferencing OFF on input line 4555.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4788.
+\c@Hy@tempcnt=\count103
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/url\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5147.
+\XeTeXLinkMargin=\dimen119
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\bitset.sty"
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\bigintcalc.sty"
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count104
+\Field@Width=\dimen120
+\Fld@charsize=\dimen121
+Package hyperref Info: Hyper figures OFF on input line 6418.
+Package hyperref Info: Link nesting OFF on input line 6423.
+Package hyperref Info: Hyper index ON on input line 6426.
+Package hyperref Info: backreferencing OFF on input line 6433.
+Package hyperref Info: Link coloring OFF on input line 6438.
+Package hyperref Info: Link coloring with OCG OFF on input line 6443.
+Package hyperref Info: PDF/A mode OFF on input line 6448.
+LaTeX Info: Redefining \ref on input line 6488.
+LaTeX Info: Redefining \pageref on input line 6492.
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\atbegshi.sty"
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+)
+\Hy@abspage=\count105
+\c@Item=\count106
+\c@Hfootnote=\count107
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hpdftex.def"
+File: hpdftex.def 2019/11/10 v7.00c Hyperref driver for pdfTeX
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\atveryend.sty"
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+)
+\Fld@listcount=\count108
+\c@bookmark@seq@number=\count109
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\uniquecounter.sty"
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+)
+\Hy@SectionHShift=\skip49
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/fancyhdr\fancyhdr.sty"
+Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footers
+\f@nch@headwidth=\skip50
+\f@nch@O@elh=\skip51
+\f@nch@O@erh=\skip52
+\f@nch@O@olh=\skip53
+\f@nch@O@orh=\skip54
+\f@nch@O@elf=\skip55
+\f@nch@O@erf=\skip56
+\f@nch@O@olf=\skip57
+\f@nch@O@orf=\skip58
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/adjustbox\adjustbox.sty"
+Package: adjustbox 2019/01/04 v1.2 Adjusting TeX boxes (trim, clip, ...)
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/xkeyval\xkeyval.sty"
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+ ("C:\Program Files\MiKTeX 2.9\tex/generic/xkeyval\xkeyval.tex" ("C:\Program Files\MiKTeX 2.9\tex/generic/xkeyval\xkvutils.tex"
+\XKV@toks=\toks21
+\XKV@tempa@toks=\toks22
+)
+\XKV@depth=\count110
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+)) ("C:\Program Files\MiKTeX 2.9\tex/latex/adjustbox\adjcalc.sty"
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back-ends (calc, etex, pgfmath)
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/adjustbox\trimclip.sty"
+Package: trimclip 2018/04/08 v1.1 Trim and clip general TeX material
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/collectbox\collectbox.sty"
+Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
+\collectedbox=\box29
+)
+\tc@llx=\dimen122
+\tc@lly=\dimen123
+\tc@urx=\dimen124
+\tc@ury=\dimen125
+Package trimclip Info: Using driver 'tc-pdftex.def'.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/adjustbox\tc-pdftex.def"
+File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
+))
+\adjbox@Width=\dimen126
+\adjbox@Height=\dimen127
+\adjbox@Depth=\dimen128
+\adjbox@Totalheight=\dimen129
+\adjbox@pwidth=\dimen130
+\adjbox@pheight=\dimen131
+\adjbox@pdepth=\dimen132
+\adjbox@ptotalheight=\dimen133
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/ifoddpage\ifoddpage.sty"
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count111
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/varwidth\varwidth.sty"
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box30
+\sift@deathcycles=\count112
+\@vwid@loff=\dimen134
+\@vwid@roff=\dimen135
+)) ("C:\Program Files\MiKTeX 2.9\tex/latex/wrapfig\wrapfig.sty"
+\wrapoverhang=\dimen136
+\WF@size=\dimen137
+\c@WF@wrappedlines=\count113
+\WF@box=\box31
+\WF@everypar=\toks23
+Package: wrapfig 2003/01/31  v 3.6
+)
+\@input{Globals.aux}
+\openout2 = `Globals.aux'.
+
+(c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Globals.tex)
+\@input{00_FrontPageDefinitions.aux}
+\openout2 = `00_FrontPageDefinitions.aux'.
+
+(c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_FrontPageDefinitions.tex) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.aux (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_FrontPage.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_Start.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_Auftraggeber.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\01_Introduction.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\02_VerwendeteTechnologien.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\02a_Lizenzen.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\GrundlagenMethoden.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\03_Umsetzung.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\10_Summary.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\11_ProjectLogBook.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\12_FirstAppendix.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\13_IndividualGoals.aux))
+\openout1 = `Main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(89.62709pt, 418.25368pt, 89.6271pt)
+* v-part:(T,H,B)=(101.40665pt, 591.5302pt, 152.11pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=418.25368pt
+* \textheight=591.5302pt
+* \oddsidemargin=17.3571pt
+* \evensidemargin=17.3571pt
+* \topmargin=-7.86334pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=59.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+("C:\Program Files\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count114
+\scratchdimen=\dimen138
+\scratchbox=\box32
+\nofMPsegments=\count115
+\nofMParguments=\count116
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen139
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
+\everyMPtoPDFconversion=\toks25
+)
+\AtBeginShipoutBox=\box33
+Package hyperref Info: Link coloring OFF on input line 24.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
+Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\refcount.sty"
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+) ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\gettitlestring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count120
+)
+LaTeX Info: Redefining \ref on input line 24.
+LaTeX Info: Redefining \pageref on input line 24.
+LaTeX Info: Redefining \nameref on input line 24.
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.out) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.out)
+\@outlinefile=\write3
+\openout3 = `Main.out'.
+
+\openout2 = `00_FrontPage.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_FrontPage.tex
+LaTeX Font Info:    Trying to load font information for U+msa on input line 26.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+<images/Logo.png, id=115, 492.84125pt x 69.25874pt>
+File: images/Logo.png Graphic file (type png)
+<use images/Logo.png>
+Package pdftex.def Info: images/Logo.png  used on input line 36.
+(pdftex.def)             Requested size: 443.55301pt x 62.33228pt.
+
+Overfull \hbox (25.29933pt too wide) has occurred while \output is active
+ [][]|
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+Make it at least 66.41231pt.
+We now make it that large for the rest of the document.
+This may cause the page layout to be inconsistent, however.
+
+[1
+
+
+
+
+
+
+{C:/Users/tripi/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/Logo.png>])
+\openout2 = `00_Start.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_Start.tex
+Overfull \hbox (15.6376pt too wide) in paragraph at lines 5--9
+[]\OT1/cmr/m/n/10.95 Die Ar-beit wur-de bis-her in glei-cher oder []ahnlicher Wei-se kei-ner an-de-ren Pr[]ufungsbeh[]orde
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.25 \begin{abstract}
+                      [1
+
+
+]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 31.
+ ("C:\Program Files\MiKTeX 2.9\tex/latex/base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 31.
+<images/Screenshot_2020-01-01 Bad-Designer.png, id=134, 1927.2pt x 947.54pt>
+File: images/Screenshot_2020-01-01 Bad-Designer.png Graphic file (type png)
+<use images/Screenshot_2020-01-01 Bad-Designer.png>
+Package pdftex.def Info: images/Screenshot_2020-01-01 Bad-Designer.png  used on input line 42.
+(pdftex.def)             Requested size: 481.79883pt x 236.88441pt.
+
+Overfull \hbox (63.54515pt too wide) in paragraph at lines 42--43
+ [] 
+ []
+
+<images/Screenshot_schraeg.png, id=135, 1927.2pt x 947.54pt>
+File: images/Screenshot_schraeg.png Graphic file (type png)
+<use images/Screenshot_schraeg.png>
+Package pdftex.def Info: images/Screenshot_schraeg.png  used on input line 52.
+(pdftex.def)             Requested size: 481.79883pt x 236.88441pt.
+
+Overfull \hbox (63.54515pt too wide) in paragraph at lines 52--53
+ [] 
+ []
+
+<images/Screenshot_seite.png, id=136, 1927.2pt x 947.54pt>
+File: images/Screenshot_seite.png Graphic file (type png)
+<use images/Screenshot_seite.png>
+Package pdftex.def Info: images/Screenshot_seite.png  used on input line 62.
+(pdftex.def)             Requested size: 481.79883pt x 236.88441pt.
+
+Overfull \hbox (63.54515pt too wide) in paragraph at lines 62--63
+ [] 
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.69 	\end{abstract}
+                     [1] [2 <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/Screenshot_2020-01-01 Bad-Designer.png> <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/Screenshot_schraeg.png>]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.72 	\clearpage
+                 [1 <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/Screenshot_seite.png>]
+Overfull \hbox (1.46788pt too wide) in paragraph at lines 82--83
+\OT1/cmr/m/n/10.95 team. The work is pub-licly ac-ces-si-ble on this web-site []$\OT1/cmtt/m/n/10.95 http : / / vm85 . htl-[]leonding .
+ []
+
+File: images/Screenshot_2020-01-01 Bad-Designer.png Graphic file (type png)
+<use images/Screenshot_2020-01-01 Bad-Designer.png>
+Package pdftex.def Info: images/Screenshot_2020-01-01 Bad-Designer.png  used on input line 89.
+(pdftex.def)             Requested size: 481.79883pt x 236.88441pt.
+
+Overfull \hbox (63.54515pt too wide) in paragraph at lines 89--90
+ [] 
+ []
+
+File: images/Screenshot_schraeg.png Graphic file (type png)
+<use images/Screenshot_schraeg.png>
+Package pdftex.def Info: images/Screenshot_schraeg.png  used on input line 99.
+(pdftex.def)             Requested size: 481.79883pt x 236.88441pt.
+
+Overfull \hbox (63.54515pt too wide) in paragraph at lines 99--100
+ [] 
+ []
+
+File: images/Screenshot_seite.png Graphic file (type png)
+<use images/Screenshot_seite.png>
+Package pdftex.def Info: images/Screenshot_seite.png  used on input line 109.
+(pdftex.def)             Requested size: 481.79883pt x 236.88441pt.
+
+Overfull \hbox (63.54515pt too wide) in paragraph at lines 109--110
+ [] 
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.116 \end{abstract}
+                     [1
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.116 \end{abstract}
+                     [2]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.120 \clearpage
+                 [1])pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.26 \include{00_Start}
+                        % Declaration of Academic Honesty, Abstracts, Acknow... [2
+
+]
+\openout2 = `00_Auftraggeber.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_Auftraggeber.tex
+<images/LL_Logo_skaliert.png, id=176, 509.905pt x 231.86626pt>
+File: images/LL_Logo_skaliert.png Graphic file (type png)
+<use images/LL_Logo_skaliert.png>
+Package pdftex.def Info: images/LL_Logo_skaliert.png  used on input line 11.
+(pdftex.def)             Requested size: 152.97267pt x 69.56041pt.
+)
+Overfull \hbox (17.0pt too wide) in paragraph at lines 11--27
+[][] 
+ []
+
+[3
+
+
+ <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/LL_Logo_skaliert.png>] (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.toc [4
+
+
+])
+\tf@toc=\write4
+\openout4 = `Main.toc'.
+
+ [5]
+\openout2 = `01_Introduction.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\01_Introduction.tex
+Kapitel 1.
+<images/don_knuth.jpg, id=220, 200.75pt x 250.9375pt>
+File: images/don_knuth.jpg Graphic file (type jpg)
+<use images/don_knuth.jpg>
+Package pdftex.def Info: images/don_knuth.jpg  used on input line 19.
+(pdftex.def)             Requested size: 100.37474pt x 125.46843pt.
+
+LaTeX Warning: Reference `cha:theoretical-background' on page 6 undefined on input line 26.
+
+[6
+
+
+]) [7 <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/don_knuth.jpg>] [8
+
+
+]
+\openout2 = `02_VerwendeteTechnologien.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\02_VerwendeteTechnologien.tex
+Kapitel 2.
+
+Overfull \hbox (23.59348pt too wide) in paragraph at lines 7--8
+\OT1/cmr/m/n/10.95 HTML5 ist die f[]unfte Ge-ne-ra-ti-on der Hy-per-text Mar-kup Lan-gua-ge. HTML wird haupts[]achlich
+ []
+
+[9
+
+
+] [10
+
+]
+Overfull \hbox (11.91331pt too wide) in paragraph at lines 50--53
+\OT1/cmr/m/n/10.95 WebGL kann f[]ur ei-ne Viel-zahl von Din-gen ver-wen-det wer-den, durch im-mer lei-stungsf[]ahigere
+ []
+
+[11
+
+] [12
+
+]
+Overfull \hbox (2.13428pt too wide) in paragraph at lines 82--85
+\OT1/cmr/m/n/10.95 AutoCAD ist ein von Au-to-Desk ent-wickel-ter gra-fi-scher Zei-chungs-edi-tor. Die-ser erm[]oglicht
+ []
+
+[13
+
+]
+<images/AutoCAD_UI.jpg, id=276, 2168.1pt x 1165.35374pt>
+File: images/AutoCAD_UI.jpg Graphic file (type jpg)
+<use images/AutoCAD_UI.jpg>
+Package pdftex.def Info: images/AutoCAD_UI.jpg  used on input line 98.
+(pdftex.def)             Requested size: 455.24408pt x 244.67816pt.
+
+Overfull \hbox (36.9904pt too wide) in paragraph at lines 98--99
+ [] 
+ []
+
+[14 <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/AutoCAD_UI.jpg>]
+<images/Electron_BD.png, id=285, 1445.4pt x 782.925pt>
+File: images/Electron_BD.png Graphic file (type png)
+<use images/Electron_BD.png>
+Package pdftex.def Info: images/Electron_BD.png  used on input line 126.
+(pdftex.def)             Requested size: 455.24408pt x 246.58684pt.
+
+Overfull \hbox (36.9904pt too wide) in paragraph at lines 126--127
+ [] 
+ []
+
+[15
+
+] [16 <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/Electron_BD.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 137--144
+
+ []
+
+[17
+
+]
+<images/Git-Branches-1.png, id=309, 1170.3725pt x 715.67375pt>
+File: images/Git-Branches-1.png Graphic file (type png)
+<use images/Git-Branches-1.png>
+Package pdftex.def Info: images/Git-Branches-1.png  used on input line 157.
+(pdftex.def)             Requested size: 455.24408pt x 278.37997pt.
+
+Overfull \hbox (36.9904pt too wide) in paragraph at lines 157--158
+ [] 
+ []
+
+[18
+
+ <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/Git-Branches-1.png>]) [19]
+\openout2 = `02a_Lizenzen.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\02a_Lizenzen.tex
+Kapitel 3.
+[20
+
+
+
+] [21]
+Overfull \hbox (54.66064pt too wide) in paragraph at lines 25--26
+\OT1/cmr/m/n/10.95 Die Ge-ne-ral Pu-blic Li-cen-se, aus dem eng-li-schen []ubersetzt et-wa \OT1/cmr/m/it/10.95 all-ge-mei-ne Ver[]offentlichungserlaubnis
+ []
+
+) [22] [23
+
+
+]
+\openout2 = `GrundlagenMethoden.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\GrundlagenMethoden.tex) [24
+
+
+
+]
+\openout2 = `03_Umsetzung.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\03_Umsetzung.tex
+Kapitel 4.
+<images/DA-SysArch.jpg, id=369, 774.895pt x 353.32pt>
+File: images/DA-SysArch.jpg Graphic file (type jpg)
+<use images/DA-SysArch.jpg>
+Package pdftex.def Info: images/DA-SysArch.jpg  used on input line 13.
+(pdftex.def)             Requested size: 232.47029pt x 105.99681pt.
+[25
+
+
+ <c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX/images/DA-SysArch.jpg>]) [26]
+\openout2 = `10_Summary.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\10_Summary.tex
+Kapitel 5.
+) [27
+
+
+
+] (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 4--8
+\OT1/cmtt/m/n/10.95 https : / / git . wiki . kernel . org / index . php / GitFaq # Why _ the _ .27Git . 27 _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--19
+[]\OT1/cmr/m/n/10.95 Torsten Gro.  Git: Mit bran-ches ar-bei-ten (git branch), 2015.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--19
+\OT1/cmr/m/n/10.95 URL: []$\OT1/cmtt/m/n/10.95 https : / / blog . seibert-[]media . net / blog / 2015 / 07 / 31 /
+ []
+
+
+Underfull \hbox (badness 7344) in paragraph at lines 41--45
+[]\OT1/cmr/m/n/10.95 opensource.org.  The 3-clause bsd li-cen-se, 2011.  URL: []$\OT1/cmtt/m/n/10.95 http :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--45
+\OT1/cmtt/m/n/10.95 / / web . archive . org / web / 20110529122012 / https : / / opensource . org /
+ []
+
+
+Underfull \hbox (badness 3439) in paragraph at lines 53--57
+[]\OT1/cmr/m/n/10.95 reflecte.at.  []osterreichisch in-ter-net sta-ti-sti-ken, 2014.  URL: []$\OT1/cmtt/m/n/10.95 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--57
+\OT1/cmtt/m/n/10.95 / / web . archive . org / web / 20170214004415 / https : / / www . reflecte . at /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--63
+\OT1/cmtt/m/n/10.95 / / web . archive . org / web / 20160625045609 / https : / / designandmotion .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--69
+[]\OT1/cmr/m/n/10.95 w3techs.com.  Usa-ge of web ser-vers bro-ken down by ran-king,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--69
+\OT1/cmr/m/n/10.95 2019.  URL: []$\OT1/cmtt/m/n/10.95 http : / / web . archive . org / web / 20191212200647 / https :
+ []
+
+[28
+
+
+]) [29] (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.lof)
+\tf@lof=\write5
+\openout5 = `Main.lof'.
+
+ [30
+
+] (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.lot)
+\tf@lot=\write6
+\openout6 = `Main.lot'.
+
+ [31
+
+]
+\openout2 = `11_ProjectLogBook.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\11_ProjectLogBook.tex) [32
+
+
+]
+\openout2 = `12_FirstAppendix.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\12_FirstAppendix.tex
+Anhang A.
+) [33
+
+
+
+]
+\openout2 = `13_IndividualGoals.aux'.
+
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\13_IndividualGoals.tex
+Anhang B.
+) [34
+
+
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 55.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 55.
+ (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\Main.aux (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_FrontPage.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_Start.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\00_Auftraggeber.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\01_Introduction.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\02_VerwendeteTechnologien.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\02a_Lizenzen.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\GrundlagenMethoden.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\03_Umsetzung.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\10_Summary.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\11_ProjectLogBook.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\12_FirstAppendix.aux) (c:/Users/tripi/Documents/HTL/Diplomarbeit/Theorie/DA-Template/LaTeX\13_IndividualGoals.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 55.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 55.
+Package rerunfilecheck Info: File `Main.out' has not changed.
+(rerunfilecheck)             Checksum: 61013A5777C2576CE791079D8E0EF7B9;1671.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 55.
+ ) 
+Here is how much of TeX's memory you used:
+ 9523 strings out of 492484
+ 145894 string characters out of 3131052
+ 256409 words of memory out of 3000000
+ 13416 multiletter control sequences out of 15000+200000
+ 12184 words of font info for 45 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 53i,16n,52p,1360b,519s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on c:/Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.pdf (41 pages, 4158464 bytes).
+PDF statistics:
+ 519 PDF objects out of 1000 (max. 8388607)
+ 129 named destinations out of 1000 (max. 500000)
+ 275 words of extra memory for PDF output out of 10000 (max. 10000000)
+
