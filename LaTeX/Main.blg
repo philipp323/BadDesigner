@@ -3,7 +3,8 @@ A level-1 auxiliary file: 00_FrontPage.aux
 A level-1 auxiliary file: 00_Start.aux
 A level-1 auxiliary file: 00_Auftraggeber.aux
 A level-1 auxiliary file: 01_Introduction.aux
-A level-1 auxiliary file: 02_VerwendeteTechnologien.aux
+A level-1 auxiliary file: 02_Software.aux
+A level-1 auxiliary file: 02b_Dateien.aux
 A level-1 auxiliary file: 02a_Lizenzen.aux
 A level-1 auxiliary file: GrundlagenMethoden.aux
 A level-1 auxiliary file: 03_Umsetzung.aux
@@ -37,4 +38,14 @@ Warning--entry type for "TorvaldsJoke" isn't style-file defined
 --line 798 of file da_bibliography.bib
 Warning--entry type for "GitBranches" isn't style-file defined
 --line 807 of file da_bibliography.bib
-(There were 12 warnings)
+Warning--entry type for "FBX_01" isn't style-file defined
+--line 816 of file da_bibliography.bib
+Warning--entry type for "FBX_02" isn't style-file defined
+--line 825 of file da_bibliography.bib
+Warning--entry type for "OBJ_01" isn't style-file defined
+--line 835 of file da_bibliography.bib
+Warning--entry type for "OBJ_02" isn't style-file defined
+--line 844 of file da_bibliography.bib
+Warning--entry type for "GLB_01" isn't style-file defined
+--line 853 of file da_bibliography.bib
+(There were 17 warnings)

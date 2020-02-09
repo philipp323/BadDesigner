@@ -1,5 +1,20 @@
 \begin{thebibliography}{ope11b}
 
+\bibitem[fe20a]{FBX_01}
+file extensions.org.
+\newblock Dateiendung fbx, 2020.
+\newblock URL: \url{https://www.file-extension.org/de/extensions/fbx}.
+
+\bibitem[fe20b]{OBJ_01}
+file extensions.org.
+\newblock Dateiendung obj, 2020.
+\newblock URL: \url{https://www.file-extension.org/de/extensions/obj}.
+
+\bibitem[fil20]{OBJ_02}
+fileformat.info.
+\newblock Wavefront obj file format summary, 2020.
+\newblock URL: \url{http://www.fileformat.info/format/wavefrontobj/egff.htm}.
+
 \bibitem[Git19]{TorvaldsJoke}
 Git.
 \newblock Git faq, 2019.
@@ -17,10 +32,21 @@ Torsten Groß.
 \newblock URL:
   \url{https://blog.seibert-media.net/blog/2015/07/31/git-mit-branches-arbeiten-git-branch/}.
 
+\bibitem[Hel16]{FBX_02}
+AutoDesk Help.
+\newblock Importieren und exportieren von fbx-dateien, 2016.
+\newblock URL:
+  \url{https://knowledge.autodesk.com/de/support/autocad/learn-explore/caas/CloudHelp/cloudhelp/2016/DEU/AutoCAD-Core/files/GUID-AE2B5A3E-2068-4706-AE83-926C26C6EE9C-htm.html}.
+
 \bibitem[Hub20]{GitMarketshare}
 Open Hub.
 \newblock Compare repositories, 2020.
 \newblock URL: \url{https://www.openhub.net/repositories/compare}.
+
+\bibitem[Iqb19]{GLB_01}
+Kashif Iqbal.
+\newblock Glb, 2019.
+\newblock URL: \url{https://wiki.fileformat.com/3d/gltf/}.
 
 \bibitem[jQu18]{jQueryLicense}
 jQuery.
