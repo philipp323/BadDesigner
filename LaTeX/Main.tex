@@ -12,7 +12,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
-%\usepackage{natbib}
+%Neu/
+\usepackage{csquotes}
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{da_bibliography.bib}{}
+%\overfullrule=1mm 
+%/Neu
 \usepackage{url}
 %for images alignment - added by Nenad
 \usepackage[export]{adjustbox}
@@ -44,8 +49,9 @@
 \include{03_Umsetzung}
 \include{10_Summary}
 
-\bibliography{da_bibliography}{}
-\bibliographystyle{alphaurl} % alternatives plainurl, alphaurl;  german alternative: dinat (but add package natbib)
+\printbibliography
+%\bibliography{da_bibliography}{}
+%\bibliographystyle{alphaurl} % alternatives plainurl, alphaurl;  german alternative: dinat (but add package natbib)
 
 \listoffigures
 \listoftables
@@ -53,5 +59,5 @@
 
 \appendix
 \include{12_FirstAppendix}
-\include{13_IndividualGoals}
+\include{13_IndividualGoals} 
 \end{document}  

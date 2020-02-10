@@ -7,7 +7,7 @@
 HTML5 ist die fünfte Generation der Hypertext Markup Language. HTML wird hauptsächlich zur Darstellung von Websites im Internet genutzt. Die HTML-Dateien werden dabei von einem Browser abgerufen und dargestellt.
 
 \section*{Funktionalität}
-Dadurch das HTML mit CSS und JavaScript um ein Design und Funktionen erweitert werden kann ist es sehr flexibel und vielseitig einsetzbar. Ganze Programme werden heute als WebApp programmiert und bieten denselben Funktionsumfang wie normale desktopbasierte Programme. Weil nur ein Browser benötigt wird um die Websites darzustellen sind sie außerdem plattformunabhängig.  
+Dadurch das HTML mit CSS und JavaScript um ein Design und Funktionen erweitert werden kann ist es sehr flexibel und vielseitig einsetzbar. Ganze Programme werden heute als WebApp programmiert und bieten denselben Funktionsumfang wie normale desktopbasierte Programme. Weil nur ein Browser benötigt wird um die Websites darzustellen sind sie außerdem plattformunabhängig.
 
 
 \section*{Verwendung}
@@ -16,7 +16,7 @@ HTML bildet das Fundament für den Bad-Designer, auf dem alle anderen Features a
 \newpage
 \clearpage
 
-\section{JavaScript}
+\section{JavaScript}\label{sec:JavaScript}
 
 \section*{Erläuterung}
 JavaScript ist eine Skriptsprache, die dazu dient, um HTML zu erweitern. Damit kann man auf Benutzerinteraktionen reagieren und auswerten, Inhalte verändern, generieren und nachladen. Somit sind die Seiten dynamisch und ergänzen HTML und CSS so dass sie interaktiv werden. Des Weiteren wird JavaScript auch für Server und Microcontroller verwendet. Eine bekannte serverseitige Plattform, nämlich Node.js, basiert auf der JavaScript-Laufzeitumgebung. 
@@ -35,7 +35,7 @@ Das Laden der Modelle, Animationen, Benutzer Eingaben und Berechnungen wurden al
 \clearpage
 
 
-\section{WebGL}
+\section{WebGL}\label{sec:WebGL}
 
 \section*{Erläuterung}
 WebGL, kurz für Web Graphics Library, ist eine auf JavaScript basierende Programmierschnittstelle, die es ermöglicht 3D-Grafiken hardwarebeschleunigt im Webbrowser ohne zusätzliche Erweiterungen, Bibliotheken und Technologien darzustellen. Des Weiteren basiert WebGL auf den Spezifikationen von OpenGL ES, kurz für Open Graphics Library for Embedded Systems. Diese beschreibt eine plattform- und sprachenunabhängige Programmierschnittstelle für die Entwicklung von 3D-Computergrafiken. 
@@ -54,7 +54,208 @@ Das Laden der Badezimmer-Module übernimmt WebGL und dient gleichzeitig als Basi
 
 
 \newpage
-\clearpage  
+\clearpage
+
+
+\section{three.js}
+\cite{Three.js_GitHub} \cite{Three.js}
+\section*{Erläuterung}
+three.js ist eine browserübergreifende JavaScript [\ref{sec:JavaScript}]  Bibliothek und API mit der dreidimensionale im Browser Objekte kreiert und angezeigt werden können. Die Besonderheit ist dabei das three.js auf WebGL [\ref{sec:WebGL}] basiert, dadurch werden Inhalte über die Grafikkarte gerendert was wiederum zu mehr Performance und kürzere Ladezeiten führt. Die Bibliothek ist das erste Mal im April 2010 unter der MIT-Lizenz [\ref{sec:MIT}] erschienen und wird in einem Repository auf GitHub [\ref{sec:Git}] gehostet.
+
+\section*{Funktionalität}
+Dadurch dass die Library in JavaScript [\ref{sec:JavaScript}]   geschrieben wurde und auf WebGL [\ref{sec:WebGL}] aufsetzt ist die Interoperabilität zwischen den verschiedensten Browsern und Betriebssystemen gewährleistet, ohne zusätzliche proprietäre Plug-Ins zu verwenden. Außerdem unterstütz sie auch virtual reality und vieles mehr.
+
+\section*{Verwendung}
+Alle Module des Badezimmers werden per three.js geladen und animiert. Jegliche Animationen, Effekte und Texturen werden erst durch diese Technologie möglich. Die Bibliothek ist verantwortlich für die meisten Vorgänge im Bad-Designer und ist somit der wichtigste Bestandteil des Projektes.
+
+\newpage
+\clearpage
+
+\section*{Struktur}
+\cite{Fundamentals_English}
+\cite{Fundamentals_German}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/threejs-structure.png}
+    \caption{Die Struktur von three.js \cite{threejs_structure}}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection*{Renderer}
+Der Renderer in three.js ist das Hauptelement dieser Technologie. Ihm wird eine Szene und eine Kamera übergeben, und dann werden die Elemente der 3D-Szene die im Kegelstumpf, auch genannt Blickfeld der Kamera liegen auf einen Canvas (Leinwand) gezeichnet.
+HTML:
+\begin{verbatim}
+<canvas id="canvas" canvas>
+\end{verbatim}
+JS Initialisierung:
+\begin{verbatim}
+renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight)
+document.getElementById("canvas").appendChild(renderer.domElement);
+renderer.render(scene, camera);
+\end{verbatim}
+Dem WebGLRenderer wird eine Größe übergeben, anschließend wird er dem in HTML erstellten Canvas, beigelegt. Durch Aufruf der Funktion „render()“ beginnt der Renderer die Szene zu zeichnen.
+\subsection*{Canvas}
+In HTML5 ist der Canvas ein Element das dafür benutzt wird, Grafiken, Pfade, Texte und Bilder darzustellen. Ein Canvas kann animiert werden, außerdem reagiert er auf JavaScript-Events beziehungsweise auf Benutzereingaben wie Mausklicks oder Mausbewegung. Dieses Objekt wird von allen gängigen Browsern unterstützt und bietet so three.js eine beständige Grundlage, Grafiken im Web darzustellen. \cite{w3canvas}
+
+\subsection*{Szene}
+Der Szene werden nun alle Objekte, denen deren Position, Orientierung und Materialien hinterlegt wurden, hinzugefügt. Um dem Canvas Daten liefern zu können, muss außerdem eine Kamera beifügt werden. Um Schatten und realistischere Darstellungen zu gewährleisten werden gegebenenfalls Lichtquellen erstellt und hinzugefügt. 
+\cite{Szenengraph}
+\\
+\\
+JS Initialisierung:
+\begin{verbatim}
+var scene = new THREE.Scene();
+\end{verbatim}
+\newpage
+\clearpage
+\subsection*{Kamera}
+Die Kamera wird dem Renderer mitgegeben und außerdem der Szene hinzugefügt. 
+Definition:
+\begin{verbatim}
+PerspectiveCamera( fov : Number, aspect : Number,
+near : Number, far : Number )
+\end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/threejs-camera.png}
+    \caption{Kamera Blickwinkel \cite{fundamentals_camera}}
+    \label{fig:my_label}
+\end{figure}
+Der Parameter „fov“ steht für „field of view“ und gibt den Winkel der Kameraaufnahmen an, vergleichbar mit unterschiedlichen Objektiven bei Kameras in der Realität.
+„aspect“ definiert das Seitenverhältnis der Darstellung. 
+„near“ und „far“ repräsentiert den Bereich vor der Kamera, der gerendert wird. Alle Objekte die nicht in diesem Bereich liegen werden abgeschnitten, oder nicht dargestellt. 
+JS Initialisierung:
+\begin{verbatim}
+camera = new THREE.PerspectiveCamera(50, 
+window.innerWidth / window.innerHeight, 1, 10000);
+scene.add(camera);
+\end{verbatim}
+\newpage
+Arten: 
+\begin{itemize}
+    \item ArrayCamera 
+  
+Dem AmbientLight auch Umgebungslicht genannt, kann keine Position zugewiesen werden und es erhellt alle Objekte gleichmäßig.
+Definition:
+\begin{verbatim}
+RectAreaLight( color : Integer, intensity : Float, width : Float,
+height : Float )
+\end{verbatim}
+    \item CubeCamera 
+  
+Dem AmbientLight auch Umgebungslicht genannt, kann keine Position zugewiesen werden und es erhellt alle Objekte gleichmäßig.
+Definition:
+\begin{verbatim}
+CubeCamera( near : Number, far : Number, cubeResolution : Number,
+options : Object )
+\end{verbatim}
+    \item OrthographicCamera 
+  
+Dem AmbientLight auch Umgebungslicht genannt, kann keine Position zugewiesen werden und es erhellt alle Objekte gleichmäßig.
+Definition:
+\begin{verbatim}
+OrthographicCamera( left : Number, right : Number, top : Number,
+bottom : Number, near : Number, far : Number )
+\end{verbatim}
+    \item PerspectiveCamera 
+  
+Dem AmbientLight auch Umgebungslicht genannt, kann keine Position zugewiesen werden und es erhellt alle Objekte gleichmäßig.
+Definition:
+\begin{verbatim}
+PerspectiveCamera( fov : Number, aspect : Number, near : Number,
+far : Number )
+\end{verbatim}
+\end{itemize}
+\newpage
+\subsection*{Licht}
+Um Objekte und Elemente für die Kamera sichtbar zu machen muss der Szene eine Lichtquelle hinzugefügt werden. Three.js bietet zahlreiche Arten von Lichtern, die viele Möglichkeiten bieten um die verschiedensten Effekte einzubauen.
+\\
+\\
+Arten: 
+\begin{itemize}
+  \item AmbientLight 
+  
+Dem AmbientLight auch Umgebungslicht genannt, kann keine Position zugewiesen werden und es erhellt alle Objekte gleichmäßig.
+Definition:
+\begin{verbatim}
+AmbientLight( color : Integer, intensity : Float )
+\end{verbatim}
+  \item DirectionalLight
+  
+Das DirectionalLight kann mit Sonnenlicht verglichen werden, es kann an keine konkrete Position gesetzt werden und ist mit einer Lichtquelle die sich in sehr großer Entfernung liegt gleichzusetzen.
+
+Definition:
+\begin{verbatim}
+DirectionalLight( color : Integer, intensity : Float )
+\end{verbatim}
+  \item HemisphereLight
+  
+Das HemisphereLight imitiert realistisches Sonnenlicht, durch Definierung der Himmels- und Bodenfarben werden Verfärbungen und Reflektionen auf den Objekten generiert.
+
+Definition:
+\begin{verbatim}
+HemisphereLight( skyColor : Integer, groundColor : Integer, 
+intensity : Float )
+\end{verbatim}
+  \item PointLight
+  
+Das Pointlight kann mit einer Glühbirne verglichen werden, da das Licht in alle Richtungen abgestrahlt wird, außerdem kann eine Position festgelegt werden.
+
+Definition:
+\begin{verbatim}
+PointLight( color : Integer, intensity : Float, 
+distance : Number, decay : Float )
+\end{verbatim}
+  \item RectAreaLight
+  
+Das RectAreaLight emittiert Licht entlang einer rechteckigen Linie, es kann dafür benutzt werden um helle Fenster oder LED-Streifen zu visualisieren.
+
+Definition:
+\begin{verbatim}
+RectAreaLight( color : Integer, intensity : Float, 
+width : Float, height : Float )
+\end{verbatim}
+  \item SpotLight
+
+Das SpotLight kann mit einer Taschenlampe verglichen werden, da das Licht in einem Kegel vom definierten Bereich ausgestrahlt wird. 
+
+Definition:
+\begin{verbatim}
+SpotLight( color : Integer, intensity : Float, distance : Float, 
+angle : Radians, penumbra : Float, decay : Float )
+\end{verbatim}
+\end{itemize}
+
+\newpage
+\clearpage
+\section{jQuery}
+\cite{jQuery}
+\section*{Erläuterung}
+JQuery ist die meistverwendete und freie JavaScript-Bibliothek die für Manipulationen und Navigation per DOM (Document Object Model) entwickelt wurde. Die plattformunabhängige Bibliothek ist das erste Mal 2006 unter der MIT-Lizenz [\ref{sec:MIT}] erschienen. 74\% der 10.000 meistbesuchten Websites ~\cite{jQuery_Usage01} und bereits jede zweite Seite ~\cite{jQuery_Usage02}  nutzen jQuery. Des Weiteren werden Webframeworks und Content-Management-Systeme wie WordPress, Joomla und Drupal mit jQuery ausgeliefert, die zusätzlich zur Beliebtheit beitragen. 
+
+\section*{Funktionalität}
+JQuery ist eine schnelle, leichtgewichtige und funktionsreiche JavaScript-Bibliothek die Dinge wie das Event Handling, Animationen und AJAX vereinfacht. Multiple Browser unterstützen diese Bibliothek und ist somit plattformunabhängig.
+
+\section*{Verwendung}
+JQuery wird primär im Bad-Designer für das Wählen von HTML-Elementen im JS-Code [\ref{sec:JavaScript}] angewendet. Dadurch kann man auf die Attribute und das Styling von Objekten via jQuery zugreifen und diese dynamisch manipulieren. 
+
+\newpage
+\clearpage
+
+\section{Bootstrap}
+\cite{BootStrap_Website} \cite{BootStrap_About}
+\section*{Erläuterung}
+Bootstrap ist ein quelloffenes Frontend-CSS-Framework. Die Technologie bietet verschiedenste Designvorlagen für gängige HTML-Elemente wie Buttons, Tabellen, Typografie, Formulare, et cetera  und optional auch JavaScript-Erweiterungen [\ref{sec:JavaScript}]. Der Entwickler von Bootstrap ist der Kurznachrichtendienst Twitter. Das Toolkit ist das erste Mal 2011 unter der MIT-Lizenz [\ref{sec:MIT}] erschienen. Jedoch ist nur der in HTML, CSS und JavaScript geschriebene Code unter der MIT-Lizenz erhältlich. Bootstrap wird als quelloffenes Framework auf GitHub [\ref{sec:Git}] gehostet.Laut eigenen Angaben des Unternehmens ist Bootstrap die beliebteste HTML, CSS und JavaScript Bibliothek der Welt.
+
+\section*{Funktionalität}
+Das Framework ist grundsätzlich modular aufgebaut und besteht im wesentlichen aus Stylesheets, die die einzelnen Komponenten beinhalten. Diese wiederum werden in einer zentralen Bootstrap-Datei kumuliert. Dieser Architektur ist es zu verdanken dass Entwickler durch Manipulationen der Bootstrap-Datei entscheiden welche Komponenten verwendet werden. Einzelne Attribute wie zum Beispiel die Schriftart und Größe können in einem gebündeltem Konfigurationsstylesheet geändert werden. Ab der Version 2.0 kann der Entwickler über ein Formular gewünschte Komponenten anpassen und anschließend wird eine fertig kompilierte CSS-Datei generiert. 
+\section*{Verwendung}
+Das Design der Website des Bad-Designers wurde mit Bootstrap realisiert und einige JavaScript Funktionen.
+
+\newpage
+\clearpage 
+
 
 \section{NGINX}\label{sec:NGINX}
 \section*{Erläuterung} 
@@ -73,8 +274,9 @@ Der Webserver dient beim Bad-Designer als Back-End wo die ganzen Modelle vom Bad
 
 
 
-\newpage
+
 \clearpage
+\newpage
 
 \section{AutoCAD}
 
@@ -132,7 +334,7 @@ Das Framework erlaubt es den Bad-Designer ohne eine Internetverbindung und lokal
 
 \newpage
 \clearpage
-\section{Git}
+\section{Git}\label{sec:Git}
 \section*{Historie}
 Git ist eine kostenlose Software, die für die verteilte Versionsverteilung von Dateien entwickelt wurde. Git wurde vom Linux-Kernel-Entwickler Linus Torvalds initiiert und entwickelt. Torvalds kam auf diese Idee da er zuvor BitKeeper nutzte, diese aber durch Lizenzänderungen kostenpflichtig wurde. 2005 begann er mit der Entwicklung des beliebten Versionsverwaltungsprogrammes. Dabei hatte er drei Anforderungen. Er wollte Unterstützung verteilter Arbeitsläufe, hohe Sicherheit gegen Verfälschung und hohe Effizienz. Mittlerweile ist der Maintainer Junio Hamano. 2018 wurde GitHub für 7,5 Milliarden US-Dollar von Microsoft übernommen. \\
 Git läuft auf den Betriebssystemen Linux, MacOS und Windows. Das Programm selbst wurde in den Sprachen C, Perl, Tcl, Python und C++ geschrieben und unter der GNU-Lizenz [\ref{sec:GNU}] veröffentlicht. 

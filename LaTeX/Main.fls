@@ -130,6 +130,34 @@ INPUT C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\uniquecounter.sty
 INPUT C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\uniquecounter.sty
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\csquotes\csquotes.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\csquotes\csquotes.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\csquotes\csquotes.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\csquotes\csquotes.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\csquotes\csquotes.cfg
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\csquotes\csquotes.cfg
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\biblatex.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\biblatex.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\logreq\logreq.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\logreq\logreq.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\logreq\logreq.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\logreq\logreq.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\blx-dm.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\blx-dm.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\blx-compat.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\blx-compat.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\biblatex.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\biblatex.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\bbx\alphabetic.bbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\bbx\alphabetic.bbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\bbx\standard.bbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\bbx\standard.bbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\cbx\alphabetic.cbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\cbx\alphabetic.cbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\biblatex.cfg
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\biblatex.cfg
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\adjustbox\adjustbox.sty
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\adjustbox\adjustbox.sty
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\xkeyval\xkeyval.sty
@@ -158,6 +186,10 @@ INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Global
 OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPageDefinitions.aux
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPageDefinitions.tex
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPageDefinitions.tex
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\lbx\german.lbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\lbx\german.lbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\lbx\english.lbx
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\biblatex\lbx\english.lbx
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.aux
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.aux
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPage.aux
@@ -203,6 +235,10 @@ OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.out
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.out
 OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.out
+OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.bcf
+INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.bbl
+INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.bbl
+INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.bbl
 OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPage.aux
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPage.tex
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\00_FrontPage.tex
@@ -329,8 +365,7 @@ INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\images
 OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\10_Summary.aux
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\10_Summary.tex
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\10_Summary.tex
-INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.bbl
-INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.bbl
+INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmcsc10.tfm
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.lof
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.lof
 OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.lof
@@ -375,10 +410,14 @@ INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\13_Ind
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\13_IndividualGoals.aux
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.out
 INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.out
+INPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.run.xml
+OUTPUT c:\Users\tripi\Documents\HTL\Diplomarbeit\Theorie\DA-Template\LaTeX\Main.run.xml
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx12.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr12.pfb
