@@ -41,13 +41,16 @@ function showTooltip() {
 }
 
 function updateTooltip(detailViewId, tooltipDataId, text) {
+  TOOLTIP_VISIBLE = false;
   document.getElementById('tooltips').innerHTML += 
   '<div id="' + detailViewId + tooltipDataId + 'tooltip" class="tooltip noPaddingMargin"><p id="'+ tooltipDataId +'text">test test test test</p><div id="tail1"></div><div id="tail2"></div></div>'
   $('#'+ tooltipDataId +'text').html(text);
+  TOOLTIP_VISIBLE = true;
 }
 
 function hideTooltip(){
     $("#tooltips").html("");
+    TOOLTIP_VISIBLE = false;
     /*if (selectedObject != undefined) {
       selectedObject.material.color = white;
     }*/

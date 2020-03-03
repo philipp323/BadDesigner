@@ -43,8 +43,7 @@ function onMouseDown(event) {
   //Tooltip Position mit Mouseclick ändern. 
   if (intersects.length > 0){
     console.log(objects);
-    // console.log(intersects[0].point);
-    // latestMouseIntersection = intersects[0].point;
+    console.log(intersects[0].point);
   }
 
   // console.log("on mouse down");
