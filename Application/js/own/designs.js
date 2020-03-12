@@ -21,7 +21,8 @@ function generateDesign() {
             {id: 1, name: 'V1_SanMod_Nature', displayName: 'NATURE', generatedTextureObjects: undefined, objectsToHide: undefined},
             {id: 2, name: 'V1_SanMod_Nomad', displayName: 'NOMAD', generatedTextureObjects: undefined, objectsToHide: undefined},
             {id: 3, name: 'V1_SanMod_Stone', displayName: 'STONE', generatedTextureObjects: undefined, objectsToHide: undefined},
-            {id: 4, name: 'V1_SanMod_Stripes', displayName: 'STRIPES', generatedTextureObjects: undefined, objectsToHide: undefined});
+            {id: 4, name: 'V1_SanMod_Stripes', displayName: 'STRIPES', generatedTextureObjects: undefined, objectsToHide: undefined},
+            {id: 5, name: 'V1_SanMod_Woods', displayName: 'INTO THE WOODS', generatedTextureObjects: undefined, objectsToHide: undefined});
 
           //DETAIL - VIEWS
           detailViews.push({id: 0,
@@ -140,12 +141,12 @@ function generateDesign() {
           loadModel("Design_1_glb/Dusche_Vorderwand", false, 0, 0, true,14,false,{value: true, childrenId: 0, hideAll: false},'FRONT',null, '6.3 Vorderwand', true, 4000, 10, true, 1);
           loadModel("Design_1_glb/Dusche_Trennwand", false, 0, 0, true,15,false,{value: true, childrenId: 0, hideAll: false},'LEFT',null, '6.4 Trennwand', true, 4000, 10);
           loadModel("Design_1_glb/Dusche_Decke", false, 0, 0, false,16,false,{value: false, childrenId: 0, hideAll: false},'FRONT',null, '6.5 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, 30);
-          loadModel("Design_1_glb/restliche_Verkleidung_Dusche", false, 0, 0, false,17,false,{value: true, childrenId: 0, hideAll: true, except: ['V1_SanMod_Nature', 'V1_SanMod_Stone','V1_SanMod_Stripes']},'RIGHT',null, '6.6 restliche Verkleidung einbauen', true, 3000, 10);
+          loadModel("Design_1_glb/restliche_Verkleidung_Dusche", false, 0, 0, false,17,false,{value: true, childrenId: 0, hideAll: true, except: ['V1_SanMod_Nature', 'V1_SanMod_Stone','V1_SanMod_Stripes', 'V1_SanMod_Woods']},'RIGHT',null, '6.6 restliche Verkleidung einbauen', true, 3000, 10);
           loadModel("Design_1_glb/Waschtisch_Boden", false, 0, 0, false,18,false,{value: false, childrenId: 0, hideAll: false},'TOP',null, '7. Badezimmerboden verlegen', true, 4000, 30);
           loadModel("Design_1_glb/Waschtisch_Verkleidung", false, 0, 0, false,19,false,{value: true, childrenId: 0, hideAll: true},'FRONT',null, '8. Registerverkleidung Waschtisch einbauen', false, 4000, 30);  
           loadModel("Design_1_glb/restliche_Verkleidung_Abdeckbrett", false, 0, 0, false,20,false,{value: false, childrenId: 0, hideAll: false},'TOP',null, '9. restliche Verkleidungen einbauen', true, 4000, 10);
-          loadModel("Design_1_glb/restliche_Verkleidung_rechts", false, 0, 0, false,21,false,{value: true, childrenId: 0, hideAll: true, except: ['V1_SanMod_Nature', 'V1_SanMod_Stone']},'RIGHT',null, null, false, 4000, 10);
-          loadModel("Design_1_glb/restliche_Verkleidung_links", false, 0, 0, false,22,false,{value: true, childrenId: 0, hideAll: true, except: ['V1_SanMod_Nature', 'V1_SanMod_Stone']},'LINKS',null, null, true, 4000, 10);
+          loadModel("Design_1_glb/restliche_Verkleidung_rechts", false, 0, 0, false,21,false,{value: true, childrenId: 0, hideAll: true, except: ['V1_SanMod_Nature', 'V1_SanMod_Stone', 'V1_SanMod_Woods']},'RIGHT',null, null, false, 4000, 10);
+          loadModel("Design_1_glb/restliche_Verkleidung_links", false, 0, 0, false,22,false,{value: true, childrenId: 0, hideAll: true, except: ['V1_SanMod_Nature', 'V1_SanMod_Stone', 'V1_SanMod_Woods']},'LINKS',null, null, true, 4000, 10);
           loadModel("Design_1_glb/Spiegel", false, 0, 0, false,23,false,{value: false, childrenId: 0, hideAll: false},'FRONT',null, '10. Spiegel', true, 4000, 15, false, 3,false, true, [0], 3);
           loadModel("Design_1_glb/Waschtischunterbau", false, 0, 0, false,24,false,{value: false, childrenId: 0, hideAll: false},'FRONT',null, '11. Waschtischunterbau', true, 4000, 15, true, 3, true);
           loadModel("Design_1_glb/Tuere_WC", false, 0, 0, true,25,false,{value: true, childrenId: 0, hideAll: false},'RIGHT',null, '12. Tür Dusche', true, 4000, 30);
@@ -172,7 +173,8 @@ function generateDesign() {
             textures.push(
               {id: 1, name: 'V2_SanMod_Nature', displayName: 'NATURE', generatedTextureObjects: undefined, objectsToHide: undefined},
               {id: 2, name: 'V2_SanMod_Nomad', displayName: 'NOMAD', generatedTextureObjects: undefined, objectsToHide: undefined},
-              {id: 3, name: 'V2_SanMod_Stripes', displayName: 'STRIPES', generatedTextureObjects: undefined, objectsToHide: undefined});
+              {id: 3, name: 'V2_SanMod_Stripes', displayName: 'STRIPES', generatedTextureObjects: undefined, objectsToHide: undefined},
+              {id: 4, name: 'V2_SanMod_Woods', displayName: 'INTO THE WOODS', generatedTextureObjects: undefined, objectsToHide: undefined});
   
         //DETAIL - VIEWS
         detailViews.push({id: 0,
@@ -289,7 +291,7 @@ function generateDesign() {
           loadModel("Design_2_glb/WC_Decke_geschlossen", false, 0, 0, false,11,false,{value: false, childrenId: 0, hideAll: false, except: null},'RIGHT',null, '5.5 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, 18,true, 0,false, true, [5,7], 2);  
           loadModel("Design_2_glb/Dusche_Rueckwand", false, 0, 0, false,12,false,{value: true, childrenId: 1, hideAll: false, except: null},'RIGHT','6. Dusch Modul einbauen', '6.1 Rückwand', true, 4000, 40);  
           loadModel("Design_2_glb/Dusche_Seitenwand", false, 0, 0, true,13,false,{value: true, childrenId: 0, hideAll: false, except: null},'RIGHT',null, '6.2 Seitenwand', true, 4000, 20);  
-          loadModel("Design_2_glb/restliche_Verkleidung_Dusche", false, 0, 0, true,14,false,{value: true, childrenId: 0, hideAll: false, except: ['V2_SanMod_Nature','V2_SanMod_Stripes']},'FRONT',null, '6.3 Verkleidung Dusche', true, 4000, 10);
+          loadModel("Design_2_glb/restliche_Verkleidung_Dusche", false, 0, 0, true,14,false,{value: true, childrenId: 0, hideAll: false, except: ['V2_SanMod_Nature','V2_SanMod_Stripes','V2_SanMod_Woods']},'FRONT',null, '6.3 Verkleidung Dusche', true, 4000, 10);
           loadModel("Design_2_glb/Dusche_Decke", false, 0, 0, false,15,false,{value: false, childrenId: 0, hideAll: false, except: null},'RIGHT',null, '6.4 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, 30, true, 1,false, true, [5,7], 2);
           loadModel("Design_2_glb/Waschtisch_Boden", false, 0, 0, false,16,false,{value: false, childrenId: 0, hideAll: false, except: null},'TOP',null, '7. Badezimmerboden verlegen', true, 4000, 30, true, 2, true, false, undefined, undefined, true);
           loadModel("Design_2_glb/Waschtisch_Verkleidung", false, 0, 0, false,17,false,{value: true, childrenId: 0, hideAll: true, except: null},'LEFT',null, '8. Registerverkleidung Waschtisch einbauen', false, 4000, 30);  
@@ -322,7 +324,9 @@ function generateDesign() {
             //TEXTURES
             textures.push(
               {id: 1, name: 'V3_SanMod_Nature', displayName: 'NATURE', generatedTextureObjects: undefined, objectsToHide: undefined},
-              {id: 2, name: 'V3_SanMod_Nomad', displayName: 'NOMAD', generatedTextureObjects: undefined, objectsToHide: undefined});
+              {id: 2, name: 'V3_SanMod_Nomad', displayName: 'NOMAD', generatedTextureObjects: undefined, objectsToHide: undefined},
+              {id: 3, name: 'V3_SanMod_Stripes', displayName: 'STRIPES', generatedTextureObjects: undefined, objectsToHide: undefined},
+              {id: 4, name: 'V3_SanMod_Woods', displayName: 'INTO THE WOODS', generatedTextureObjects: undefined, objectsToHide: undefined});
 
             //DETAIL - VIEWS
             detailViews.push({id: 0,
@@ -442,7 +446,7 @@ function generateDesign() {
             loadModel("Design_3_glb/Dusche_Decke", false, 0, 0, false,14,false,{value: false, childrenId: 0},'FRONT',null, '6.3 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, 40, false, 2,false, true, [7], 2);  
             loadModel("Design_3_glb/Fliesenboden_weiss", false, 0, 0, false,15,false,{value: false, childrenId: 0},'TOP',null, '7. Badezimmerboden verlegen', false, 4000, 30, true, 2, true, false, undefined, undefined, true);  
             loadModel("Design_3_glb/Waschtisch_Verkleidung", false, 0, 0, false,16,false,{value: true, childrenId: 0},'FRONT',null, '8. Registerverkleidung Waschtisch einbauen', false, 4000, 30);  
-            loadModel("Design_3_glb/restliche Verkleidung_rechts", false, 0, 0, false,17,false,{value: true, childrenId: 0, hideAll: false, except: ['V3_SanMod_Nature']},'RIGHT',null, '9. restliche Verkleidungen einbauen', false, 4000, 10, true, 1);
+            loadModel("Design_3_glb/restliche Verkleidung_rechts", false, 0, 0, false,17,false,{value: true, childrenId: 0, hideAll: false, except: ['V3_SanMod_Nature','V3_SanMod_Stripes','V3_SanMod_Woods']},'RIGHT',null, '9. restliche Verkleidungen einbauen', false, 4000, 10, true, 1);
             loadModel("Design_3_glb/restliche Verkleidung_Abdeckbrett", false, 0, 0, false,18,false,{value: false, childrenId: 0},'TOP',null, null, true, 4000, 10);
             loadModel("Design_3_glb/restliche Verkleidung_links", false, 0, 0, false,19,false,{value: true, childrenId: 0},'RIGHT',null, null, true, 4000, 10);
             loadModel("Design_3_glb/Spiegel", false, 0, 0, false,20,false,{value: false, childrenId: 0},'FRONT',null, '10. Spiegel', false, 4000, 15, false, 3,false, true, [0], 3);  
@@ -469,7 +473,9 @@ function generateDesign() {
             //TEXTURES
             textures.push(
               {id: 1, name: 'V4_SanMod_Nature', displayName: 'NATURE', generatedTextureObjects: undefined, objectsToHide: undefined},
-              {id: 2, name: 'V4_SanMod_Nomad', displayName: 'NOMAD', generatedTextureObjects: undefined, objectsToHide: undefined});
+              {id: 2, name: 'V4_SanMod_Nomad', displayName: 'NOMAD', generatedTextureObjects: undefined, objectsToHide: undefined},
+              {id: 3, name: 'V4_SanMod_Stripes', displayName: 'STRIPES', generatedTextureObjects: undefined, objectsToHide: undefined},
+              {id: 4, name: 'V4_SanMod_Woods', displayName: 'INTO THE WOODS', generatedTextureObjects: undefined, objectsToHide: undefined});
 
             //DETAIL - VIEWS
             detailViews.push({id: 0,
@@ -589,7 +595,7 @@ function generateDesign() {
             loadModel("Design_4_glb/Dusche_Trennwand", false, 0, 0, true,14,false,{value: true, childrenId: 99, hideAll: true,},'RIGHT',null, '6.3 Trennwand', true, 4000, 18);  
             loadModel("Design_4_glb/Dusche_Vorderwand", false, 0, 0, true,15,false,{value: true, childrenId: 0},'RIGHT',null, '6.4 Vorderwand', true, 4000, 18, true, 1);  
             loadModel("Design_4_glb/Dusche_Decke", false, 0, 0, false,16,false,{value: false, childrenId: 0},'FRONT',null, '6.5 Decke inkl. Beleuchtung, Absaugung, Revisionsklappe', true, 4000, 18, false, 2,false, true, [7], 2);  
-            loadModel("Design_4_glb/restliche_Verkleidung_Dusche", false, 0, 0, false,17,false,{value: false, childrenId: 0, except: ['V4_SanMod_Nature']},'RIGHT',null, '6.6 Dusche Verkleidung', true, 4000, 20);  
+            loadModel("Design_4_glb/restliche_Verkleidung_Dusche", false, 0, 0, false,17,false,{value: false, childrenId: 0, except: ['V4_SanMod_Nature','V4_SanMod_Stripes','V4_SanMod_Woods']},'RIGHT',null, '6.6 Dusche Verkleidung', true, 4000, 20);  
             loadModel("Design_4_glb/Waschtischboden", false, 0, 0, false,18,false,{value: false, childrenId: 0},'TOP',null, '7. Badezimmerboden verlegen', false, 4000, 30, true, 2, true, false, undefined, undefined, true);
             loadModel("Design_4_glb/Waschtisch_Verkleidung_vorne", false, 0, 0, false,19,false,{value: true, childrenId: 0},'LEFT',null, '8. Registerverkleidung Waschtisch einbauen', false, 4000, 30); 
             loadModel("Design_4_glb/Waschtisch_Verkleidung_hinten", false, 0, 0, false,20,false,{value: true, childrenId: 0},'RIGHT',null, null, false, 4000, 30);  
@@ -597,7 +603,7 @@ function generateDesign() {
             loadModel("Design_4_glb/restliche_Verkleidung_Abdeckbrett", false, 0, 0, false,22,false,{value: false, childrenId: 0},'TOP',null, null, true, 4000, 10); 
             loadModel("Design_4_glb/Spiegel", false, 0, 0, false,23,false,{value: false, childrenId: 0},'LEFT',null, '9. Spiegel', false, 4000, 15, false, 3,false, true, [2], 3);  
             loadModel("Design_4_glb/Waschtischunterbau", false, 0, 0, false,24,false,{value: false, childrenId: 0},'LEFT',null, '10. Waschtischunterbau', false, 4000, 15, true, 3, true);
-            loadModel("Design_4_glb/Tuere_WC", false, 0, 0, true,25,false,{value: true, childrenId: 0},'FRONT', null, '11. Tür Dusche', false, 4000, 20);
+            loadModel("Design_4_glb/Tuere_Dusche", false, 0, 0, true,25,false,{value: true, childrenId: 0},'FRONT', null, '11. Tür Dusche', false, 4000, 20);
             loadModel("Design_4_glb/Tuere_WC", false, 0, 0, true,26,false,{value: true, childrenId: 0},'FRONT',null, '12. Tür WC', false, 4000, 20);  
             loadModel("Design_4_glb/Waschbecken", false, 0, 0, false,27,false,{value: false, childrenId: 0},'TOP',null, '13. Waschbecken + Armatur', false, 4000, 20); 
             loadModel("Design_4_glb/WC", false, 0, 0, false,28,false,{value: false, childrenId: 0},'FRONT',null, '14. WC Keramik montieren', false, 4000, 30);  
