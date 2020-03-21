@@ -1,5 +1,4 @@
 \chapter{Dateien}
-
 \section{.FBX}
 ~\cite{FBX_01} ~\cite{FBX_02}
 \section*{Erläuterung}
@@ -9,6 +8,7 @@
 Dadurch das FBX-Dateien die volle Funktionalität und Wiedergabetreue der Originaldatei beibehalten, ist es zum Beispiel möglich mit Cinema 4D, 3D Studio Max und PowerAnimator den Projektentwurf zu bearbeiten obwohl er davor in AutoCAD erstellt wurde. 
 
 \section*{Verwendung}
+Im Bad-Designer wurde der Dateityp .FBX in der ersten Phase der Programmierung genutzt. Da die schnelle Exportierung von .DWG zu .FBX viele Vorteile mit sich brachte.
 
 \clearpage
 \newpage
@@ -22,11 +22,11 @@ Das offene Dateiformat .obj dient zum Speichern von dreidimensionalen geometrisc
 Das OBJ-Format speichert lediglich die geometrischen Eigenschaften wie die Koordinaten der Ecken, Texturen, Normalen, Flächen und Glättungen. Die Oberflächenschattierungen können durch Referenzen auf .mtl-Dateien implementiert werden.
 
 \section*{Verwendung}
-
+In der zweiten Phase des Bad-Designers wurden dann .OBJ Dateien für das Darstellen der einzelnen Modelle genutzt. 
 \clearpage
 \newpage
 
-\section{.GLB}
+\section{.GLB}\label{sec:GLB}
 ~\cite{GLB_01}
 \section*{Erläuterung}
 In GLB-Dateien werden Repräsentationen von dreidimensionalen Modellen im GL Transmission Format, binär abgespeichert. Das GL Transmission Format speichert dreidimensionale Objekte im JSON-Format ab. Des Weiteren werden Kameras, Materialien, Animationen und Meshes binär in der GLB-Datei abgespeichert. 
@@ -35,7 +35,7 @@ Durch die kompakten Dateigrößen und das JSON-Format können so komplette dreid
 
 
 \section*{Verwendung}
-
+In der finalen Phase wurde auf .GLB umgestiegen, die Kopplung mit dem DRACOLoader [\ref{sec:Loader}] ermöglichte es alle Modelle schneller zu laden als mit jedem anderem vergleichbaren Dateityp.
 
 
 
