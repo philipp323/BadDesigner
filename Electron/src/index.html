@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible">
+
+    <title>Bad-Designer</title>
+
+    <link rel="icon" href="logos/Baustein.png" sizes="64x64" />
+
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/snackbar.css">
+    <!-- Titelseite - styling -->
+    <link rel="stylesheet" type="text/css" href="style/landing-page-style.css">
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fontawesome.js"></script>
+    <script src="js/solid.js"></script>
+
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/dat.gui.min.js"></script>
+    <script src="js/LoaderSupport.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/WebGL.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/LoadingManager.js"></script>
+    <script src="js/MTLLoader.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script src="js/DRACOLoader.js"></script>
+    <script src="js/own/listeners.js"></script>
+    <script src="js/own/tooltip.js"></script>
+    <script src="js/own/moveEvents.js"></script>
+    <script src="js/own/loadModel.js"></script>
+    <script src="js/own/items.js"></script>
+    <script src="js/own/collision.js"></script>
+    <script src="js/own/designs.js"></script>
+    <script src="js/Tween.min.js"></script>
+    <script src="js/station-clock.js"></script>
+    <script src="js/own/tutorial.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Titelseite/ -->
+        <div id="landing-page">
+
+            <img src="logos/Logo_mit_Schrift_white.png" class="fade-in" id="landing-page-img">
+            <div id="footer">
+                <div style="text-align: center;">
+                    <div class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Titelseit -->
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="active" style="position:absolute !important;">
+            <span id="sidebar_presentations">
+                <div class="">
+                    <a type="button" href="" id="objectModeExited" class="cursor closeBtn">
+                        <i class="fas fa-redo fa-2x"></i>
+                    </a>
+                </div>
+                <ul class="list-unstyled CTAs">
+                    <div id="items-wrapper">
+                    </div>
+                    <div id="textures" class="row">
+                    </div>
+                    <div id="grundrisse" class="row">
+                    </div>
+                    <div id="progress-block" class="progress" style="display: none;">
+                        <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;"
+                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
+                </ul>
+            </span>
+            <span id="sidebar_elements">
+                <ul class="list-unstyled components">
+                    <li>
+                        <a id="sidebarCollapse" class="cursor">
+                            <i class="fas fa-arrows-alt-h fa-2x"></i>
+                            Menü
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" aria-expanded="false">
+                            <i class="fas fa-redo fa-2x"></i>
+                            Laden
+                        </a>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" class="cursor" onclick=startedPresentation()>
+                            <i class="fas fa-eye fa-2x"></i>
+                            Details
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list-unstyled CTAs">
+                    <li>
+                        <a href="http://www.sanmod.at/" class="download">SanMOD Website</a>
+                    </li>
+                    <li>
+                        <a href="/installer/SanMODWinSetupV1.0.0.exe" class="download" download>Windows Installer</a>
+                    </li>
+                    <li>
+                        <a href="/installer/SanMODMacSetupV1.0.0.dmg" class="download" download>Mac Installer</a>
+                    </li>
+                </ul>
+            </span>
+        </nav>
+
+        <!-- <div id="loader"></div> -->
+        <div id="canvas" style="z-index: 0 !important;"></div>
+        <a id="drawer">
+            <div id="drawer_left" class="drawer_left" onclick="sliderLeftClicked()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div id="drawer_right" class="drawer_right" onclick="sliderRightClicked()">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+        <a id="tutorial">
+            <div id="tutorial_box" class="tutorial_box">
+                <div id="countdownBar" class="countdownBar">
+                    <div></div>
+                  </div>
+                <i class="fas fa-hand-point-left" style="margin-right:15px"></i> Wählen Sie Ihr Design <i class="fas fa-arrow-alt-circle-right forwardButton" onclick="tutorial_step1()" style="margin-left:15px"></i>
+            </div>
+        </a>
+        <div id="floorButtons" class="content floorSelection">
+            <button type="" id="view_front" class="smallButton" onClick="changeView('view_front');">
+                <i class="fas fa-angle-up "></i>
+            </button>
+            <button type="" id="view_angle" class="smallButton" onClick="changeView('view_angle');">
+                <i class="fas fa-angle-up" data-fa-transform="rotate-30"></i>
+            </button>
+            <button type="" id="view_right" class="smallButton" onClick="changeView('view_right');">
+                <i class="fas fa-angle-right "></i>
+            </button>
+        </div>
+        <!-- Page Content  -->
+        <div id="controls" class="content">
+            <div class="buttons musicSelection">
+                <button type="" id="musicBtn" class="smallButton" onclick="toggleMusic();">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+
+            <div class="buttons speedSelection">
+                <button type="" id="speed_1" class="smallButton" onclick="MULTIPLIER = 1;">
+                    1x
+                </button>
+                <button type="" id="speed_2" class="smallButton" onclick="MULTIPLIER = 0.5;">
+                    2x
+                </button>
+                <button type="" id="restart" class="smallButton" onclick="restart();">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button type="" id="pause" class="smallButton" onclick="pauseAnimation();">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+
+            <div class="textureSelection">
+                <button type="" id="texture" class="smallButton" onclick="startTextureMode();">
+                    <i class="fas fa-palette"></i> Design
+                </button><br>
+                <button type="" id="install" class="smallButton" onclick="endTextureMode(); startInstallationMode(); ">
+                    <i class="fas fa-cog"></i> Installationsanleitung
+                </button>
+            </div>
+
+            <input type="range" min="1" max="30" value="0" id="slider" style="outline: none !important;"
+                class="slider sliderSelection">
+            <div id="progress-wrapper" class="progress-wrapper sliderSelection">
+                <div id="progress" style="outline: none !important;" class="progress"></div>
+            </div>
+
+            <div id="detailDiv"></div>
+
+
+            <div style="text-align: center;" class="clockPosition">
+                <canvas id="clock" width="120" height="120">
+
+                </canvas>
+            </div>
+
+            <div id="tooltips" class="tooltips">
+            </div>
+            <!--GUI for the objects-->
+            <div id="tooltip" class="tooltip noPaddingMargin">
+                <p id="tooltipText">test</p>
+                <!-- <div id="tailShadow"></div> -->
+                <div id="tail1"></div>
+                <div id="tail2"></div>
+            </div>
+
+            <!-- Choose design-Modal -->
+            <div class="modal fade" id="chooseDesignModal" tabindex="-1" role="dialog"
+                aria-labelledby="chooseDesignCenterModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="chooseDesignModalLongTitle" style="text-align: center;">Wählen
+                                Sie einen Grundriss</h5>
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                        </div>
+                        <div class="modal-body" style="padding: 0; padding-left: 1.5rem; padding-right: 1rem;">
+                            <a onclick=chooseDesign(1) id="design_1" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/Sanmod01.jpg" alt="IMAGE"
+                                        tabindex="1">
+                                </div>
+                            </a>
+                            <a onclick=chooseDesign(2) id="design_2" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/Sanmod02.jpg" alt="IMAGE"
+                                        tabindex="2">
+                                </div>
+                            </a>
+                            <a onclick=chooseDesign(3) id="design_3" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/Sanmod03.jpg" alt="IMAGE"
+                                        tabindex="3">
+                                </div>
+                            </a>
+                            <a onclick=chooseDesign(4) id="design_4" class="custom-card cursor">
+                                <div class="card" style="width: 14rem; display: inline-block">
+                                    <img class="card-img-top" src="models/thumbnails/Sanmod04.jpg" alt="IMAGE"
+                                        tabindex="4">
+                                </div>
+                            </a>
+                            <!-- <a href="" class="custom-card">
+                                    <div class="card" style="width: 14rem; display: inline-block">
+                                        <img class="card-img-top" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="IMAGE">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Wrapped with a tag</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        </div>
+                                    </div>
+                                </a>  -->
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                onclick="generateDesign();">Auswählen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="chooseModeModal" tabindex="-1" role="dialog"
+                aria-labelledby="chooseDesignCenterModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="chooseModeModalLongTitle"
+                                style="text-align: center !important;">Wählen Sie einen Modus</h5>
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> -->
+                        </div>
+                        <div class="modal-body"
+                            style="padding: 0; padding-left: 0.3rem; padding-right: 1rem; margin:5px;">
+                            <button type="button" class="btn btn-primary modeButton" data-dismiss="modal"
+                                onclick=startTextureMode()>Designauswahl</button>
+                            <button type="button" class="btn btn-primary modeButton" data-dismiss="modal"
+                                onclick=startInstallationMode()>Installationsanleitung</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            var chosenDesign = 0;
+
+            if (WEBGL.isWebGLAvailable() === false) {
+
+                document.body.appendChild(WEBGL.getWebGLErrorMessage());
+
+            }
+
+            var MODE = "PRESENTATION";
+            var TOOLTIP = document.querySelector(".tooltip");
+            var dragging;
+            var controls;
+            var camera, scene, renderer;
+            var room;
+            var latestMouseIntersection;
+            var buttonClicked;
+            var mouse, raycaster, isShiftDown = false;
+            var rollOverMesh, rollOverMaterial;
+            var objects = [];
+            var objectArr = [];
+            var floorObjects = [];
+            var draggableObjects = [];
+
+            var oldValue = undefined;
+            var newObject = undefined;
+            var selectedObject = undefined;
+
+            var needsUpdate = true;
+            var placeable = false;
+            var startingApplication = false;
+            var ANIMATING = false;
+            var LOADING = false;
+            var MOUSEDOWN = false;
+
+
+            var new_door;
+            var oldDoorPosition = { x: -250, y: 169.07999999999998, z: 0 };
+
+            var numberOfModels = 0;
+
+            var raycaster_controls;
+            var controlsEnabled = false;
+            var moveForward = false;
+            var moveBackward = false;
+            var moveLeft = false;
+            var moveRight = false;
+            var canJump = false;
+            var prevTime = performance.now();
+            var velocity = new THREE.Vector3();
+
+            var mouseControl = new THREE.Vector2();
+            var target = new THREE.Vector2();
+            var windowHalf = new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2);
+            var clock;
+            var MULTIPLIER = 1;
+            var animations = [];
+            var currentAnimation = 0;
+            var PAUSED = false;
+            var prevSliderValue = -1;
+            var newSliderValue = -1;
+
+            var detailScene;
+            var detailCamera;
+            var betonboden;
+            var detailViews = [];
+            var currentlySelectedView = 'view_front';
+            var cameraViews = [];
+            var spiegel;
+            var textures = [];
+            var texturePath;
+            var chosenTexture = undefined;
+            var delta;
+            var threeClock;
+            var smokeParticles;
+            var TOOLTIP_VISIBLE = false;
+            var audioElement = new Audio('music/music.mp3');
+            var MUTED = false;
+
+            var objectsAll = [];
+            var grundrisse = [{id:0, name:'Sanmod01'}, {id:1, name:'Sanmod02'}, {id:2, name:'Sanmod03'}, {id:3, name:'Sanmod04'}];
+            var floor;
+            var chosenGrundriss = 3;
+
+            init();
+            animate();
+
+            function init() {
+                $('#textures').hide();
+                $('#grundrisse').hide();
+                $("#sidebar_presentations").hide();
+                $('#progress').hide();
+                $('#slider').hide();
+                $('#slider').val(1);
+                $('#sidebar').hide();
+                $('#controls').hide();
+                $('#view_front').show();
+                $('#tutorial').hide();
+                $('#drawer').hide();
+                $('#drawer_left').hide();
+                $('#drawer_right').hide();
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color("#ffffff");
+
+                var ambientLight = new THREE.AmbientLight(0x606060);
+                scene.add(ambientLight);
+                var directionalLight = new THREE.DirectionalLight(0xffffff);
+                directionalLight.position.set(1, 0.75, 0.5).normalize();
+                scene.add(directionalLight);
+
+                raycaster = new THREE.Raycaster();
+                mouse = new THREE.Vector2();
+
+                //var clock = new THREE.Clock();
+
+                renderer = new THREE.WebGLRenderer({
+                    antialias: true
+                });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.sortObjects = false;
+                document.getElementById("canvas").appendChild(renderer.domElement);
+
+                camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+                camera.position.set(-130, 150, 440);
+                scene.add(camera);
+                LOADING = true;
+
+                // loadModel("Design_1_obj/Betonboden",false, 0, 0, false, 0, true);
+
+
+                var wand_texture = new THREE.TextureLoader().load('textures/wand.jpg', function () {
+                    wall1.visible = true;
+                    wall2.visible = true;
+                    wall3.visible = true;
+                    wall4.visible = true;
+                    ceiling.visible = true;
+                    needsUpdate = true;
+                });
+
+                // var texture = new THREE.TextureLoader().load('textures/beton.jpg',
+                // function( texture ) {
+
+                // });
+
+                function clearLoader() {
+                    $('#loader').removeAttr("style").hide();
+                    $('.modal-backdrop.fade.show').css("opacity", ".5");
+                }
+
+                var geometry_wall = new THREE.BoxBufferGeometry(5, 273, 727);
+                wall1 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall1.position.y = 263.5 / 2;
+                wall1.position.z = 265;
+                wall1.position.x = 500 - 400;
+                wall1.visible = false;
+                scene.add(wall1);
+
+                var geometry_wall = new THREE.BoxBufferGeometry(731, 270, 5);
+                wall2 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall2.position.y = 257 / 2;
+                wall2.position.z = -500 + 400;
+                wall2.position.x = -265;
+                wall2.visible = false;
+                scene.add(wall2);
+
+                var geometry_wall = new THREE.BoxBufferGeometry(5, 263.5, 727);
+                wall3 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall3.position.y = 257 / 2;
+                wall3.position.z = 263.5;
+                wall3.position.x = -520; //-631;
+                wall3.visible = false;
+                scene.add(wall3);
+
+                var geometry_wall = new THREE.BoxBufferGeometry(731, 270, 5);
+                wall4 = new THREE.Mesh(geometry_wall, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                wall4.position.y = 257 / 2;
+                wall4.position.z = 630;
+                wall4.position.x = -265;
+                wall4.visible = false;
+                scene.add(wall4);
+
+                var geometry = new THREE.BoxBufferGeometry(731, 727, 5);
+                geometry.rotateX(- Math.PI / 2);
+
+                // room = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture }));
+                // room.visible = false;
+                // room.position.x = -400;
+                // room.position.z = 400;
+                // //room.material.transparent = true; //transparents zulassen
+                // scene.add(room);
+
+                //objects.push(room);
+                // floorObjects.push(room);
+
+                ceiling = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: wand_texture }));
+                ceiling.visible = false;
+                ceiling.position.x = -265;
+                ceiling.position.z = 265;
+                ceiling.position.y = 263.5;
+                //room.material.transparent = true; //transparents zulassen
+                scene.add(ceiling);
+
+                raycaster_controls = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 1;
+                controls.screenSpacePanning = false;
+                controls.enableZoom = false;
+                controls.minDistance = 10;
+                controls.maxDistance = 850;
+                controls.target.x = camera.position.x;
+                controls.target.y = 150;
+                controls.target.z = camera.position.z - 1;
+                //controls.maxPolarAngle = Math.PI / 2 -0.01;
+                controls.rotateSpeed = 0.2;
+                controls.minZoom = 100;
+                controls.maxZoom = 1;
+
+                camera.updateProjectionMatrix();
+                needsUpdate = true;
+
+                controls.update();
+                //console.log(controls);
+
+                clock = new StationClock("clock");
+                clock.body = StationClock.RoundBody;
+                clock.dial = StationClock.GermanHourStrokeDial;
+                clock.hourHand = StationClock.SwissHourHand;
+                clock.minuteHand = StationClock.SwissMinuteHand;
+                clock.secondHand = StationClock.NoSecondHand;
+                clock.boss = StationClock.BlackBoss;
+                clock.minuteHandBehavoir = StationClock.BouncingMinuteHand;
+                clock.secondHandBehavoir = StationClock.OverhastySecondHand;
+
+                window.addEventListener('resize', onResize, false);
+                window.addEventListener("mousedown", onMouseDown, false);
+                window.addEventListener('mousemove', onMouseMove, false);
+                window.addEventListener("mouseup", onMouseUp, false);
+                window.addEventListener("scroll", onMouseWheel, false);
+                controls.addEventListener("change", controlsChange, false);
+                $("#slider").on("input change", onSliderChange);
+
+                cameraViews.push({ name: 'view_front', camera: { x: -130, y: 150, z: 440 }, target: { x: -130, y: 150, z: 439 } });
+                cameraViews.push({ name: 'view_right', camera: { x: -520, y: 110, z: 0 }, target: { x: 0, y: 130, z: -80 } });
+                cameraViews.push({ name: 'view_angle', camera: { x: -300, y: 150, z: 450 }, target: { x: -160, y: 150, z: 0 } });
+            }
+
+            function startedPresentation() {
+                $('#sidebar_elements').hide();
+                $('#sidebar_presentations').show();
+                $('#sidebar').toggleClass('active');
+                $('#sidebar').attr("class", "");
+                $('#sidebar').css("min-width", "33%");
+                $('#sidebar').css("max-width", "33%");
+                $('#sidebar').css("overflow-y", "auto");
+            }
+
+            function exitPresentationMode() {
+                $('#sidebar').toggleClass('active');
+                $('#sidebar_presentations').hide();
+                $('#sidebar_elements').show();
+                $('#sidebar').css("min-width", "250px");
+                $('#sidebar').css("max-width", "250px");
+                $('#sidebar').css("overflow-y", "hidden !important");
+            }
+
+            function startedAnimationMode() {
+                //to unfold the Navbar
+                camera.position.x = 850;
+                needsUpdate = true;
+                $('#sidebar').attr("class", "");
+                $('#sidebar').css("min-width", "440px");
+                $('#sidebar').css("max-width", "440px");
+                $('#sidebar').css("overflow-y", "auto");
+                $("#sidebar_elements").hide();
+                $("#sidebar_objects").show();
+            }
+
+            function startTextureMode() {
+                sliderInput(numberOfModels + 1, false);
+                startedPresentation();
+                $('#sidebar').show();
+                var runningAnimation = animations.find(x => x.id == currentAnimation)
+                if (runningAnimation != undefined) {
+                    runningAnimation.CANCELLED = true;
+                }
+
+                $('#items-wrapper').hide();
+
+                $('#textures').html("");
+                $('#textures').show();
+
+                textures.forEach(to => {
+                    $('#textures').append(
+                        '<a id=' + to.id + 'textureDiv class="container cursor col-sm-6" onclick="showTexture(' + to.id + ',' + chosenGrundriss + ');"><img id=' + to.id + 'Image class="image" src="models/texture/' + to.name + '/'
+                        + to.name + '.jpg" alt="' + to.name + '">' +
+                        '<div id=' + to.id + 'Text class="middle"><div class="textureNameText">' + to.displayName + '</div></div></a>');
+
+                    $('#' + to.id + 'textureDiv').hover(function () {
+                        $('#' + to.id + 'Text').css("font-size", $('#' + to.id + 'Image').width() / 6 + 'px');
+                    }, function () {
+                        if (chosenTexture == undefined || chosenTexture.id != to.id) {
+                            $('#' + to.id + 'Text').css("font-size", '1px');
+                        }
+                    });
+                });
+            }
+
+            function showTexture(id, grundriss_id) {
+                if (chosenTexture != undefined) {
+                    chosenTexture.generatedTextureObjects.forEach(o => {
+                        o.visible = false;
+                    });
+                    chosenTexture = undefined;
+                }
+                chosenTexture = objectsAll[grundriss_id].textures.find(to => to.id == id);
+                chosenDesign = id;
+                //HTML STYLE
+                //alle unactive machen
+                objectsAll[grundriss_id].textures.forEach(to => {
+                    $('#' + to.id + 'Image').toggleClass('higherTextureImageOpacity', false);
+                    $('#' + to.id + 'Text').toggleClass('showTextureNameText', false);
+                    $('#' + to.id + 'Text').css("font-size", '1px');
+                });
+
+                //das einschalten das gerade geclickt wurde
+                $('#' + id + 'Image').toggleClass('higherTextureImageOpacity');
+                $('#' + id + 'Text').toggleClass('showTextureNameText');
+                $('#' + id + 'Text').css("font-size", $('#' + id + 'Image').width() / 6 + 'px');
+
+
+                //OBJECTS
+                //before hiding all, showing all
+                objectsAll[grundriss_id].objects.forEach(o => {
+                    o.children[0].children.forEach(child => child.visible = true);
+                });
+
+                console.log(chosenTexture.objectsToHide);
+
+                //hide real
+                ANIMATING = true;
+                chosenTexture.objectsToHide.forEach(o => {
+                    if (o.children[0].children[o.textureJSON.childrenId] != undefined) {
+                        o.children[0].children[o.textureJSON.childrenId].visible = false;
+                    }
+                    o.children[0].children.forEach(child => {
+                        if (child.type == "LineSegments") {
+                            child.visible = false;
+                        }
+                    });
+                    needsUpdate = true;
+
+                    //alle hiden?
+                    if (o.textureJSON.hideAll) {
+                        o.children[0].children.forEach(c => {
+                            c.visible = false;
+                        });
+                    }
+                });
+
+                //show all textured objects
+                chosenTexture.generatedTextureObjects.forEach(o => {
+                    o.visible = true;
+                    needsUpdate = true;
+                });
+                ANIMATING = false;
+                needsUpdate = true;
+            }
+
+            function endTextureMode() {
+                $('#items-wrapper').show();
+                $('#textures').hide();
+
+                //hide all textured objects
+                if (chosenTexture != undefined) {
+                    chosenTexture.generatedTextureObjects.forEach(o => {
+                        o.visible = false;
+                    });
+                    chosenTexture = undefined;
+                }
+
+                //showAllNormalObjects
+                objects.forEach(o => {
+                    o.children[0].children.forEach(child => child.visible = true);
+                });
+            }
+
+            function loadTextures(id) {
+                objectsAll[id].textures.forEach(to => {
+                    var objectsWithTexture = objectsAll[id].objects.filter(o => o.textureJSON.value == true);
+                    var generatedTextureObjects = [];
+                    var objectsToHide = [];
+                    //generateObjects
+                    objectsWithTexture.forEach(o => {
+                        texturePath = 'models/texture/' + to.name + '/' + o.name.split('/')[1] + '.png';
+                        if (o.textureJSON.except == null || !o.textureJSON.except.includes(to.name)) {
+                            objectsToHide.push(o);
+                            var png_texture = new THREE.TextureLoader().load(texturePath, function () {
+
+                            });
+                            // var materials = [
+                            //     leftSide,        // Left side
+                            //     rightSide,       // Right side
+                            //     topSide,         // Top side
+                            //     bottomSide,      // Bottom side
+                            //     frontSide,       // Front side
+                            //     backSide         // Back side
+                            // ];
+                            var png_material = new THREE.MeshPhongMaterial({ map: png_texture });
+                            //png_material.side = THREE.DoubleSide;
+
+                            var whiteMaterial = new THREE.MeshPhongMaterial();
+                            whiteMaterial.transparent = true;
+                            whiteMaterial.opacity = 0.50;
+
+                            var mainMesh = o.children[0].children[o.textureJSON.childrenId];
+                            if (mainMesh != undefined) {
+                                if(mainMesh.material.transparent){
+                                    png_material.transparent = true;
+                                }else{
+                                    png_material.transparent = false;
+                                }
+                                var materials = [png_material, png_material, whiteMaterial, png_material, png_material, undefined]
+                                var geometry = new THREE.BoxGeometry(mainMesh.size.x, mainMesh.size.y, mainMesh.size.z, 1, 1, 1, materials);
+                                var generatedTextureObject = new THREE.Mesh(geometry, materials);
+                                mainMesh.geometry.computeBoundingSphere();
+                                //generatedTextureObject.material.transparent = true; //transparents zulassen
+                                generatedTextureObject.name = o.name;
+                                generatedTextureObject.position.x = mainMesh.geometry.boundingSphere.center.x - 5395;
+                                generatedTextureObject.position.y = mainMesh.geometry.boundingSphere.center.y - 22;
+                                generatedTextureObject.position.z = mainMesh.geometry.boundingSphere.center.z + 701;
+
+                                generatedTextureObjects.push(generatedTextureObject);
+                                scene.add(generatedTextureObject);
+                                generatedTextureObject.visible = false;
+                                if(to.name == "V4_SanMod_Nature"){
+                                    generatedTextureObject.visible = true;
+                                    renderer.clear();
+                                    renderer.render(scene, camera);
+                                }
+                            }
+                        }
+                    });
+                    to.generatedTextureObjects = generatedTextureObjects;
+                    to.objectsToHide = objectsToHide;
+                });
+                console.log(objectsAll);
+                window.onload = function () {
+                    $("#landing-page").delay(1000).fadeOut(1000);
+                    $('#tutorial').delay(2000).fadeIn(1000);
+                    $("#textures").delay(2000).fadeIn(1000);
+                    progress1(20, 20, $('#countdownBar'));
+                }
+
+                if (id == 3) {
+                    console.log("last grundriss");
+                    var toShow = objectsAll[id];
+                    objects = toShow.objects;
+                    textures = toShow.textures;
+                    detailViews = toShow.detailViews;  
+                    numberOfModels = toShow.numberOfModels;
+                    $('#slider').prop('max', numberOfModels + 1);
+                    startTextureMode();
+                    showTexture(1, 3);
+                    showGrundriss();
+                    $("#textures").hide();
+                }
+            }
+
+            function changeView(type) {
+                if (type == 'view_front') {
+                    camera.position.set(-130, 150, 440);
+                    controls.target.x = -130;
+                    controls.target.y = 150;
+                    controls.target.z = 439;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = true;
+                    controls.enabled = true;
+                    currentlySelectedView = 'view_front';
+                } else if (type == 'view_right') {
+                    controls.enabled = false;
+                    camera.position.set(-520, 110, 0);
+                    controls.target.x = 0;
+                    controls.target.y = 130;
+                    controls.target.z = -80;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = true;
+                    currentlySelectedView = 'view_right';
+                }
+                else if (type == 'view_angle') {
+                    controls.enabled = false;
+                    camera.position.set(-300, 150, 450);
+                    controls.target.x = -160;
+                    controls.target.y = 150;
+                    controls.target.z = 0;
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    ceiling.visible = true;
+                    currentlySelectedView = 'view_angle';
+                }
+
+            }
+
+            function toggleMusic() {
+                if (MUTED) {
+                    MUTED = false;
+                    audioElement.muted = false;
+                    $("#musicBtn").html('<i class="fas fa-volume-up"></i>');
+                    $("#musicBtn").blur();
+                } else {
+                    MUTED = true;
+                    audioElement.muted = true;
+                    $("#musicBtn").html('<i class="fas fa-volume-off"></i>');
+                    $("#musicBtn").blur();
+                }
+            }
+
+            function selectObject(object) {
+                selectedObject = object;
+                $("#object-name").text(object.name);
+                $('#object-width').val(selectedObject.size.x);
+                $('#object-height').val(selectedObject.size.y);
+                $('#object-depth').val(selectedObject.size.z);
+                if (oldValue == undefined) {
+                    oldValue = selectedObject.size.y;
+                }
+            }
+
+            function showChooseModeModal() {
+                $('#chooseModeModal').modal({  //prevent from closing when clicking outside
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#chooseModeModal').modal('show');
+                $('.modal-backdrop.fade.show').css("opacity", ".5");
+            }
+
+            function chooseNewGrundriss() {
+                if (currentAnimation != 0) {
+                    animations.find(x => x.id == currentAnimation).CANCELLED = true;
+                }
+                audioElement.pause();
+                audioElement.currentTime = 0
+                textures = [];
+                detailViews = [];
+                $('#slider').val(1);
+                $("#items-wrapper").html("");
+                $('#textures').html("");
+                $('#sidebar').hide();
+                endTextureMode();
+                $('#chooseDesignModal').modal({  //prevent from closing when clicking outside
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#chooseDesignModal').modal('show');
+                setTimeout(function () {
+                    objects.forEach(o => {
+                        o.visible = false;
+                        if (o.otherObjectsToDisplay != undefined) {
+                            o.otherObjectsToDisplay.forEach(obj => obj.visible = false);
+                        }
+                    });
+                    needsUpdate = true;
+                    objects = [];
+                }, 100);
+            }
+
+            function shouldRender() {
+                // Do we need to draw a new frame //space for more attributes 
+                if (needsUpdate || ANIMATING || LOADING) {
+                    needsUpdate = false;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function animate() {
+                var delay = 50;
+                setTimeout(function () {
+                    requestAnimationFrame(animate);
+                    //controls.update();
+                }, delay);
+                render();
+            };
+
+            function render() {
+                //detailRenderer.render(detailScene, detailCamera);
+                if(scene.children.filter(x => x.visible == true).length == 54 && ANIMATING == true){
+                    needsUpdate = true;
+                }
+                if (shouldRender()) {
+                    renderer.clear();
+                    renderer.render(scene, camera);
+                    if (!PAUSED) {
+                        TWEEN.update();
+                    }
+                    if (TOOLTIP_VISIBLE) {
+                        showTooltip();
+                    }
+                    //console.log("Number of Models: " + scene.children.filter(x => x.visible == true).length);
+                    clock.draw();
+                }
+            }
+
+            $(document).ready(function () {
+                console.log("Document Ready");
+                startedPresentation();
+                setup();
+            });
+        </script>
+
+        <script>
+            // SIDEBAR
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+</body>
+
+</html>
