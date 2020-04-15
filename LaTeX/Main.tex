@@ -1,6 +1,11 @@
 \documentclass[11pt]{report}
 \usepackage[english, german]{babel}
 \usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+
+% nach oben verschieben
+\setlength{\voffset}{-0.75in} 
+\setlength{\headsep}{0pt}
+%
 \geometry{a4paper}                   % ... or a4paper or a5paper or ... 
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{xifthen}
@@ -12,12 +17,53 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{extsizes}
 %Neu/
 \usepackage{csquotes}
 \usepackage[backend=biber, style=alphabetic]{biblatex}
 \addbibresource{da_bibliography.bib}{}
 %\overfullrule=1mm 
 %/Neu
+%TEST-Highlighting
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{green}{rgb}{0, 0.5, 0}
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  commentstyle=\color{green}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  sensitive=true
+}
+
+\lstset{
+   language=JavaScript,
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+%
+
+
 \usepackage{url}
 %for images alignment - added by Nenad
 \usepackage[export]{adjustbox}
@@ -26,15 +72,16 @@
 \include{Globals} % Set basic data (author, title, etc.) of your thesis
 \include{00_FrontPageDefinitions} % This file should not really be touched
 
-\begin{document}
+\begin{document}\layout
 \include{00_FrontPage} % Should not be necessary to touch this file
 \include{00_Start} % Declaration of Academic Honesty, Abstracts, Acknowledgments, 
 \include{00_Auftraggeber} % Auftraggeber Info 
-
+\part{Autoren der Diplomarbeit} \include{00_Auinger} \include{00_Tripic}
 
 \tableofcontents
 
 \include{01_Introduction}
+\part{Programmablauf}\include{01a_Einführung_sanMOD}\include{01_Programmablauf}
 \part{Verwendete Technologien}\label{part:Verwendete Technologien}
 \include{02_Software}
 \include{02b_Dateien}
@@ -42,8 +89,7 @@
 
 % create further tex files for all other chapters of your document
 
-\part{Grundlagen und Methoden}
-\include{GrundlagenMethoden}
+
 
 \part{Umsetzung}
 \include{03_Umsetzung}
@@ -51,13 +97,13 @@
 
 \printbibliography
 %\bibliography{da_bibliography}{}
-%\bibliographystyle{alphaurl} % alternatives plainurl, alphaurl;  german alternative: dinat (but add package natbib)
+%\bibliographystyle{plainurl} % alternatives plainurl, alphaurl;  german alternative: dinat (but add package natbib)
 
 \listoffigures
-\listoftables
-\include{11_ProjectLogBook}
+%\listoftables
+%\include{11_ProjectLogBook}
 
-\appendix
-\include{12_FirstAppendix}
-\include{13_IndividualGoals} 
+%\appendix
+%\include{12_FirstAppendix}
+%\include{13_IndividualGoals} 
 \end{document}  
